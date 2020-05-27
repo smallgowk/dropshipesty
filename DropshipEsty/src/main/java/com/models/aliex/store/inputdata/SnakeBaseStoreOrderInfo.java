@@ -36,6 +36,14 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
 
         return snakeBaseStoreOrderInfo;
     }
+    
+    public String getItemType() {
+        return "";
+    }
+    
+    public String getVariationType() {
+        return "";
+    }
 
     public String getLink1() {
         return link1;
@@ -109,4 +117,11 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
         this.description = description;
     }
 
+    public String[] getImagesUrl(String mainUrl) {
+        return new String[] {
+            mainUrl,
+            link1,
+            link2
+        };
+    }
 }

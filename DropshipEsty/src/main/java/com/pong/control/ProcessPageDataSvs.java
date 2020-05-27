@@ -8,6 +8,7 @@ package com.pong.control;
 import com.config.Configs;
 import com.models.amazon.ProductAmz;
 import com.models.aliex.store.AliexStoreInfo;
+import com.models.esty.store.EstyPageInfo;
 import com.pong.server.process.CrawlPageServerThread;
 import com.pong.server.obj.income.BaseIncomeRequestObject;
 import com.utils.ExcelUtils;
@@ -39,6 +40,14 @@ public class ProcessPageDataSvs {
             String fileName = aliexStoreInfo.genExcelFileNameForStore();
             ExcelUtils.saveListProductsToExcel(listProducts, fileName, Configs.excelSampleFilePath);
             
+        } catch (EncryptedDocumentException | InvalidFormatException | IOException ex) {
+            Logger.getLogger(CrawlPageServerThread.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void processPageData(ArrayList<ProductAmz> listProducts, String fileName) {
+        try {
+            ExcelUtils.saveListProductsToExcel(listProducts, fileName, Configs.excelSampleFilePath);
         } catch (EncryptedDocumentException | InvalidFormatException | IOException ex) {
             Logger.getLogger(CrawlPageServerThread.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -6,6 +6,9 @@
 package com.ping.control;
 
 import com.models.aliex.store.inputdata.SnakeBaseStoreOrderInfo;
+import com.models.esty.EstyCrawlDataPageBase;
+import com.models.esty.EstyCrawlDataStoreBase;
+import com.ping.service.crawl.esty.EstyCrawlSvs;
 import com.pong.control.ProcessStoreInfoSvs;
 import org.apache.log4j.Logger;
 
@@ -22,6 +25,8 @@ public class ProcessCrawlThread extends Thread {
     SnakeBaseStoreOrderInfo baseStoreOrderInfo;
     CrawlProcessListener crawlProcessListener;
     ProcessStoreInfoSvs processStoreInfoSvs;
+    
+    int pageCount = 1;
     
 
 //    StringBuffer sb;
@@ -45,7 +50,11 @@ public class ProcessCrawlThread extends Thread {
 
     @Override
     public void run() {
-        // Transform raw data
-
+        //
+        EstyCrawlDataStoreBase estyCrawlDataStoreBase = EstyCrawlSvs.getInstance().crawlStoreInfo();
+        
+        EstyCrawlDataPageBase estyCrawlDataPageBase = EstyCrawlSvs.getInstance().crawlPage(estyCrawlDataStoreBase);
+        
+        
     }
 }

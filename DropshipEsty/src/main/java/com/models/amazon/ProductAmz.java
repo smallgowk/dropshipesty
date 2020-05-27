@@ -297,6 +297,15 @@ public class ProductAmz {
         }
     }
 
+    public void setVariationTheme(String theme) {
+        parent_child = "Parent";
+        variation_theme = theme;
+        quantity = "";
+        standard_price = "";
+        color_name = "";
+        size_name = "";
+    }
+
     public String getMain_keywords() {
         return main_keywords;
     }
@@ -663,6 +672,8 @@ public class ProductAmz {
         return generic_keywords;
     }
 
+    
+    
     public void genGeneric_keywords(ArrayList<String> listKeywords) {
 //        System.out.println("============== id: " + aliexId);
 //        System.out.println("setGeneric_keywords: " + listKeywords);
@@ -2915,6 +2926,10 @@ public class ProductAmz {
         if (bullet_point5 != null) {
             bullet_point5 = bullet_point5.replaceAll(Pattern.quote(pattern), bullet);
         }
+
+    }
+    
+    public void genDescriptions(String description) {
 
     }
 
