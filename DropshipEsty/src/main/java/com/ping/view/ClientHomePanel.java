@@ -19,6 +19,7 @@ import com.ping.tcpclient.ResponseObj;
 import com.utils.DialogUtil;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
@@ -55,6 +56,25 @@ public class ClientHomePanel extends BasePanel {
         setMenuActionCommand("MainHome");
         initData();
 
+    }
+    
+    public void fakeData() {
+        txtStoreLink.setText("https://www.etsy.com/shop/cormaidesign");
+        txtLink1.setText("https://cdn.pixabay.com/photo/2015/12/01/20/28/road-1072823_960_720.jpg");
+        txtLink2.setText("https://image.shutterstock.com/image-photo/fabulous-spring-view-cameo-island-600w-790346161.jpg");
+        
+        Set<String> colors = new HashSet<>();
+        colors.add(Configs.listColor[0]);
+        Set<String> sizes = new HashSet<>();
+        sizes.add(Configs.listSize[0]);
+        mainController.setListColor(colors);
+        mainController.setListSizes(sizes);
+        
+        jTextAreaColor.setText(mainController.getColorStr());
+        jTextAreaSizes.setText(mainController.getSizeStr());
+        txtBrandName.setText("Fake Brand");
+        txtDesciption.setText("Fake Description");
+        txtBasePrice.setText("23");
     }
 
     public void initData() {
@@ -112,6 +132,8 @@ public class ClientHomePanel extends BasePanel {
 //                statePannel.validate();
 //            }
 //        });
+
+        fakeData();
     }
 
     public void disableButton() {
@@ -153,6 +175,8 @@ public class ClientHomePanel extends BasePanel {
         txtLink2 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         txtBasePrice = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        txtBrandName = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
 
         btnStartCrawl.setText("Start");
@@ -249,12 +273,14 @@ public class ClientHomePanel extends BasePanel {
 
         jLabel8.setText("Giá cơ bản");
 
+        jLabel9.setText("Nhập brand");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(5, 5, 5)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addComponent(jScrollPane2)
@@ -271,16 +297,22 @@ public class ClientHomePanel extends BasePanel {
                     .addComponent(txtLink1)
                     .addComponent(txtLink2)
                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel9))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)
                             .addComponent(jLabel5)
                             .addComponent(jLabel6)
                             .addComponent(jLabel7)
                             .addComponent(jLabel8)
                             .addComponent(txtBasePrice, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtBrandName)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -303,14 +335,18 @@ public class ClientHomePanel extends BasePanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel4)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBrandName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtLink1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -335,7 +371,7 @@ public class ClientHomePanel extends BasePanel {
                 .addComponent(storePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
@@ -616,6 +652,7 @@ public class ClientHomePanel extends BasePanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -626,6 +663,7 @@ public class ClientHomePanel extends BasePanel {
     private javax.swing.JTextArea jTextAreaSizes;
     private javax.swing.JPanel storePanel;
     private javax.swing.JTextField txtBasePrice;
+    private javax.swing.JTextField txtBrandName;
     private javax.swing.JTextArea txtDesciption;
     private javax.swing.JTextField txtLink1;
     private javax.swing.JTextField txtLink2;

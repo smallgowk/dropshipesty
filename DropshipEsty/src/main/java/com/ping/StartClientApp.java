@@ -226,8 +226,8 @@ public class StartClientApp {
         });
         
         
-        LoginThread loginThread = new LoginThread(true, null);
-        loginThread.start();
+//        LoginThread loginThread = new LoginThread(true, null);
+//        loginThread.start();
 
     }
 

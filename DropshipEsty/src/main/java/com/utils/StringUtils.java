@@ -281,4 +281,15 @@ public class StringUtils {
 
         return sb.toString();
     }
+    
+    public static String convertEstyImageLink(String link) {
+        link = link.replaceAll("il_([0-9]{3})+x([0-9]{3})", "il_fullxfull");
+        
+        if(link.contains("?version")) {
+            link = link.substring(0, link.lastIndexOf("?version"));
+        }
+        
+        
+        return link;
+    }
 }

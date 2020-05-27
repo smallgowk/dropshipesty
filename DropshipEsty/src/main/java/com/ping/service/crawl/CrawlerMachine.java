@@ -282,11 +282,6 @@ public class CrawlerMachine {
 
     public Document processPage(String URL) {
         
-        if(!rechiveCookies()) {
-            System.out.println("Invalid cookies!");
-            return null;
-        }
-
         Document doc = null;
         try {
             Connection connection = Jsoup.connect(URL)
@@ -294,8 +289,7 @@ public class CrawlerMachine {
                     .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36")
                     .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8")
                     .header("Accept-Language", "en-US,en;q=0.9,vi;q=0.8")
-                    .header("Accept-Encoding", "gzip, deflate, br")
-                    .cookies(cookies);
+                    .header("Accept-Encoding", "gzip, deflate, br");
 //            Thread.sleep(500);
             doc = connection.get();
             return doc;

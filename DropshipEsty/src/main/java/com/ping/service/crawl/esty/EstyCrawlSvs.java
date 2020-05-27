@@ -16,8 +16,10 @@ import com.models.aliex.crawl.CrawlPageProductItem;
 import com.models.esty.EstyCrawlDataPageBase;
 import com.models.esty.EstyCrawlDataStoreBase;
 import com.ping.service.crawl.CrawlerMachine;
+import com.ping.service.crawl.aliex.AliexCrawlSvs;
 import com.utils.CookieUtil;
 import com.utils.EncryptUtil;
+import com.utils.StringUtils;
 import com.utils.Utils;
 import java.io.File;
 import java.io.IOException;
@@ -47,16 +49,49 @@ public class EstyCrawlSvs extends CrawlerMachine {
         return estyCrawlSvs;
     }
 
-    public EstyCrawlDataPageBase crawlPage(EstyCrawlDataStoreBase storeBase) {
+    public EstyCrawlDataPageBase crawlPage() {
+        String pageSource = getPageSource();
+        Document doc = Jsoup.parse(pageSource);
+        return crawlPage(doc);
+    }
+    public EstyCrawlDataPageBase crawlPage(Document doc) {
         EstyCrawlDataPageBase estyCrawlDataPageBase = new EstyCrawlDataPageBase();
+        
+        Elements items = doc.select("li");
+        
+        for(Element element : items) {
+            if(!StringUtils.isEmpty(element.attr("data-listing-id"))) {
+                String id = element.attr("data-listing-id");
+                System.out.println("" + id);
+//                
+                Elements elements = element.select("div[class='height-placeholder'] > img");
+                String image = null;
+                if(elements != null) {
+                    image = elements.first().attr("src");
+                    if(StringUtils.isEmpty(image)) {
+                        image = elements.first().attr("data-src");
+                    }
+                }
+                
+                if(StringUtils.isEmpty(image)) {
+                    System.out.println("1: " + element.html());
+                } else {
+                    image = StringUtils.convertEstyImageLink(image);
+                    System.out.println(image);
+                }
+            }
+        }
+        
         return estyCrawlDataPageBase;
     }
     
+    
     public EstyCrawlDataStoreBase crawlStoreInfo() {
         EstyCrawlDataStoreBase estyCrawlDataStoreBase = new EstyCrawlDataStoreBase();
+        
         return estyCrawlDataStoreBase;
     }
-
+    
     public void logout() {
 
         
