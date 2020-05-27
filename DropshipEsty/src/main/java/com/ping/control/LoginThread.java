@@ -24,11 +24,7 @@ public class LoginThread extends Thread{
     
     @Override
     public void run() {
-        if(isLogoutBefore) {
-            AliexCrawlSvs.getInstance().logout();
-        }
-        
-        AliexCrawlSvs.getInstance().autoLoginAliex(redirectLink);
+        AliexCrawlSvs.getInstance().goToPage("https://www.etsy.com/");
     }
     
     

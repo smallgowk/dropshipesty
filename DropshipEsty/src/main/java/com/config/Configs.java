@@ -29,14 +29,14 @@ import java.util.regex.Pattern;
  * @author duyuno
  */
 public class Configs {
-    
+
     public static String version = "2.0";
 
 //    private static final String CONFIG_FILE = "/config.conf";
 //    public static final String CONFIG_FILE_EXCEL_PATH = "/pathConfig.conf";
     private static final String CONTENT_CONFIG_FILE = "aliexConf.conf";
     private static final String PRODUCT_CONFIG_FILE = "pathConfig.conf";
-    
+
     private static final String COOKIE_CACHE_FILE = "Cookie.txt";
 
 //    public static final String DEFAUL_TOOL_DIRECTORY = "AppConfig";
@@ -45,17 +45,16 @@ public class Configs {
     public static final String DEFAULT_PRODUCT_DIRECTORY = "Products";
     public static final String BRANCH_PRODUCT_DIRECTORY = "BranchProducts";
     public static final String FIXING_PRODUCT_DIRECTORY = "FixingProducts";
-    
+
     public static final String CONFIGS_DIRECTORY = "Configs";
     public static final String DATA_DIRECTORY = "Data";
-    
+
     public static final String STORE_INFO_CACHE_DIR = "StoreInfoCache";
     public static final String MERCHANT_CACHE_DIR = "Merchant";
     public static final String PRODUCT_CACHE_DIR = "Products";
     public static final String RELATED_CACHE_DIR = "Related";
-    
+
     public static String PRODUCT_DATA_PATH;
-    
 
     public static final String DEFAULT_EXCEL_SAMPLE_FILE = "AmazonProductTemplate.xlsx";
 //    public static final String DEFAULT_STORE_FILE = "storeInfo.xlsx";
@@ -97,20 +96,53 @@ public class Configs {
     public static int dataSaveType;
 //    public static int dataLevel;
     public static int port = 89;
-    
+
     public static boolean isFilterEpacket = true;
     public static boolean isFilterAliexpress = true;
     public static boolean isFilterDHL = false;
-    
+
     public static String[] listPrice = new String[]{"10$", "20$", "30$", "40$", "50$", "80$", "100$", "150$", "200$", "500$", "1000$"};
     public static float[] listPriceValue = new float[]{10, 20, 30, 40, 50, 80, 100, 150, 200, 500, 1000};
 
-    public static String[] listPriceRate = new String[]{"x1.5","x1.8", "x2","x2.2", "x2.5","x2.8", "x3", "x3.5", "x4", "x4.5", "x5"};
+    public static String[] listPriceRate = new String[]{"x1.5", "x1.8", "x2", "x2.2", "x2.5", "x2.8", "x3", "x3.5", "x4", "x4.5", "x5"};
     public static float[] listPriceRateValue = new float[]{1.5f, 1.8f, 2f, 2.2f, 2.5f, 2.8f, 3f, 3.5f, 4f, 4.5f, 5f};
+
+    public static String[] listColor = new String[]{
+        "Black",
+        "Navy",
+        "White", "Red", "Royal Blue", "Light Blue", "Sport Grey", "Green", "Purple", "Light Pink"
+    };
+
+    public static String[] listSize = new String[]{
+        "Youth - XS",
+        "Youth - S",
+        "Youth - M",
+        "Youth - L",
+        "Youth - XL",
+        "Adult - XS",
+        "Adult - S",
+        "Adult - M",
+        "Adult - L",
+        "Adult - XL",
+        "Adult - 2XL",
+        "Adult - 3XL",
+        "Adult - 4XL",
+        "Adult - 5XL"
+    };
     
+    public static String[] listCategories = new String[]{
+        "Men T-Shirt",
+        "Women T-Shirt",
+        "Men Hoodie",
+        "Women Hoodie"
+    };
+    
+    public static HashMap<String, Float> hashMapSizePrice = new HashMap<>();
+    public static HashMap<String, String> hashMapCateType = new HashMap<>();
+
     public static ArrayList<String[]> listAccount;
     public static HashMap<String, Boolean> hashMapAccountState;
-    
+
     public static String downloadUrl = "http://dropshiptool.vn/update.html";
 
     static {
@@ -120,36 +152,43 @@ public class Configs {
         } else {
             pathChar = "/";
         }
+        
+        hashMapSizePrice.put("Adult - 2XL", 2.5f);
+        hashMapSizePrice.put("Adult - 3XL", 3.5f);
+        hashMapSizePrice.put("Adult - 4XL", 4.5f);
+        hashMapSizePrice.put("Adult - 5XL", 5.5f);
+        
+        hashMapCateType.put("Men T-Shirt", "Clothing, Shoes & Jewelry/Men/Clothing/Shirts/T-Shirts");
+        hashMapCateType.put("Women T-Shirt", "Clothing, Shoes & Jewelry/Girls/Clothing/Tops & Tees/Tees");
+        hashMapCateType.put("Men Hoodie", "Clothing, Shoes & Jewelry/Men/Clothing/Active/Active Hoodies");
+        hashMapCateType.put("Women Hoodie", "Clothing, Shoes & Jewelry/Women/Clothing/Active/Active Hoodies");
 
         appIconPath = "Images" + pathChar + "appIcon.png";
 
 //        TOOL_DATA_PATH = System.getProperty("user.home") + pathChar + DEFAUL_TOOL_DIRECTORY;
-    
         String dir = System.getProperty("user.dir");
-        
-        if(dir == null || dir.isEmpty()) {
+
+        if (dir == null || dir.isEmpty()) {
             dir = Paths.get("").toAbsolutePath().toString();
         }
 
-        
         CONFIG_FOLDER_PATH = dir + pathChar + "etc" + pathChar + CONFIGS_DIRECTORY + pathChar;
 //        CONFIG_FOLDER_PATH = String.valueOf(TOOL_DATA_PATH + pathChar + CONFIGS_DIRECTORY + pathChar);
         LOG_CONFIG_PATH = String.valueOf(CONFIG_FOLDER_PATH + pathChar + "log4j.properties");
-        
+
         TOOL_DATA_PATH = dir + pathChar + "etc" + pathChar + DATA_DIRECTORY + pathChar;
-        
+
         CACHE_PATH = String.valueOf(TOOL_DATA_PATH + pathChar + CACHE_DIRECTORY + pathChar);
         COOKIE_PATH = String.valueOf(CACHE_PATH + COOKIE_CACHE_FILE);
         LOG_PATH = String.valueOf(TOOL_DATA_PATH + pathChar + CACHE_DIRECTORY + pathChar);
-        
-        
+
         PRODUCT_DATA_PATH = String.valueOf(TOOL_DATA_PATH + pathChar + DEFAULT_PRODUCT_DIRECTORY + pathChar);
-        
+
         CONFIG_FOLDER_BTG_PATH = String.valueOf(CONFIG_FOLDER_PATH + "BTG" + pathChar);
         DEFAULT_SAMPLE_XLSX_FILE_PATH = String.valueOf(CONFIG_FOLDER_PATH + DEFAULT_EXCEL_SAMPLE_FILE);
 //        DEFAULT_STORE_FILE_PATH = String.valueOf(CONFIG_FOLDER_PATH + DEFAULT_STORE_FILE);
         DEFAULT_UPC_FILE_PATH = String.valueOf(CONFIG_FOLDER_PATH + DEFAULT_UPC_FILE);
-        
+
         File directory = new File(TOOL_DATA_PATH);
         if (!directory.exists()) {
             directory.mkdir();
@@ -158,35 +197,35 @@ public class Configs {
         File configDirectory = new File(CONFIG_FOLDER_PATH);
         if (!configDirectory.exists()) {
             configDirectory.mkdir();
-        } 
-        
+        }
+
         copyConfigsFiles();
-        
+
         File cacheDirectory = new File(CACHE_PATH);
         if (!cacheDirectory.exists()) {
             cacheDirectory.mkdir();
         }
-        
+
         cacheDirectory = new File(CACHE_PATH + STORE_INFO_CACHE_DIR);
         if (!cacheDirectory.exists()) {
             cacheDirectory.mkdir();
         }
-        
+
         cacheDirectory = new File(CACHE_PATH + MERCHANT_CACHE_DIR);
         if (!cacheDirectory.exists()) {
             cacheDirectory.mkdir();
         }
-        
+
         cacheDirectory = new File(CACHE_PATH + PRODUCT_CACHE_DIR);
         if (!cacheDirectory.exists()) {
             cacheDirectory.mkdir();
         }
 
         loadAllConfigs();
-        
+
 //        com.pong.config.Configs.init();
         AWSUtil.init();
-        
+
         BTGManager.getInstance().initBTG();
 
     }
@@ -289,7 +328,6 @@ public class Configs {
 //            }
 //        }
 //    }
-
     public static void loadContentConfig() {
         Properties cnfParamsTmp = new Properties();
         FileInputStream propsFile = null;
@@ -322,17 +360,15 @@ public class Configs {
 
             excelSampleFilePath = cnfParamsTmp.getProperty("excelSamplePath", DEFAULT_SAMPLE_XLSX_FILE_PATH);
             storeFilePath = cnfParamsTmp.getProperty("storeFilePath", "");
-            
+
             createProductFolders();
-            
+
 //            String apiKeyEn = cnfParamsTmp.getProperty("apiKey", "6C0FD11E49F6125C74BACB32D35C67449BA1592E68AE220B0A42035647AE11EA");
 //            String merchantUserEn = cnfParamsTmp.getProperty("merchantUser", "804373CFF37E764C5D2A505B5047991DD501BF679B5A24C21A980BE778B53A8B");
 //            String merchantPassEn = cnfParamsTmp.getProperty("merchantPass", "905DDA0FA5FAFC65C9C76A208C495D3E");
-            
 //            System.out.println("" + apiKeyEn);
 //            System.out.println("" + merchantUserEn);
 //            System.out.println("" + merchantPassEn);
-            
 //            try {
 //                apiKeys = FuncUtil.decrypt(apiKeyEn);
 //                merchantUser = FuncUtil.decrypt(merchantUserEn);
@@ -340,35 +376,31 @@ public class Configs {
 //            } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException | DecoderException ex) {
 //                Logger.getLogger(Configs.class.getName()).log(Level.SEVERE, null, ex);
 //            }
-            
 //            System.out.println("" + apiKeys);
 //            System.out.println("" + merchantUser);
 //            System.out.println("" + merchantPass);
-            
 //            try {
 //                port = Integer.parseInt(portStr);
 //            } catch (NumberFormatException ex) {
 //                port = 89;
 //            }
-
             try {
                 dataSaveType = Integer.parseInt(dataSaveTypeStr);
             } catch (NumberFormatException ex) {
                 dataSaveType = 0;
             }
-            
+
 //            try {
 //                dataLevel = Integer.parseInt(dataLevelStr);
 //            } catch (NumberFormatException ex) {
 //                dataLevel = 1;
 //            }
-            
             try {
                 lastPriceLimitIndex = Integer.parseInt(lastPriceLimitIndexStr);
             } catch (NumberFormatException ex) {
                 lastPriceLimitIndex = 5;
             }
-            
+
             Configs.priceLimit = listPriceValue[lastPriceLimitIndex];
 
             try {
@@ -376,9 +408,8 @@ public class Configs {
             } catch (NumberFormatException ex) {
                 lastPriceRateIndex = 2;
             }
-            
-            Configs.priceRate = listPriceRateValue[lastPriceRateIndex];
 
+            Configs.priceRate = listPriceRateValue[lastPriceRateIndex];
 
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Configs.class.getName()).log(Level.SEVERE, null, ex);
@@ -394,7 +425,7 @@ public class Configs {
             }
         }
     }
-    
+
     public static void createProductFolders() {
 
         File directory = new File(PRODUCT_DATA_PATH);
@@ -410,7 +441,6 @@ public class Configs {
 //
 //            storeDirectory.mkdir();
 //        }
-
 //        File branchDirectory = new File(BRANCH_PRODUCT_PATH);
 //
 //        if (!branchDirectory.exists()) {
@@ -424,10 +454,8 @@ public class Configs {
 //
 //            fixingDirectory.mkdir();
 //        }
-
     }
-    
-    
+
     public static void loadAccountAuthen() {
         try {
             FileInputStream fileInputStream = new FileInputStream(CONFIG_FOLDER_PATH + ACCOUNT_FILE_NAME);
@@ -438,21 +466,21 @@ public class Configs {
             while ((st = br.readLine()) != null) {
                 if (st != null && !st.isEmpty()) {
                     String[] parts = st.split(Pattern.quote(","));
-                    if(parts.length == 2) {
-                        if(listAccount == null) {
+                    if (parts.length == 2) {
+                        if (listAccount == null) {
                             listAccount = new ArrayList<>();
                         }
                         String[] data = new String[2];
                         data[0] = parts[0];
-                        data[1] = parts[1]; 
+                        data[1] = parts[1];
                         listAccount.add(data);
                     }
                 }
             }
-            
+
             hashMapAccountState = new HashMap<>();
-            
-            for(String[] account : listAccount) {
+
+            for (String[] account : listAccount) {
                 hashMapAccountState.put(account[0], false);
             }
 
@@ -465,7 +493,7 @@ public class Configs {
         changeConfigValues(PRODUCT_CONFIG_FILE, new String[]{"dataPath", path});
         TOOL_DATA_PATH = path;
     }
-    
+
     public static void changeUserEmailConfig(String email) {
         try {
             changeConfigValues(CONTENT_CONFIG_FILE, new String[]{"userEmail", email});
@@ -473,9 +501,9 @@ public class Configs {
         } catch (IOException ex) {
             Logger.getLogger(Configs.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
+
     public static void changeDataSaveType(int mode) {
         try {
             changeConfigValues(CONTENT_CONFIG_FILE, new String[]{"dataSaveType", "" + mode});
@@ -483,9 +511,9 @@ public class Configs {
         } catch (IOException ex) {
             Logger.getLogger(Configs.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
+
 //    public static void changeDataLevel(int level) {
 //        try {
 //            changeConfigValues(CONTENT_CONFIG_FILE, new String[]{"dataLevel", "" + level});
@@ -495,7 +523,6 @@ public class Configs {
 //        }
 //        
 //    }
-    
     public static void changeLicenseConfig(String lic) {
         try {
             changeConfigValues(CONTENT_CONFIG_FILE, new String[]{"license", lic});
@@ -503,7 +530,7 @@ public class Configs {
         } catch (IOException ex) {
             Logger.getLogger(Configs.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     public static void changeExcelSamplePathConfig(String path) throws FileNotFoundException, IOException {
@@ -546,7 +573,6 @@ public class Configs {
 //        createProductFolders();
 //        changeProductFolderConfig(path);
 //    }
-
     public static boolean isEmptyPath(String path) {
         return path == null || path.trim().isEmpty();
     }
@@ -558,7 +584,6 @@ public class Configs {
 //        BRANCH_PRODUCT_PATH = String.valueOf(PRODUCT_DATA_PATH + BRANCH_PRODUCT_DIRECTORY + pathChar);
 //        FIXING_PRODUCT_PATH = String.valueOf(PRODUCT_DATA_PATH + FIXING_PRODUCT_DIRECTORY + pathChar);
 //    }
-
     public static void changeConfigValues(String fileName, String[]... listConfigs) throws IOException {
         if (listConfigs == null || listConfigs.length == 0) {
             return;
@@ -601,8 +626,6 @@ public class Configs {
 //        props.store(outLocal, null);
 //        outLocal.close();
     }
-    
-    
 
 //    public static void createProductFolders() {
 //
@@ -635,14 +658,13 @@ public class Configs {
 //        }
 //
 //    }
-
     public static void copyConfigsFilesByName(String fileName) throws IOException {
-        
+
         File file = new File(CONFIG_FOLDER_PATH + fileName);
-        if(file.exists()) {
+        if (file.exists()) {
             return;
         }
-        
+
         InputStream inputStream = Configs.class.getResourceAsStream("/" + fileName);
 //        InputStreamReader clientSecretReader = new InputStreamReader(inputStream);
 //
@@ -687,21 +709,21 @@ public class Configs {
     }
 
     public static void copyExecuteFilesByName(String fileName) {
-        
+
         File file = new File(CONFIG_FOLDER_PATH + fileName);
-        if(file.exists()) {
+        if (file.exists()) {
             return;
         }
-        
+
         InputStream inputStream = null;
         FileOutputStream outLocal = null;
 
         inputStream = Configs.class.getResourceAsStream("/" + fileName);
 
-        if(inputStream == null) {
+        if (inputStream == null) {
             return;
         }
-        
+
 //        InputStreamReader clientSecretReader = new InputStreamReader(inputStream);
         try {
             outLocal = new FileOutputStream(CONFIG_FOLDER_PATH + fileName);

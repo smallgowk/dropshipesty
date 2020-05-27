@@ -375,11 +375,6 @@ public class CrawlerMachine {
 
     public boolean goToPage(String url) {
         
-        if(!AliexCrawlSvs.getInstance().rechiveCookies()) {
-            DialogUtil.showInfoMessage(null, "Vui lòng đăng nhập Aliexpress!");
-            return false;
-        }
-        
         try {
             if (!isReady()) {
 //                close();

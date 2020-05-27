@@ -8,6 +8,7 @@ package com.ping.control;
 import com.models.aliex.store.inputdata.BaseStoreOrderInfo;
 import com.models.aliex.store.inputdata.SnakeBaseStoreOrderInfo;
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  *
@@ -23,19 +24,116 @@ public class MainController {
     
     public int currentIndex;
 
-    public ArrayList<BaseStoreOrderInfo> listOrderStore;
-
     ProcessCrawlThread processCrawlThread;
     CrawlProcessListener crawlProcessListener;
     ActionListener actionListener;
+    
+    Set<String> listColor;
+    Set<String> listSizes;
+    String linkStore;
+    String category;
+    String description;
+    String link1;
+    String link2;
+    float basePrice;
 
-    public ArrayList<BaseStoreOrderInfo> getListOrderStore() {
-        return listOrderStore;
+    public Set<String> getListColor() {
+        return listColor;
     }
 
-    public void setListOrderStore(ArrayList<BaseStoreOrderInfo> listOrderStore) {
-        this.listOrderStore = listOrderStore;
-        currentIndex = 0;
+    public void setListColor(Set<String> listColor) {
+        this.listColor = listColor;
+    }
+
+    public Set<String> getListSizes() {
+        return listSizes;
+    }
+
+    public void setListSizes(Set<String> listSizes) {
+        this.listSizes = listSizes;
+    }
+
+    
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getLink1() {
+        return link1;
+    }
+
+    public void setLink1(String link1) {
+        this.link1 = link1;
+    }
+
+    public String getLink2() {
+        return link2;
+    }
+
+    public void setLink2(String link2) {
+        this.link2 = link2;
+    }
+
+    public float getBasePrice() {
+        return basePrice;
+    }
+
+    public void setBasePrice(float basePrice) {
+        this.basePrice = basePrice;
+    }
+
+    public String getLinkStore() {
+        return linkStore;
+    }
+
+    public void setLinkStore(String linkStore) {
+        this.linkStore = linkStore;
+    }
+    
+    
+    
+    public String getColorStr() {
+        if(listColor == null) return "";
+        
+        StringBuilder sb = new StringBuilder();
+        for(String s : listColor) {
+            if(sb.length() == 0) {
+                sb.append(s);
+            } else {
+                sb.append(", ").append(s);
+            }
+        }
+        
+        return sb.toString();
+    }
+    
+    
+    public String getSizeStr() {
+        if(listSizes == null) return "";
+        
+        StringBuilder sb = new StringBuilder();
+        for(String s : listSizes) {
+            if(sb.length() == 0) {
+                sb.append(s);
+            } else {
+                sb.append(", ").append(s);
+            }
+        }
+        
+        return sb.toString();
     }
 
     public void setCrawlProcessListener(CrawlProcessListener crawlProcessListener) {
@@ -46,26 +144,19 @@ public class MainController {
         this.actionListener = actionListener;
     }
 
-    public BaseStoreOrderInfo getCurrentStore() {
-        if (listOrderStore == null) {
-            return null;
-        }
-
-        return currentIndex < listOrderStore.size() ? listOrderStore.get(currentIndex) : null;
-    }
-    
     public void doAction() {
         
         if(null != state) switch (state) {
             case STOP:
-                SnakeBaseStoreOrderInfo baseStoreOrderInfo = (SnakeBaseStoreOrderInfo) getCurrentStore();
+                System.out.println("" + this.toString());
+                SnakeBaseStoreOrderInfo baseStoreOrderInfo = SnakeBaseStoreOrderInfo.createInstance(linkStore, listColor, listSizes, category, description, link1, link2, basePrice);
                 startCrawl(baseStoreOrderInfo);
                 break;
             case RUNNING:
-                pause();
+//                pause();
                 break;
             case PAUSING:
-                resume();
+//                resume();
                 break;
             default:
                 break;
@@ -74,24 +165,6 @@ public class MainController {
     
     public boolean isStop() {
         return state == STATE.STOP;
-    }
-
-    public BaseStoreOrderInfo nextStore() {
-
-        if (listOrderStore == null) {
-            return null;
-        }
-
-        BaseStoreOrderInfo baseStoreOrderInfo = null;
-        while (currentIndex < listOrderStore.size() - 1) {
-            currentIndex++;
-            baseStoreOrderInfo = listOrderStore.get(currentIndex);
-
-            if (!baseStoreOrderInfo.isCrawled && baseStoreOrderInfo.hasInfo()) {
-                break;
-            }
-        }
-        return baseStoreOrderInfo;
     }
 
     public void startCrawl(SnakeBaseStoreOrderInfo baseStoreOrderInfo) {
@@ -114,16 +187,6 @@ public class MainController {
             processCrawlThread.doStop();
         }
         
-        SnakeBaseStoreOrderInfo snakeBaseStoreOrderInfo = (SnakeBaseStoreOrderInfo) getCurrentStore();
-        crawlProcessListener.onPushState(snakeBaseStoreOrderInfo.getStoreSign(), "Stopped");
-        
-        if (listOrderStore != null) {
-            for(BaseStoreOrderInfo baseStoreOrderInfo : listOrderStore) {
-                baseStoreOrderInfo.isCrawled = false;
-            }
-        }
-        
-        currentIndex = 0;
         state = STATE.STOP;
         
         actionListener.onFinish(state);
@@ -139,30 +202,43 @@ public class MainController {
         state = STATE.STOP;
     }
     
-    public void pause() {
-        if (processCrawlThread != null) {
-            processCrawlThread.doStop();
-        }
-        
-        SnakeBaseStoreOrderInfo snakeBaseStoreOrderInfo = (SnakeBaseStoreOrderInfo) getCurrentStore();
-        crawlProcessListener.onPushState(snakeBaseStoreOrderInfo.getStoreSign(), "Stopped");
-        
-        state = STATE.PAUSING;
-        
-        actionListener.onFinish(state);
-    }
+//    public void pause() {
+//        if (processCrawlThread != null) {
+//            processCrawlThread.doStop();
+//        }
+//        
+//        SnakeBaseStoreOrderInfo snakeBaseStoreOrderInfo = (SnakeBaseStoreOrderInfo) getCurrentStore();
+//        crawlProcessListener.onPushState(snakeBaseStoreOrderInfo.getStoreSign(), "Stopped");
+//        
+//        state = STATE.PAUSING;
+//        
+//        actionListener.onFinish(state);
+//    }
     
-    public void resume() {
-        if (processCrawlThread != null) {
-            processCrawlThread.doStop();
-        }
-        BaseStoreOrderInfo baseStoreOrderInfo = getCurrentStore();
-        processCrawlThread = new ProcessCrawlThread((SnakeBaseStoreOrderInfo) baseStoreOrderInfo, crawlProcessListener);
-        processCrawlThread.start();
-        
-        state = STATE.RUNNING;
-        
-        actionListener.onFinish(state);
+//    public void resume() {
+//        if (processCrawlThread != null) {
+//            processCrawlThread.doStop();
+//        }
+//        BaseStoreOrderInfo baseStoreOrderInfo = getCurrentStore();
+//        processCrawlThread = new ProcessCrawlThread((SnakeBaseStoreOrderInfo) baseStoreOrderInfo, crawlProcessListener);
+//        processCrawlThread.start();
+//        
+//        state = STATE.RUNNING;
+//        
+//        actionListener.onFinish(state);
+//    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(linkStore).append(", \n");
+        sb.append(getColorStr()).append(", \n");
+        sb.append(getSizeStr()).append(", \n");
+        sb.append(getCategory()).append(", \n");
+        sb.append(getBasePrice()).append(", \n");
+        sb.append(getDescription()).append(", \n");
+        return sb.toString(); //To change body of generated methods, choose Tools | Templates.
     }
 
+    
 }

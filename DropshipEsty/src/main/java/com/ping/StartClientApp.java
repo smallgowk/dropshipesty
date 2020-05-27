@@ -167,11 +167,11 @@ public class StartClientApp {
         OSUtil.setAppTitle(jFrame);
 
         ClientHomePanel mainHomePanel = new ClientHomePanel();
-        SettingPannel settingPannel = new SettingPannel();
+//        SettingPannel settingPannel = new SettingPannel();
         AboutPannel aboutPannel = new AboutPannel();
 
         listPanel.add(mainHomePanel);
-        listPanel.add(settingPannel);
+//        listPanel.add(settingPannel);
         listPanel.add(aboutPannel);
 
         JMenuBar mb = new JMenuBar();
@@ -181,8 +181,8 @@ public class StartClientApp {
 
 //        JMenuItem menuItem = createMenuItem(mainHomePanel);
 //        menu.add(menuItem);
-        JMenuItem settingMenuItem = createMenuItem(settingPannel);
-        menu.add(settingMenuItem);
+//        JMenuItem settingMenuItem = createMenuItem(settingPannel);
+//        menu.add(settingMenuItem);
 
         JMenuItem jItem = new JMenuItem("Exit");
         jItem.setActionCommand("exit");
@@ -192,7 +192,7 @@ public class StartClientApp {
         helpMenu.add(aboutMenuItem);
 
 //        menuItem.addActionListener(actionListener);
-        settingMenuItem.addActionListener(actionListener);
+//        settingMenuItem.addActionListener(actionListener);
         aboutMenuItem.addActionListener(actionListener);
         jItem.addActionListener(actionListener);
 

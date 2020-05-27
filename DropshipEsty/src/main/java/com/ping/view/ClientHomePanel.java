@@ -5,8 +5,8 @@
  */
 package com.ping.view;
 
-import com.api.dropship.DropApiCall;
 import com.config.Configs;
+import static com.config.Configs.listCategories;
 import com.ping.control.ActionListener;
 import com.ping.control.CrawlProcessListener;
 import com.ping.control.MainController;
@@ -14,16 +14,14 @@ import com.models.state.ProcessState;
 import com.models.aliex.store.BaseStoreInfo;
 import com.models.aliex.store.inputdata.BaseStoreOrderInfo;
 import com.models.aliex.store.inputdata.SnakeBaseStoreOrderInfo;
-import com.ping.control.SendInfoThread;
 import com.ping.service.crawl.aliex.AliexCrawlSvs;
-import com.ping.service.data.inputprocess.SnakeReadOrderInfoSvs;
 import com.ping.tcpclient.ResponseObj;
-import com.utils.Constants;
 import com.utils.DialogUtil;
 import java.awt.Dimension;
-import java.io.File;
 import java.util.ArrayList;
+import java.util.Set;
 import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -50,6 +48,9 @@ public class ClientHomePanel extends BasePanel {
 
     public ClientHomePanel() {
         initComponents();
+        
+        jComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(listCategories));
+        
         setTitle("Home");
         setMenuActionCommand("MainHome");
         initData();
@@ -74,11 +75,6 @@ public class ClientHomePanel extends BasePanel {
 //        if (pathStr != null) {
 //            System.setProperty("webdriver.chrome.driver", pathStr);
 //        }
-
-        txtStoreFilePath.setText("" + Configs.storeFilePath);
-
-        
-        
 //        AliexCrawlSvs.getInstance().initDriver();
 //        if (!AliexCrawlSvs.getInstance().isHasCookies()) {
 ////            AliexCrawlSvs.getInstance().initDriver();
@@ -103,13 +99,11 @@ public class ClientHomePanel extends BasePanel {
 //        }
 //        MerchantSearchSvs.getInstance().login();
 //        AliexCrawlSvs.getInstance().autoLoginAliex();
-
         btnStop.setEnabled(false);
-        
+
 //        if (!AliexCrawlSvs.getInstance().isHasCookies()) {
 //            AliexCrawlSvs.getInstance().autoLoginAliex();
 //        }
-
 //        javax.swing.SwingUtilities.invokeLater(new Runnable() {
 //            public void run() {
 //                processPannel = new ProcessPannel(statePannel.getWidth(), statePannel.getHeight());
@@ -137,9 +131,28 @@ public class ClientHomePanel extends BasePanel {
         btnStartCrawl = new javax.swing.JButton();
         btnStop = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        txtStoreFilePath = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtStoreLink = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextAreaColor = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextAreaSizes = new javax.swing.JTextArea();
+        jButton2 = new javax.swing.JButton();
+        jComboBox = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtDesciption = new javax.swing.JTextArea();
+        jLabel6 = new javax.swing.JLabel();
+        txtLink1 = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        txtLink2 = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        txtBasePrice = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
 
         btnStartCrawl.setText("Start");
@@ -178,15 +191,63 @@ public class ClientHomePanel extends BasePanel {
 
         jPanel3.setFocusTraversalPolicyProvider(true);
 
-        txtStoreFilePath.addActionListener(new java.awt.event.ActionListener() {
+        jLabel1.setText("Store Link");
+
+        jLabel2.setText("Màu sắc");
+
+        txtStoreLink.setColumns(20);
+        txtStoreLink.setRows(2);
+        txtStoreLink.setWrapStyleWord(true);
+        jScrollPane1.setViewportView(txtStoreLink);
+
+        jTextAreaColor.setEditable(false);
+        jTextAreaColor.setColumns(20);
+        jTextAreaColor.setRows(2);
+        jTextAreaColor.setWrapStyleWord(true);
+        jScrollPane2.setViewportView(jTextAreaColor);
+
+        jButton1.setText("Click để chọn màu");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtStoreFilePathActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("Store Link");
+        jLabel3.setText("Kích thước");
 
-        jLabel2.setText("Chọn màu");
+        jTextAreaSizes.setEditable(false);
+        jTextAreaSizes.setColumns(20);
+        jTextAreaSizes.setRows(2);
+        jTextAreaSizes.setWrapStyleWord(true);
+        jScrollPane3.setViewportView(jTextAreaSizes);
+
+        jButton2.setText("Click để chọn kích thước");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ" }));
+        jComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Chọn category");
+
+        jLabel5.setText("Description");
+
+        txtDesciption.setColumns(20);
+        txtDesciption.setRows(5);
+        jScrollPane4.setViewportView(txtDesciption);
+
+        jLabel6.setText("Link ảnh 1");
+
+        jLabel7.setText("Link ảnh 2");
+
+        jLabel8.setText("Giá cơ bản");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -195,12 +256,31 @@ public class ClientHomePanel extends BasePanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtStoreFilePath, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane2)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1))
+                    .addComponent(jScrollPane3)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 159, Short.MAX_VALUE)
+                        .addComponent(jButton2))
+                    .addComponent(jScrollPane4)
+                    .addComponent(txtLink1)
+                    .addComponent(txtLink2)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(0, 309, Short.MAX_VALUE)))
+                            .addComponent(jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)
+                            .addComponent(txtBasePrice, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -209,10 +289,40 @@ public class ClientHomePanel extends BasePanel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtStoreFilePath, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jButton2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtLink1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtLink2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtBasePrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -225,16 +335,18 @@ public class ClientHomePanel extends BasePanel {
                 .addComponent(storePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(storePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jSeparator1)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -263,70 +375,46 @@ public class ClientHomePanel extends BasePanel {
 //        aliexCrawlThread.stopCrawl();
     }
 
-    private void txtStoreFilePathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStoreFilePathActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtStoreFilePathActionPerformed
-
     private void btnStartCrawlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartCrawlActionPerformed
 
-        if (txtStoreFilePath.getText().isEmpty()) {
-            DialogUtil.showErrorMessage(topFrame, "", "Please chose a store excel file!");
+        if (txtStoreLink.getText().isEmpty()) {
+            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập link store!");
             return;
         }
         
-        File file = new File(txtStoreFilePath.getText());
-        if(!file.exists()) {
-            DialogUtil.showErrorMessage(topFrame, "File không tồn tại!", "Bấm Change để lựa chọn file đầu vào!");
+        mainController.setLinkStore(txtStoreLink.getText());
+        
+        if(mainController.getListColor() == null) {
+            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng chọn màu!");
             return;
         }
         
-        ResponseObj responseObj = DropApiCall.doSendGetInfo(null);
-        
-        if(responseObj == null) {
-            System.out.println("Can not check info!");
+        if(mainController.getListSizes() == null) {
+            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng chọn size!");
             return;
         }
         
-        switch(responseObj.getResultCode()) {
-            case Constants.ResultCode.SERIAL_INVALID:
-                DialogUtil.showInfoMessage(null, "Máy tính cài đặt không hợp lệ. Liên hệ 0972071089 để được xác thực!");
-                return;
-            case Constants.ResultCode.VERSION_INVALID:
-                DialogUtil.showInfoMessage(null,responseObj.getMessage() != null ? responseObj.getMessage() : "Version app không hợp lệ!");
-                return;
-        }
-        if(responseObj.getMessage() != null) {
-            DialogUtil.showInfoMessage(null,responseObj.getMessage());
-        }
-        
-//        CookieUtil.deleteCookies();
-
-        if(!AliexCrawlSvs.getInstance().rechiveCookies()) {
-            DialogUtil.showInfoMessage(null, "Vui lòng thực hiện đăng nhập Aliexpress trước khi bắt đầu!");
+        if (txtDesciption.getText().isEmpty()) {
+            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập description!");
             return;
         }
-
-        if (mainController.isStop() || processPannel == null) {
-            ArrayList<BaseStoreOrderInfo> listOrders = SnakeReadOrderInfoSvs.getInstance().readStoreOrderLinks(txtStoreFilePath.getText());
-            
-            SendInfoThread sendInfoThread = new SendInfoThread("Eva",null, listOrders);
-            sendInfoThread.start();
-            
-            mainController.setListOrderStore(listOrders);
-
-
-//            ArrayList<ProcessState> listState = new ArrayList<>();
-//
-//            for (BaseStoreOrderInfo baseStoreOrderInfo : listOrders) {
-//                ProcessState processState = ProcessState.createInstance(baseStoreOrderInfo.getStoreSign(), baseStoreOrderInfo.getAcc_no());
-//                processState.setStatus("Test");
-//                listState.add(processState);
-//                processPannel.addData(processState);
-//            }
-
-//            processPannel.addAll(listState);
+        mainController.setDescription(txtDesciption.getText());
+        
+        if (txtLink1.getText().isEmpty()) {
+            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập link ảnh 1!");
+            return;
         }
+        mainController.setLink1(txtLink1.getText());
+        
+        if (txtLink2.getText().isEmpty()) {
+            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập link ảnh 2!");
+            return;
+        }
+        mainController.setLink2(txtLink2.getText());
 
+        String select = (String) jComboBox.getSelectedItem();
+        mainController.setCategory(Configs.hashMapCateType.get(select));
+        
         mainController.doAction();
 
     }//GEN-LAST:event_btnStartCrawlActionPerformed
@@ -342,7 +430,7 @@ public class ClientHomePanel extends BasePanel {
 
         @Override
         public void onStop(String storeSign) {
-            mainController.pause();
+//            mainController.pause();
 //            mainController.stopCrawl();
         }
 
@@ -354,26 +442,21 @@ public class ClientHomePanel extends BasePanel {
 
         @Override
         public void onStopToLogin(String currentUrl, String storeSign) {
-            mainController.pause();
-            processPannel.updateStatus(storeSign, "Need to login...");
+//            mainController.pause();
+//            processPannel.updateStatus(storeSign, "Need to login...");
 //            CookieUtil.deleteCookies();
-            
+
 //            LoginThread loginThread = new LoginThread(true, currentUrl);
 //            loginThread.start();
-            AliexCrawlSvs.getInstance().goToLogin(currentUrl);
-            
-            DialogUtil.showInfoMessage(null, "Vui lòng thực hiện đăng nhập lại sau đó ấn Resume!");
+//            AliexCrawlSvs.getInstance().goToLogin(currentUrl);
+
+//            DialogUtil.showInfoMessage(null, "Vui lòng thực hiện đăng nhập lại sau đó ấn Resume!");
         }
 
         @Override
         public void onFinishPage(String storeSign) {
-            SnakeBaseStoreOrderInfo snakeBaseStoreOrderInfo = (SnakeBaseStoreOrderInfo) mainController.nextStore();
-            if (snakeBaseStoreOrderInfo != null) {
-                mainController.startCrawl(snakeBaseStoreOrderInfo);
-            } else {
-                mainController.finish();
-                actionListener.onFinish(MainController.STATE.STOP);
-            }
+            mainController.finish();
+            actionListener.onFinish(MainController.STATE.STOP);
         }
 
         @Override
@@ -388,16 +471,19 @@ public class ClientHomePanel extends BasePanel {
         public void onFinish(MainController.STATE state) {
             switch (state) {
                 case STOP:
-                    btnStartCrawl.setText("Start");
+//                    btnStartCrawl.setText("Start");
+                    btnStartCrawl.setEnabled(true);
                     btnStop.setEnabled(false);
                     break;
                 case RUNNING:
-                    btnStartCrawl.setText("Pause");
+//                    btnStartCrawl.setText("Pause");
+//                    btnStop.setEnabled(true);
+                    btnStartCrawl.setEnabled(false);
                     btnStop.setEnabled(true);
                     break;
                 case PAUSING:
-                    btnStartCrawl.setText("Resume");
-                    btnStop.setEnabled(true);
+//                    btnStartCrawl.setText("Resume");
+//                    btnStop.setEnabled(true);
                     break;
             }
         }
@@ -492,14 +578,57 @@ public class ClientHomePanel extends BasePanel {
         btnStop.setEnabled(false);
     }//GEN-LAST:event_btnStopActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Set<String> setColors = DialogUtil.showListViewValues(0, Configs.listColor, mainController.getListColor());
+        if(setColors != null) {
+            mainController.setListColor(setColors);
+            jTextAreaColor.setText(mainController.getColorStr());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        Set<String> setSizes = DialogUtil.showListViewValues(1, Configs.listSize, mainController.getListSizes());
+        if(setSizes != null) {
+            mainController.setListSizes(setSizes);
+            jTextAreaSizes.setText(mainController.getSizeStr());
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxActionPerformed
+        // TODO add your handling code here:
+        String select = (String) jComboBox.getSelectedItem();
+        mainController.setCategory(Configs.hashMapCateType.get(select));
+    }//GEN-LAST:event_jComboBoxActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnStartCrawl;
     private javax.swing.JButton btnStop;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> jComboBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTextArea jTextAreaColor;
+    private javax.swing.JTextArea jTextAreaSizes;
     private javax.swing.JPanel storePanel;
-    private javax.swing.JTextField txtStoreFilePath;
+    private javax.swing.JTextField txtBasePrice;
+    private javax.swing.JTextArea txtDesciption;
+    private javax.swing.JTextField txtLink1;
+    private javax.swing.JTextField txtLink2;
+    private javax.swing.JTextArea txtStoreLink;
     // End of variables declaration//GEN-END:variables
 }

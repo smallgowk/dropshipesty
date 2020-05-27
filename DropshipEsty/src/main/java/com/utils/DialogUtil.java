@@ -19,6 +19,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
@@ -352,7 +354,7 @@ public class DialogUtil {
         }
     }
     
-    public static ArrayList<String> showListViewValues(int type, ArrayList<String> listValues) {
+    public static Set<String> showListViewValues(int type, String[] listValues, Set<String> listValuesSelected) {
         ArrayList<ViewValue> listViewValues = new ArrayList<>();
 
         int columns = 5;
@@ -375,7 +377,7 @@ public class DialogUtil {
 
 //        rowWords = null;
 
-        for (int i = 0, length = listValues.size(); i < length; i++) {
+        for (int i = 0, length = listValues.length; i < length; i++) {
             if (i % columns == 0) {
                 final int row = i / columns + 1;
                 rowWords = new JPanel();
@@ -384,14 +386,21 @@ public class DialogUtil {
                 rowWords.add(new JSeparator(), BorderLayout.CENTER);
             }
 
-            JCheckBox jCheckBoxSoftRemove = createCheckBox(listValues.get(i), null);
+            JCheckBox jCheckBoxSoftRemove = createCheckBox(listValues[i], null);
+            
+            if(listValuesSelected != null && listValuesSelected.contains(listValues[i])) {
+                jCheckBoxSoftRemove.setSelected(true);
+            }
+            
             rowWords.add(jCheckBoxSoftRemove);
             rowWords.add(new JSeparator(), BorderLayout.CENTER);
             
             ViewValue viewValue = new ViewValue();
             viewValue.setType(type);
-            viewValue.setName(listValues.get(i));
+            viewValue.setName(listValues[i]);
             viewValue.setCheckBox(jCheckBoxSoftRemove);
+            
+            listViewValues.add(viewValue);
 
             if (i % columns == columns - 1 || i == length - 1) {
                 if (i == length - 1 && i % columns < columns - 1) {
@@ -425,11 +434,11 @@ public class DialogUtil {
                 options[0]);
 
         if (n == 0) {
-            ArrayList<String> listChose = null;
+            Set<String> listChose = null;
             for (ViewValue viewValue : listViewValues) {
                 if (viewValue.isChosed()) {
                     if(listChose == null) {
-                        listChose = new ArrayList<>();
+                        listChose = new HashSet<>();
                     }
                     listChose.add(viewValue.getName());
                 }

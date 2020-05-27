@@ -27,6 +27,8 @@ import javax.mail.Store;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.search.FlagTerm;
 import static com.utils.AWSUtil.getListKeywordIndex;
+import com.utils.DialogUtil;
+import java.util.Set;
 
 /**
  *
@@ -53,6 +55,29 @@ public class Test {
     static long crawlTimeTotal = 0;
 
     public static void main(String[] str) throws Exception {
+        
+//        ArrayList<String> listString = new ArrayList<>();
+//        listString.add("Red");
+//        listString.add("White");
+//        listString.add("Pink");
+//        listString.add("Green");
+//        listString.add("Green");
+//        listString.add("Green");
+//        listString.add("Green");
+//        listString.add("Green");
+//        listString.add("Green");
+//        listString.add("Green");
+//        listString.add("Green");
+//        listString.add("Green");
+//        listString.add("Green");
+//        listString.add("Green");
+//        listString.add("Green");
+//        listString.add("Green");
+//        
+//        Set<String> listPick = DialogUtil.showListViewValues(1, listString, null);
+//        for(String s: listPick) {
+//            System.out.println("" + s);
+//        }
         
 //        AWSUtil.init();
         
