@@ -15,6 +15,7 @@ import com.models.aliex.Variation;
 import com.models.aliex.VariationProperty;
 import com.models.aliex.crawl.ItemSpecifics;
 import com.models.aliex.store.AliexStoreInfo;
+import com.models.esty.EstyVariation;
 import com.pong.control.ProcessTransformAliexToAmz;
 import com.utils.AWSUtil;
 import com.utils.StringUtils;
@@ -672,8 +673,6 @@ public class ProductAmz {
         return generic_keywords;
     }
 
-    
-    
     public void genGeneric_keywords(ArrayList<String> listKeywords) {
 //        System.out.println("============== id: " + aliexId);
 //        System.out.println("setGeneric_keywords: " + listKeywords);
@@ -2568,6 +2567,41 @@ public class ProductAmz {
 
         return productAmz;
     }
+    
+    public ProductAmz createChild(int index, EstyVariation estyVariation) {
+
+        ProductAmz productAmz = new ProductAmz();
+        productAmz.copyProduct(this);
+        productAmz.setParent_child("Child");
+        productAmz.setParent_sku(item_sku);
+//        productAmz.setMain_image_url(null);
+
+//        if (variation.getImageUrl() != null && !variation.getImageUrl().trim().isEmpty()) {
+//            productAmz.setMain_image_url(MarketUtil.processImgUrl(variation.getImageUrl().trim()));
+//        }
+//        String imageUrl = MarketUtil.processImgUrl(variation.getImageUrl().trim());
+//        
+//        String hash = imageUrl.substring(imageUrl.lastIndexOf("/") + 1, imageUrl.lastIndexOf("."));
+//        if(hash.length() >= 29) {
+//            productAmz.setMain_image_url(imageUrl);
+//        }
+        StringBuilder sb = new StringBuilder();
+        sb.append(item_sku).append("_").append(index);
+        productAmz.setItem_sku(sb.toString());
+
+        productAmz.setStandard_price("" + Utils.getCEOPrice(estyVariation.getPrice()));
+
+        productAmz.setColor_map("White");
+        productAmz.setColor_name(estyVariation.getColor());
+        productAmz.setSize_map("Large");
+        productAmz.setSize_name(estyVariation.getSize());
+
+
+        
+        productAmz.setRelationship_type("variation");
+
+        return productAmz;
+    }
 
 //    public ProductAmz createChild(SkuValue colorSku, SkuValue sizeSku, AliexStoreCommon aliexStoreCommon) {
 //
@@ -2928,9 +2962,14 @@ public class ProductAmz {
         }
 
     }
-    
-    public void genDescriptions(String description) {
 
+    public void genDescriptions(String description) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<p><b>").append(item_name).append("</b></p></br>\n");
+        sb.append("<p>");
+        sb.append(description);
+        sb.append("</p>");
+        product_description = sb.toString();
     }
 
     public void genDescriptions(HashMap<String, Boolean> hashMap, AliexStoreInfo storePageInfo) {

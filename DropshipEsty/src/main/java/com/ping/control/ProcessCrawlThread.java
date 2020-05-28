@@ -64,7 +64,7 @@ public class ProcessCrawlThread extends Thread {
         //
 
 //        EstyCrawlSvs.getInstance().goToPage(baseStoreOrderInfo.getLink());
-//        EstyCrawlDataStoreBase estyCrawlDataStoreBase = EstyCrawlSvs.getInstance().crawlStoreInfo();
+        EstyCrawlDataStoreBase estyCrawlDataStoreBase = EstyCrawlSvs.getInstance().crawlStoreInfo(baseStoreOrderInfo.getLink());
 //        try {
 //            EstyCrawlSvs.getInstance().scrollToBottom();
 //            Thread.sleep(2000);
@@ -72,21 +72,9 @@ public class ProcessCrawlThread extends Thread {
 //            java.util.logging.Logger.getLogger(AliexCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //        EstyCrawlDataPageBase estyCrawlDataPageBase = EstyCrawlSvs.getInstance().crawlPage();
-        Document document = EstyCrawlSvs.getInstance().processPage(baseStoreOrderInfo.getLink());
 
-        Elements script = document.select("script[type='application/ld+json']");
-
-        Gson gson = new Gson();
-        EstyScriptCrawl estyScriptCrawl = gson.fromJson(script.html(), EstyScriptCrawl.class);
-
-        while (isNotStopCondition()) {
-            EstyCrawlDataPageBase estyCrawlDataPageBase = null;
-            if(pageCount == 1) {
-                estyCrawlDataPageBase = EstyCrawlSvs.getInstance().crawlPage(document);
-            } else {
-               document = EstyCrawlSvs.getInstance().processPage(estyScriptCrawl.getUrl() + "?page=" + pageCount); 
-               estyCrawlDataPageBase = EstyCrawlSvs.getInstance().crawlPage(document);
-            }
+        while (pageCount < estyCrawlDataStoreBase.getPageTotal()) {
+            EstyCrawlDataPageBase estyCrawlDataPageBase = EstyCrawlSvs.getInstance().crawlPage(estyCrawlDataStoreBase, pageCount);
 
             ArrayList<ProductAmz> listProducts = new ArrayList<>();
 
@@ -98,7 +86,7 @@ public class ProcessCrawlThread extends Thread {
                     }
                 }
 
-                ProcessPageDataSvs.processPageData(listProducts, "Esty.xlsx");
+                ProcessPageDataSvs.processPageData(listProducts, "Esty" + pageCount +  ".xlsx");
             }
             System.out.println("Finish page " + pageCount);
             System.out.println("========================");

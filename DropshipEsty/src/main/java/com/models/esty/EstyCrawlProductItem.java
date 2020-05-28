@@ -37,6 +37,11 @@ public class EstyCrawlProductItem {
     public void setId(String id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return id + ", " + title + ", " + imageUrl; //To change body of generated methods, choose Tools | Templates.
+    }
     
     
 }

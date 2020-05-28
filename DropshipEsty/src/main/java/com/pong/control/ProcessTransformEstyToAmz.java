@@ -15,6 +15,7 @@ import com.models.aliex.crawl.ItemSpecifics;
 import com.models.aliex.store.AliexStoreInfo;
 import com.models.aliex.store.inputdata.SnakeBaseStoreOrderInfo;
 import com.models.esty.EstyCrawlProductItem;
+import com.models.esty.EstyVariation;
 import com.utils.AWSUtil;
 import com.utils.FuncUtil;
 import com.utils.StringUtils;
@@ -47,11 +48,11 @@ public class ProcessTransformEstyToAmz {
 
         ProductAmz productAmz = createBasicProductAmz(estyCrawlProductItem, snakeBaseStoreOrderInfo);
 
-        productAmz.setItem_name(AWSUtil.processTrademarkAndBrandname(productAmz.getItem_name()));
+//        productAmz.setItem_name(AWSUtil.processTrademarkAndBrandname(productAmz.getItem_name()));
 
         productAmz.setGeneric_keywords(estyCrawlProductItem.getTitle());
 
-        productAmz.genBulletPoints();
+//        productAmz.genBulletPoints();
         results.add(productAmz);
 
         productAmz.genDescriptions(snakeBaseStoreOrderInfo.getDescription());
@@ -62,8 +63,13 @@ public class ProcessTransformEstyToAmz {
     }
 
     public static ArrayList<ProductAmz> createChilds(EstyCrawlProductItem estyCrawlProductItem, SnakeBaseStoreOrderInfo snakeBaseStoreOrderInfo, ProductAmz productAmz) {
-        ArrayList<ProductAmz> results = null;
-
+        ArrayList<ProductAmz> results = new ArrayList<>();
+        for(int i = 0, size = snakeBaseStoreOrderInfo.listVariation.size(); i < size; i++) {
+            EstyVariation estyVariation = snakeBaseStoreOrderInfo.listVariation.get(i);
+            ProductAmz child = productAmz.createChild((i + 1) , estyVariation);
+            results.add(child);
+        }
+            
         return results;
     }
 
@@ -290,7 +296,7 @@ public class ProcessTransformEstyToAmz {
     public static ProductAmz createBasicProductAmz(EstyCrawlProductItem estyCrawlProductItem, SnakeBaseStoreOrderInfo snakeBaseStoreOrderInfo) {
         ProductAmz productAmz = new ProductAmz();
         productAmz.setExternal_product_id_type("UPC");
-//        productAmz.setFeed_product_type(aliexStoreInfo.getProductType());
+        productAmz.setFeed_product_type("shirt");
         productAmz.setQuantity("100");
         productAmz.setFulfillment_latency("5");
         productAmz.setMfg_minimum("10");
@@ -299,10 +305,19 @@ public class ProcessTransformEstyToAmz {
         productAmz.setItem_package_quantity("1");
         productAmz.setNumber_of_items("1");
         productAmz.setMaterial_type("other");
-//        productAmz.setBrand_name(aliexStoreInfo.getBrandName());
+        productAmz.setBrand_name(snakeBaseStoreOrderInfo.getBrand_name());
         productAmz.setImageUrl(snakeBaseStoreOrderInfo.getImagesUrl(estyCrawlProductItem.getImageUrl()));
+        productAmz.setItem_type(snakeBaseStoreOrderInfo.getItemType());
+        productAmz.setVariation_theme(snakeBaseStoreOrderInfo.getVariationType());
 
-//        productAmz.setBulletPoints(aliexStoreInfo.getListBulletPoints());
+        ArrayList<String> listBullets = new ArrayList<>();
+        listBullets.add("Bullet 1");
+        listBullets.add("Bullet 2");
+        listBullets.add("Bullet 3");
+        listBullets.add("Bullet 4");
+        listBullets.add("Bullet 5");
+        
+        productAmz.setBulletPoints(listBullets);
         productAmz.setItem_sku(FuncUtil.createSaltNumber(5) + "_" + estyCrawlProductItem.getId());
         productAmz.setPart_number(productAmz.getItem_sku().substring(0, productAmz.getItem_sku().length() - 2));
 

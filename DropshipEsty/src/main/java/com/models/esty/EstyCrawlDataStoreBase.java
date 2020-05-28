@@ -18,6 +18,8 @@ public class EstyCrawlDataStoreBase extends EstyCrawlDataPageBase{
     public int pageTotal;
     public String pageRuleUrl;
     
+    EstyScriptCrawl estyScriptCrawl;
+    
     public int getPageTotal() {
         return pageTotal;
     }
@@ -41,4 +43,17 @@ public class EstyCrawlDataStoreBase extends EstyCrawlDataPageBase{
     public boolean isHasData() {
         return pageTotal > 0 && !StringUtils.isEmpty(pageRuleUrl);
     }
+
+    public EstyScriptCrawl getEstyScriptCrawl() {
+        return estyScriptCrawl;
+    }
+
+    public void setEstyScriptCrawl(EstyScriptCrawl estyScriptCrawl) {
+        this.estyScriptCrawl = estyScriptCrawl;
+    }
+    
+    public String getPageLink(int pageCount) {
+        return estyScriptCrawl.getUrl() + "?page=" + pageCount;
+    }
+    
 }

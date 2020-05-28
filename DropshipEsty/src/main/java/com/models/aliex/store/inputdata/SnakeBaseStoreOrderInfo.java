@@ -5,6 +5,9 @@
  */
 package com.models.aliex.store.inputdata;
 
+import com.config.Configs;
+import com.models.esty.EstyVariation;
+import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -19,9 +22,11 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
     public String description;
     public String link1;
     public String link2;
+    public String itemType;
     public Set<String> listColor;
     public Set<String> listSizes;
     public float basePrice;
+    public ArrayList<EstyVariation> listVariation;
 
     public static SnakeBaseStoreOrderInfo createInstance(String linkStore, Set<String> listColor, Set<String> listSizes, String category, String description, String link1, String link2, float basePrice) {
         SnakeBaseStoreOrderInfo snakeBaseStoreOrderInfo = new SnakeBaseStoreOrderInfo();
@@ -33,16 +38,38 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
         snakeBaseStoreOrderInfo.setLink1(link1);
         snakeBaseStoreOrderInfo.setLink2(link2);
         snakeBaseStoreOrderInfo.setBasePrice(basePrice);
-
+        snakeBaseStoreOrderInfo.genListVariation();
+        snakeBaseStoreOrderInfo.setItemType(Configs.hashMapCateType.get(category));
+        
         return snakeBaseStoreOrderInfo;
     }
     
-    public String getItemType() {
-        return "";
-    }
     
+    
+    public void genListVariation() {
+        if (listColor != null && listSizes != null) {
+            listVariation = new ArrayList<>();
+            for (String color : listColor) {
+                for (String size : listSizes) {
+                    float addPrice = Configs.hashMapSizePrice.containsKey(size) ? Configs.hashMapSizePrice.get(size) : 0;
+                    listVariation.add(new EstyVariation(color, size, basePrice + addPrice));
+                }
+            }
+        }
+    }
+
+    public String getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(String itemType) {
+        this.itemType = itemType;
+    }
+
+    
+
     public String getVariationType() {
-        return "";
+        return "colorsize";
     }
 
     public String getLink1() {
@@ -118,7 +145,7 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
     }
 
     public String[] getImagesUrl(String mainUrl) {
-        return new String[] {
+        return new String[]{
             mainUrl,
             link1,
             link2
