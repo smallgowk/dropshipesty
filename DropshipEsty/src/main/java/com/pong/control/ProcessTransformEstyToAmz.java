@@ -329,7 +329,7 @@ public class ProcessTransformEstyToAmz {
         productAmz.setItem_type(snakeBaseStoreOrderInfo.getItemType());
 //        productAmz.setTarget_audience_keywords(aliexStoreInfo.getAudienceKeyword());
 //        productAmz.setTarget_audience_keywords1(aliexStoreInfo.getAudienceKeyword());
-//        productAmz.setDepartment_name(aliexStoreInfo.getDepartmentName());
+        productAmz.setDepartment_name(snakeBaseStoreOrderInfo.getDepartment());
 //        productAmz.setTarget_audience_keywords(aliexStoreInfo.getAudienceKeyword());
 //        productAmz.setTarget_audience_keywords1(aliexStoreInfo.getAudienceKeyword());
 

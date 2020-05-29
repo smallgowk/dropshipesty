@@ -23,6 +23,7 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
     public String link1;
     public String link2;
     public String itemType;
+    public String department;
     public Set<String> listColor;
     public Set<String> listSizes;
     public float basePrice;
@@ -40,8 +41,17 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
         snakeBaseStoreOrderInfo.setBasePrice(basePrice);
         snakeBaseStoreOrderInfo.genListVariation();
         snakeBaseStoreOrderInfo.setItemType(Configs.hashMapCateType.get(category));
+        snakeBaseStoreOrderInfo.setDepartment(Configs.hashMapCateType.get(category));
         
         return snakeBaseStoreOrderInfo;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
     }
     
     

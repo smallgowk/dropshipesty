@@ -139,6 +139,7 @@ public class Configs {
     
     public static HashMap<String, Float> hashMapSizePrice = new HashMap<>();
     public static HashMap<String, String> hashMapCateType = new HashMap<>();
+    public static HashMap<String, String> hashMapDepartmentName = new HashMap<>();
 
     public static ArrayList<String[]> listAccount;
     public static HashMap<String, Boolean> hashMapAccountState;
@@ -158,10 +159,22 @@ public class Configs {
         hashMapSizePrice.put("Adult - 4XL", 4.5f);
         hashMapSizePrice.put("Adult - 5XL", 5.5f);
         
-        hashMapCateType.put("Men T-Shirt", "Clothing, Shoes & Jewelry/Men/Clothing/Shirts/T-Shirts");
-        hashMapCateType.put("Women T-Shirt", "Clothing, Shoes & Jewelry/Girls/Clothing/Tops & Tees/Tees");
-        hashMapCateType.put("Men Hoodie", "Clothing, Shoes & Jewelry/Men/Clothing/Active/Active Hoodies");
-        hashMapCateType.put("Women Hoodie", "Clothing, Shoes & Jewelry/Women/Clothing/Active/Active Hoodies");
+//        hashMapCateType.put("Men T-Shirt", "Clothing, Shoes & Jewelry/Men/Clothing/Shirts/T-Shirts");
+//        hashMapCateType.put("Women T-Shirt", "Clothing, Shoes & Jewelry/Girls/Clothing/Tops & Tees/Tees");
+//        hashMapCateType.put("Men Hoodie", "Clothing, Shoes & Jewelry/Men/Clothing/Active/Active Hoodies");
+//        hashMapCateType.put("Women Hoodie", "Clothing, Shoes & Jewelry/Women/Clothing/Active/Active Hoodies");
+        
+        hashMapCateType.put("Men T-Shirt", "fashion-t-shirts");
+        hashMapDepartmentName.put("Men T-Shirt", "mens");
+        
+        hashMapCateType.put("Women T-Shirt", "fashion-t-shirts");
+        hashMapDepartmentName.put("Women T-Shirt", "girls");
+        
+        hashMapCateType.put("Men Hoodie", "athletic-hoodies");
+        hashMapDepartmentName.put("Men Hoodie", "mens");
+        
+        hashMapCateType.put("Women Hoodie", "athletic-hoodies");
+        hashMapDepartmentName.put("Women Hoodie", "womens");
 
         appIconPath = "Images" + pathChar + "appIcon.png";
 

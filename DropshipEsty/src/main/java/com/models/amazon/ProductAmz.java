@@ -15,6 +15,7 @@ import com.models.aliex.Variation;
 import com.models.aliex.VariationProperty;
 import com.models.aliex.crawl.ItemSpecifics;
 import com.models.aliex.store.AliexStoreInfo;
+import com.models.aliex.store.inputdata.SnakeBaseStoreOrderInfo;
 import com.models.esty.EstyVariation;
 import com.pong.control.ProcessTransformAliexToAmz;
 import com.utils.AWSUtil;
@@ -809,8 +810,33 @@ public class ProductAmz {
     }
 
     public void setGeneric_keywords(String generic_keywords) {
-        this.generic_keywords = generic_keywords;
+        
+        if(StringUtils.isEmpty(generic_keywords)) return;
+        
+        Set<String> hashMap = new HashSet<>();
+        StringBuilder sb = new StringBuilder();
+        String[] titlePart = generic_keywords.split(Pattern.quote(" "));
+        
+        for (String s : titlePart) {
+            String lower = s.trim().toLowerCase();
+            
+            if (AWSUtil.isAvoidKeyword(lower) || !StringUtils.isTextOnly(lower)) {
+                continue;
+            }
+
+            if (!hashMap.contains(lower)) {
+                hashMap.add(lower);
+                if (sb.length() == 0) {
+                    sb.append(s);
+                } else {
+                    sb.append(" ").append(s);
+                }
+            }
+        }
+        
+        this.generic_keywords = sb.toString();
     }
+    
 
 //    public void optimizeGenericKeywords() {
 //        if (generic_keywords == null || generic_keywords.isEmpty()) {

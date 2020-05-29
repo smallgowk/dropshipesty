@@ -447,9 +447,24 @@ public class ClientHomePanel extends BasePanel {
             return;
         }
         mainController.setLink2(txtLink2.getText());
+        
+        if (txtBasePrice.getText().isEmpty()) {
+            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập giá !");
+            return;
+        }
+        String priceStr = txtBasePrice.getText();
+        try {
+            float price = Float.parseFloat(priceStr);
+            mainController.setBasePrice(price);
+            
+        } catch (NumberFormatException ex) {
+            DialogUtil.showErrorMessage(topFrame, "", "Thông tin giá không hợp lệ !");
+            return;
+        }
 
         String select = (String) jComboBox.getSelectedItem();
-        mainController.setCategory(Configs.hashMapCateType.get(select));
+//        mainController.setCategory(Configs.hashMapCateType.get(select));
+        mainController.setCategory(select);
         
         mainController.doAction();
 
