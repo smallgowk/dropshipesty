@@ -7,9 +7,6 @@ package com.api.dropship;
 
 import com.api.ApiBase;
 import com.interfaces.CallApiInterface;
-import com.models.outcome.AliexProductInfoWrap;
-import com.models.outcome.AliexStoreInfoWrap;
-import com.models.outcome.AliexStorePageWrap;
 import com.ping.service.data.transform.TransformToServer;
 import com.ping.tcpclient.ResponseObj;
 import org.apache.http.entity.StringEntity;

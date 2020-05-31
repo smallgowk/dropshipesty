@@ -57,21 +57,21 @@ public class ProcessTransformEstyToAmz {
 
         productAmz.genDescriptions(snakeBaseStoreOrderInfo.getDescription());
 
-        ArrayList<ProductAmz> listChilds = createChilds(estyCrawlProductItem, snakeBaseStoreOrderInfo, productAmz);
-        results.addAll(listChilds);
+//        ArrayList<ProductAmz> listChilds = createChilds(estyCrawlProductItem, snakeBaseStoreOrderInfo, productAmz);
+//        results.addAll(listChilds);
         return results;
     }
 
-    public static ArrayList<ProductAmz> createChilds(EstyCrawlProductItem estyCrawlProductItem, SnakeBaseStoreOrderInfo snakeBaseStoreOrderInfo, ProductAmz productAmz) {
-        ArrayList<ProductAmz> results = new ArrayList<>();
-        for(int i = 0, size = snakeBaseStoreOrderInfo.listVariation.size(); i < size; i++) {
-            EstyVariation estyVariation = snakeBaseStoreOrderInfo.listVariation.get(i);
-            ProductAmz child = productAmz.createChild((i + 1) , estyVariation);
-            results.add(child);
-        }
-            
-        return results;
-    }
+//    public static ArrayList<ProductAmz> createChilds(EstyCrawlProductItem estyCrawlProductItem, SnakeBaseStoreOrderInfo snakeBaseStoreOrderInfo, ProductAmz productAmz) {
+//        ArrayList<ProductAmz> results = new ArrayList<>();
+//        for(int i = 0, size = snakeBaseStoreOrderInfo.listVariation.size(); i < size; i++) {
+//            EstyVariation estyVariation = snakeBaseStoreOrderInfo.listVariation.get(i);
+//            ProductAmz child = productAmz.createChild((i + 1) , estyVariation);
+//            results.add(child);
+//        }
+//            
+//        return results;
+//    }
 
 //    public static void genProductSearchTerm(AliexStoreInfo aliexStoreInfo, AliexProductFull aliexProductFull, ProductAmz productAmz) {
 //
@@ -297,8 +297,8 @@ public class ProcessTransformEstyToAmz {
         ProductAmz productAmz = new ProductAmz();
         productAmz.setExternal_product_id_type("UPC");
         productAmz.setFeed_product_type("shirt");
-        productAmz.setQuantity("100");
-        productAmz.setFulfillment_latency("5");
+        productAmz.setQuantity("200");
+        productAmz.setFulfillment_latency("" + snakeBaseStoreOrderInfo.getHandlingTime());
         productAmz.setMfg_minimum("10");
         productAmz.setUnit_count("1");
         productAmz.setUnit_count_type("PC");
@@ -308,18 +308,18 @@ public class ProcessTransformEstyToAmz {
         productAmz.setBrand_name(snakeBaseStoreOrderInfo.getBrand_name());
         productAmz.setImageUrl(snakeBaseStoreOrderInfo.getImagesUrl(estyCrawlProductItem.getImageUrl()));
         productAmz.setItem_type(snakeBaseStoreOrderInfo.getItemType());
-        productAmz.setVariation_theme(snakeBaseStoreOrderInfo.getVariationType());
-
-        ArrayList<String> listBullets = new ArrayList<>();
-        listBullets.add("Bullet 1");
-        listBullets.add("Bullet 2");
-        listBullets.add("Bullet 3");
-        listBullets.add("Bullet 4");
-        listBullets.add("Bullet 5");
+//        productAmz.setVariation_theme(snakeBaseStoreOrderInfo.getVariationType());
         
-        productAmz.setBulletPoints(listBullets);
-        productAmz.setItem_sku(FuncUtil.createSaltNumber(5) + "_" + estyCrawlProductItem.getId());
+        productAmz.setBulletPoints(snakeBaseStoreOrderInfo.getListBullets());
+        productAmz.setItem_sku(snakeBaseStoreOrderInfo.getPrefix().toUpperCase() + FuncUtil.createSaltNumber(5) + "_" + estyCrawlProductItem.getId());
         productAmz.setPart_number(productAmz.getItem_sku().substring(0, productAmz.getItem_sku().length() - 2));
+        productAmz.setOuter_material_type1(snakeBaseStoreOrderInfo.getOuterMaterialType());
+        productAmz.setMaterial_composition1(snakeBaseStoreOrderInfo.getMaterialComposition());
+        productAmz.setIs_adult_product("TRUE");
+        productAmz.setColor_map("White");
+        productAmz.setColor_name("Black");
+        productAmz.setSize_map("Large");
+        productAmz.setSize_name("Large");
 
         String title = estyCrawlProductItem.getTitle();
 
@@ -336,7 +336,9 @@ public class ProcessTransformEstyToAmz {
         productAmz.setUnit_count_type("PC");
         productAmz.setMaterial_type("other");
         productAmz.setManufacturer(productAmz.getBrand_name());
-        productAmz.setVariationTheme(snakeBaseStoreOrderInfo.getVariationType());
+        productAmz.setStandard_price("" + Utils.getCEOPrice(snakeBaseStoreOrderInfo.getBasePrice()));
+        
+//        productAmz.setVariationTheme(snakeBaseStoreOrderInfo.getVariationType());
 
         return productAmz;
     }

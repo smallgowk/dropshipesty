@@ -35,25 +35,25 @@ public class FetchAliexProductInfoSvs {
     }
     
     public AliexProductFull getProductFromCache(String id, String storeSign) {
-        String filePath = Configs.CACHE_PATH + Configs.PRODUCT_CACHE_DIR + Configs.pathChar + storeSign + Configs.pathChar + id + ".txt";
-        String cacheData = null;
-
-        File cache = new File(filePath);
-
-        try {
-            if (cache.exists()) {
-                cacheData = FileUtils.readFileToString(cache);
-            }
-
-        } catch (IOException ex) {
-            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        if (cacheData != null) {
-            String cleanData = EncryptUtil.decrypt(cacheData);
-            Gson gson = new Gson();
-            return gson.fromJson(cleanData, AliexProductFull.class);
-        }
+//        String filePath = Configs.CACHE_PATH + Configs.PRODUCT_CACHE_DIR + Configs.pathChar + storeSign + Configs.pathChar + id + ".txt";
+//        String cacheData = null;
+//
+//        File cache = new File(filePath);
+//
+//        try {
+//            if (cache.exists()) {
+//                cacheData = FileUtils.readFileToString(cache);
+//            }
+//
+//        } catch (IOException ex) {
+//            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//        if (cacheData != null) {
+//            String cleanData = EncryptUtil.decrypt(cacheData);
+//            Gson gson = new Gson();
+//            return gson.fromJson(cleanData, AliexProductFull.class);
+//        }
         
         return null;
     }
@@ -74,26 +74,26 @@ public class FetchAliexProductInfoSvs {
 //    }
 
     public void saveProductInfo(AliexProductFull aliexProductFull, String storeSign) {
-        Gson gson = new Gson();
-        String data = gson.toJson(aliexProductFull);
-        String encrytData = EncryptUtil.encrypt(data);
-
-        File file = new File(Configs.CACHE_PATH + Configs.PRODUCT_CACHE_DIR + Configs.pathChar + storeSign);
-        
-        
-//        System.out.println("" + file.getAbsolutePath());
-
-        if (!file.exists()) {
-            file.mkdir();
-        }
-
-        try {
-            FileUtils.writeStringToFile(new File(file.getAbsolutePath() + Configs.pathChar + aliexProductFull.getId() + ".txt"), encrytData);
-            
-//            System.out.println("" + aliexProductFull.id + " cached success to ");
-            
-        } catch (IOException ex) {
-            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        Gson gson = new Gson();
+//        String data = gson.toJson(aliexProductFull);
+//        String encrytData = EncryptUtil.encrypt(data);
+//
+//        File file = new File(Configs.CACHE_PATH + Configs.PRODUCT_CACHE_DIR + Configs.pathChar + storeSign);
+//        
+//        
+////        System.out.println("" + file.getAbsolutePath());
+//
+//        if (!file.exists()) {
+//            file.mkdir();
+//        }
+//
+//        try {
+//            FileUtils.writeStringToFile(new File(file.getAbsolutePath() + Configs.pathChar + aliexProductFull.getId() + ".txt"), encrytData);
+//            
+////            System.out.println("" + aliexProductFull.id + " cached success to ");
+//            
+//        } catch (IOException ex) {
+//            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 }

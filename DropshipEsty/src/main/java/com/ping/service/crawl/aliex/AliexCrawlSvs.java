@@ -6,7 +6,7 @@
 package com.ping.service.crawl.aliex;
 
 import com.config.Configs;
-import static com.config.Configs.STORE_INFO_CACHE_DIR;
+//import static com.config.Configs.STORE_INFO_CACHE_DIR;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.models.aliex.store.AliexStoreInfo;
@@ -47,23 +47,23 @@ public class AliexCrawlSvs extends CrawlerMachine {
 
     public CrawlDataStoreBase crawlStoreInfo(AliexStoreInfo aliexStoreInfo) {
 
-        String cacheData = null;
-        File cache = new File(Configs.CACHE_PATH + STORE_INFO_CACHE_DIR + Configs.pathChar + aliexStoreInfo.getStoreSign() + Configs.pathChar + aliexStoreInfo.getStoreSign() + ".txt");
-
-        try {
-            if (cache.exists()) {
-                cacheData = FileUtils.readFileToString(cache);
-            }
-
-        } catch (IOException ex) {
-            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        String cacheData = null;
+//        File cache = new File(Configs.CACHE_PATH + STORE_INFO_CACHE_DIR + Configs.pathChar + aliexStoreInfo.getStoreSign() + Configs.pathChar + aliexStoreInfo.getStoreSign() + ".txt");
 //
-        if (cacheData != null) {
-            String cleanData = EncryptUtil.decrypt(cacheData);
-            Gson gson = new Gson();
-            return gson.fromJson(cleanData, CrawlDataStoreBase.class);
-        }
+//        try {
+//            if (cache.exists()) {
+//                cacheData = FileUtils.readFileToString(cache);
+//            }
+//
+//        } catch (IOException ex) {
+//            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+////
+//        if (cacheData != null) {
+//            String cleanData = EncryptUtil.decrypt(cacheData);
+//            Gson gson = new Gson();
+//            return gson.fromJson(cleanData, CrawlDataStoreBase.class);
+//        }
 
         goToPage(aliexStoreInfo.getLink());
 
@@ -167,23 +167,23 @@ public class AliexCrawlSvs extends CrawlerMachine {
         String dataClean = gson.toJson(crawlDataStoreAliex);
         String encrytData = EncryptUtil.encrypt(dataClean);
 //
-        File file = new File(Configs.CACHE_PATH + STORE_INFO_CACHE_DIR);
-        if (!file.exists()) {
-            file.mkdir();
-        }
-//
-        file = new File(file.getAbsolutePath() + Configs.pathChar + aliexStoreInfo.getStoreSign());
-        if (!file.exists()) {
-            file.mkdir();
-        }
-//
-        file = new File(file.getAbsolutePath() + Configs.pathChar + aliexStoreInfo.getStoreSign() + ".txt");
-//
-        try {
-            FileUtils.writeStringToFile(file, encrytData);
-        } catch (IOException ex) {
-            Logger.getLogger(AliexCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        File file = new File(Configs.CACHE_PATH + STORE_INFO_CACHE_DIR);
+//        if (!file.exists()) {
+//            file.mkdir();
+//        }
+////
+//        file = new File(file.getAbsolutePath() + Configs.pathChar + aliexStoreInfo.getStoreSign());
+//        if (!file.exists()) {
+//            file.mkdir();
+//        }
+////
+//        file = new File(file.getAbsolutePath() + Configs.pathChar + aliexStoreInfo.getStoreSign() + ".txt");
+////
+//        try {
+//            FileUtils.writeStringToFile(file, encrytData);
+//        } catch (IOException ex) {
+//            Logger.getLogger(AliexCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
         return crawlDataStoreAliex;
     }
@@ -400,26 +400,26 @@ public class AliexCrawlSvs extends CrawlerMachine {
 
         String cacheData = null;
 //
-        File cache = new File(Configs.CACHE_PATH + STORE_INFO_CACHE_DIR + Configs.pathChar + aliexStoreInfo.getStoreSign() + Configs.pathChar + aliexStoreInfo.getStoreSign() + "_page" + page + ".txt");
-
-        try {
-            if (cache.exists()) {
-                cacheData = FileUtils.readFileToString(cache);
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        File cache = new File(Configs.CACHE_PATH + STORE_INFO_CACHE_DIR + Configs.pathChar + aliexStoreInfo.getStoreSign() + Configs.pathChar + aliexStoreInfo.getStoreSign() + "_page" + page + ".txt");
 //
-        if (cacheData != null) {
-            String cleanData = EncryptUtil.decrypt(cacheData);
-            Gson gson = new Gson();
-            try {
-                CrawlDataPageBase crawlDataPageBase = gson.fromJson(cleanData, CrawlDataPageBase.class);
-                return crawlDataPageBase;
-            } catch (Exception ex) {
-
-            }
-        }
+//        try {
+//            if (cache.exists()) {
+//                cacheData = FileUtils.readFileToString(cache);
+//            }
+//        } catch (IOException ex) {
+//            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+////
+//        if (cacheData != null) {
+//            String cleanData = EncryptUtil.decrypt(cacheData);
+//            Gson gson = new Gson();
+//            try {
+//                CrawlDataPageBase crawlDataPageBase = gson.fromJson(cleanData, CrawlDataPageBase.class);
+//                return crawlDataPageBase;
+//            } catch (Exception ex) {
+//
+//            }
+//        }
 
         boolean isLoadSuccess = false;
         String currentUrl = getCurrentUrl();
@@ -566,23 +566,23 @@ public class AliexCrawlSvs extends CrawlerMachine {
         String dataClean = gson.toJson(crawlDataPageAliex);
         String encrytData = EncryptUtil.encrypt(dataClean);
 
-        File file = new File(Configs.CACHE_PATH + STORE_INFO_CACHE_DIR);
-        if (!file.exists()) {
-            file.mkdir();
-        }
-//
-        file = new File(file.getAbsolutePath() + Configs.pathChar + aliexStoreInfo.getStoreSign());
-        if (!file.exists()) {
-            file.mkdir();
-        }
-//
-        file = new File(file.getAbsolutePath() + Configs.pathChar + aliexStoreInfo.getStoreSign() + "_page" + page + ".txt");
-//
-        try {
-            FileUtils.writeStringToFile(file, encrytData);
-        } catch (IOException ex) {
-            Logger.getLogger(AliexCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        File file = new File(Configs.CACHE_PATH + STORE_INFO_CACHE_DIR);
+//        if (!file.exists()) {
+//            file.mkdir();
+//        }
+////
+//        file = new File(file.getAbsolutePath() + Configs.pathChar + aliexStoreInfo.getStoreSign());
+//        if (!file.exists()) {
+//            file.mkdir();
+//        }
+////
+//        file = new File(file.getAbsolutePath() + Configs.pathChar + aliexStoreInfo.getStoreSign() + "_page" + page + ".txt");
+////
+//        try {
+//            FileUtils.writeStringToFile(file, encrytData);
+//        } catch (IOException ex) {
+//            Logger.getLogger(AliexCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
         return crawlDataPageAliex;
     }

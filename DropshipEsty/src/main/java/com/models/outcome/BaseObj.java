@@ -11,6 +11,7 @@ package com.models.outcome;
  */
 public class BaseObj {
     private String action;
+    private String module;
     private String version;
     private String diskSerialNumber;
     private String computerName;
@@ -54,6 +55,14 @@ public class BaseObj {
 
     public void setClientMessage(String clientMessage) {
         this.clientMessage = clientMessage;
+    }
+
+    public String getModule() {
+        return module;
+    }
+
+    public void setModule(String module) {
+        this.module = module;
     }
 
     

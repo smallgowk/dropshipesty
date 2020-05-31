@@ -37,9 +37,9 @@ public class Configs {
     private static final String CONTENT_CONFIG_FILE = "aliexConf.conf";
     private static final String PRODUCT_CONFIG_FILE = "pathConfig.conf";
 
-    private static final String COOKIE_CACHE_FILE = "Cookie.txt";
+//    private static final String COOKIE_CACHE_FILE = "Cookie.txt";
 
-//    public static final String DEFAUL_TOOL_DIRECTORY = "AppConfig";
+    public static final String DEFAUL_TOOL_DIRECTORY = "AppConfig";
     public static final String STORE_PRODUCT_DIRECTORY = "StoreProducts";
     public static final String CACHE_DIRECTORY = "CacheAliex";
     public static final String DEFAULT_PRODUCT_DIRECTORY = "Products";
@@ -47,7 +47,7 @@ public class Configs {
     public static final String FIXING_PRODUCT_DIRECTORY = "FixingProducts";
 
     public static final String CONFIGS_DIRECTORY = "Configs";
-    public static final String DATA_DIRECTORY = "Data";
+//    public static final String DATA_DIRECTORY = "Data";
 
     public static final String STORE_INFO_CACHE_DIR = "StoreInfoCache";
     public static final String MERCHANT_CACHE_DIR = "Merchant";
@@ -60,7 +60,7 @@ public class Configs {
 //    public static final String DEFAULT_STORE_FILE = "storeInfo.xlsx";
     public static final String DEFAULT_UPC_FILE = "upccodes.xlsx";
     public static final String SHEET_NAME = "Worksheet";
-    public static final String ACCOUNT_FILE_NAME = "login_account.txt";
+//    public static final String ACCOUNT_FILE_NAME = "login_account.txt";
 
     public static String TOOL_DATA_PATH;
 //    public static String PRODUCT_DATA_PATH;
@@ -178,7 +178,7 @@ public class Configs {
 
         appIconPath = "Images" + pathChar + "appIcon.png";
 
-//        TOOL_DATA_PATH = System.getProperty("user.home") + pathChar + DEFAUL_TOOL_DIRECTORY;
+        TOOL_DATA_PATH = System.getProperty("user.home") + pathChar + DEFAUL_TOOL_DIRECTORY;
         String dir = System.getProperty("user.dir");
 
         if (dir == null || dir.isEmpty()) {
@@ -189,10 +189,10 @@ public class Configs {
 //        CONFIG_FOLDER_PATH = String.valueOf(TOOL_DATA_PATH + pathChar + CONFIGS_DIRECTORY + pathChar);
         LOG_CONFIG_PATH = String.valueOf(CONFIG_FOLDER_PATH + pathChar + "log4j.properties");
 
-        TOOL_DATA_PATH = dir + pathChar + "etc" + pathChar + DATA_DIRECTORY + pathChar;
+//        TOOL_DATA_PATH = dir + pathChar + "etc" + pathChar + DATA_DIRECTORY + pathChar;
 
-        CACHE_PATH = String.valueOf(TOOL_DATA_PATH + pathChar + CACHE_DIRECTORY + pathChar);
-        COOKIE_PATH = String.valueOf(CACHE_PATH + COOKIE_CACHE_FILE);
+//        CACHE_PATH = String.valueOf(TOOL_DATA_PATH + pathChar + CACHE_DIRECTORY + pathChar);
+//        COOKIE_PATH = String.valueOf(CACHE_PATH + COOKIE_CACHE_FILE);
         LOG_PATH = String.valueOf(TOOL_DATA_PATH + pathChar + CACHE_DIRECTORY + pathChar);
 
         PRODUCT_DATA_PATH = String.valueOf(TOOL_DATA_PATH + pathChar + DEFAULT_PRODUCT_DIRECTORY + pathChar);
@@ -202,37 +202,37 @@ public class Configs {
 //        DEFAULT_STORE_FILE_PATH = String.valueOf(CONFIG_FOLDER_PATH + DEFAULT_STORE_FILE);
         DEFAULT_UPC_FILE_PATH = String.valueOf(CONFIG_FOLDER_PATH + DEFAULT_UPC_FILE);
 
-        File directory = new File(TOOL_DATA_PATH);
-        if (!directory.exists()) {
-            directory.mkdir();
-        }
-
-        File configDirectory = new File(CONFIG_FOLDER_PATH);
-        if (!configDirectory.exists()) {
-            configDirectory.mkdir();
-        }
+//        File directory = new File(TOOL_DATA_PATH);
+//        if (!directory.exists()) {
+//            directory.mkdir();
+//        }
+//
+//        File configDirectory = new File(CONFIG_FOLDER_PATH);
+//        if (!configDirectory.exists()) {
+//            configDirectory.mkdir();
+//        }
 
         copyConfigsFiles();
 
-        File cacheDirectory = new File(CACHE_PATH);
-        if (!cacheDirectory.exists()) {
-            cacheDirectory.mkdir();
-        }
+//        File cacheDirectory = new File(CACHE_PATH);
+//        if (!cacheDirectory.exists()) {
+//            cacheDirectory.mkdir();
+//        }
 
-        cacheDirectory = new File(CACHE_PATH + STORE_INFO_CACHE_DIR);
-        if (!cacheDirectory.exists()) {
-            cacheDirectory.mkdir();
-        }
+//        cacheDirectory = new File(CACHE_PATH + STORE_INFO_CACHE_DIR);
+//        if (!cacheDirectory.exists()) {
+//            cacheDirectory.mkdir();
+//        }
 
-        cacheDirectory = new File(CACHE_PATH + MERCHANT_CACHE_DIR);
-        if (!cacheDirectory.exists()) {
-            cacheDirectory.mkdir();
-        }
+//        cacheDirectory = new File(CACHE_PATH + MERCHANT_CACHE_DIR);
+//        if (!cacheDirectory.exists()) {
+//            cacheDirectory.mkdir();
+//        }
 
-        cacheDirectory = new File(CACHE_PATH + PRODUCT_CACHE_DIR);
-        if (!cacheDirectory.exists()) {
-            cacheDirectory.mkdir();
-        }
+//        cacheDirectory = new File(CACHE_PATH + PRODUCT_CACHE_DIR);
+//        if (!cacheDirectory.exists()) {
+//            cacheDirectory.mkdir();
+//        }
 
         loadAllConfigs();
 
@@ -248,17 +248,19 @@ public class Configs {
         loadContentConfig();
         loadAccountAuthen();
 
-        if (excelSampleFilePath == null || excelSampleFilePath.trim().isEmpty()) {
-            excelSampleFilePath = DEFAULT_SAMPLE_XLSX_FILE_PATH;
-        } else {
-            File file = new File(excelSampleFilePath);
-            if (!file.exists()) {
-                excelSampleFilePath = DEFAULT_SAMPLE_XLSX_FILE_PATH;
-            }
-        }
+//        if (excelSampleFilePath == null || excelSampleFilePath.trim().isEmpty()) {
+//            excelSampleFilePath = DEFAULT_SAMPLE_XLSX_FILE_PATH;
+//        } else {
+//            File file = new File(excelSampleFilePath);
+//            if (!file.exists()) {
+//                excelSampleFilePath = DEFAULT_SAMPLE_XLSX_FILE_PATH;
+//            }
+//        }
+        
+        System.out.println("excelSampleFilePath: " + DEFAULT_SAMPLE_XLSX_FILE_PATH);
 
         try {
-            changeExcelSamplePathConfig(excelSampleFilePath);
+            changeExcelSamplePathConfig(DEFAULT_SAMPLE_XLSX_FILE_PATH);
         } catch (IOException ex) {
             Logger.getLogger(Configs.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -470,36 +472,36 @@ public class Configs {
     }
 
     public static void loadAccountAuthen() {
-        try {
-            FileInputStream fileInputStream = new FileInputStream(CONFIG_FOLDER_PATH + ACCOUNT_FILE_NAME);
-            InputStreamReader clientSecretReader = new InputStreamReader(fileInputStream);
-            BufferedReader br = new BufferedReader(clientSecretReader);
-
-            String st;
-            while ((st = br.readLine()) != null) {
-                if (st != null && !st.isEmpty()) {
-                    String[] parts = st.split(Pattern.quote(","));
-                    if (parts.length == 2) {
-                        if (listAccount == null) {
-                            listAccount = new ArrayList<>();
-                        }
-                        String[] data = new String[2];
-                        data[0] = parts[0];
-                        data[1] = parts[1];
-                        listAccount.add(data);
-                    }
-                }
-            }
-
-            hashMapAccountState = new HashMap<>();
-
-            for (String[] account : listAccount) {
-                hashMapAccountState.put(account[0], false);
-            }
-
-        } catch (IOException ex) {
-
-        }
+//        try {
+//            FileInputStream fileInputStream = new FileInputStream(CONFIG_FOLDER_PATH + ACCOUNT_FILE_NAME);
+//            InputStreamReader clientSecretReader = new InputStreamReader(fileInputStream);
+//            BufferedReader br = new BufferedReader(clientSecretReader);
+//
+//            String st;
+//            while ((st = br.readLine()) != null) {
+//                if (st != null && !st.isEmpty()) {
+//                    String[] parts = st.split(Pattern.quote(","));
+//                    if (parts.length == 2) {
+//                        if (listAccount == null) {
+//                            listAccount = new ArrayList<>();
+//                        }
+//                        String[] data = new String[2];
+//                        data[0] = parts[0];
+//                        data[1] = parts[1];
+//                        listAccount.add(data);
+//                    }
+//                }
+//            }
+//
+//            hashMapAccountState = new HashMap<>();
+//
+//            for (String[] account : listAccount) {
+//                hashMapAccountState.put(account[0], false);
+//            }
+//
+//        } catch (IOException ex) {
+//
+//        }
     }
 
     public static void changeProductFolderConfig(String path) throws FileNotFoundException, IOException {

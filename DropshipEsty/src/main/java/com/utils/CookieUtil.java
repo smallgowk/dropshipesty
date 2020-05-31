@@ -6,7 +6,6 @@
 package com.utils;
 
 import com.config.Configs;
-import static com.config.Configs.CACHE_PATH;
 import com.google.gson.Gson;
 import static com.config.Configs.COOKIE_PATH;
 import java.io.BufferedWriter;
@@ -175,54 +174,54 @@ public class CookieUtil {
     
     public static void saveCookies(Map<String, String> cookies,String fileName) {
 //        System.out.println("Cookie path " + filePath);
-        Gson gson = new Gson();
-
-        String cacheData = gson.toJson(cookies);
-
-        BufferedWriter bw = null;
-        FileWriter fw = null;
-
-        try {
-//            String fileName = getCookiesFileName();
-
-//            ClassLoader classLoader = NewMainUI.class.;
-//            URL location = CookieUtil.class.getProtectionDomain().getCodeSource().getLocation();
-//            String pathStr = location.getFile() + COOKIE_CACHE_FILE;
-//            System.out.println(pathStr);
-//            PrintWriter pw = new PrintWriter(fileName);
-//            pw.close();
-            fw = new FileWriter(CACHE_PATH + Configs.pathChar + fileName);
-            bw = new BufferedWriter(fw);
-            bw.write(cacheData);
-
-//            fw.close();
-//            bw.close();
-//            fw = new FileWriter(pathStr.replace("target/classes", "src/main/resources"));
+//        Gson gson = new Gson();
+//
+//        String cacheData = gson.toJson(cookies);
+//
+//        BufferedWriter bw = null;
+//        FileWriter fw = null;
+//
+//        try {
+////            String fileName = getCookiesFileName();
+//
+////            ClassLoader classLoader = NewMainUI.class.;
+////            URL location = CookieUtil.class.getProtectionDomain().getCodeSource().getLocation();
+////            String pathStr = location.getFile() + COOKIE_CACHE_FILE;
+////            System.out.println(pathStr);
+////            PrintWriter pw = new PrintWriter(fileName);
+////            pw.close();
+//            fw = new FileWriter(CACHE_PATH + Configs.pathChar + fileName);
 //            bw = new BufferedWriter(fw);
 //            bw.write(cacheData);
-        } catch (IOException e) {
-
-            e.printStackTrace();
-
-        } finally {
-
-            try {
-
-                if (bw != null) {
-                    bw.close();
-                }
-
-                if (fw != null) {
-                    fw.close();
-                }
-
-            } catch (IOException ex) {
-
-                ex.printStackTrace();
-
-            }
-
-        }
+//
+////            fw.close();
+////            bw.close();
+////            fw = new FileWriter(pathStr.replace("target/classes", "src/main/resources"));
+////            bw = new BufferedWriter(fw);
+////            bw.write(cacheData);
+//        } catch (IOException e) {
+//
+//            e.printStackTrace();
+//
+//        } finally {
+//
+//            try {
+//
+//                if (bw != null) {
+//                    bw.close();
+//                }
+//
+//                if (fw != null) {
+//                    fw.close();
+//                }
+//
+//            } catch (IOException ex) {
+//
+//                ex.printStackTrace();
+//
+//            }
+//
+//        }
     }
 
     public static String readCookies(String filePath) throws FileNotFoundException, IOException {

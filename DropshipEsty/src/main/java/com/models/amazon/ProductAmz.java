@@ -15,7 +15,6 @@ import com.models.aliex.Variation;
 import com.models.aliex.VariationProperty;
 import com.models.aliex.crawl.ItemSpecifics;
 import com.models.aliex.store.AliexStoreInfo;
-import com.models.aliex.store.inputdata.SnakeBaseStoreOrderInfo;
 import com.models.esty.EstyVariation;
 import com.pong.control.ProcessTransformAliexToAmz;
 import com.utils.AWSUtil;
@@ -52,6 +51,9 @@ public class ProductAmz {
     public String item_type;
     public String standard_price;
     public String quantity;
+    public String outer_material_type1;
+    public String material_composition1;
+    public String is_adult_product;
     public String main_image_url;
     public String swatch_image_url;
     public String other_image_url1;
@@ -529,6 +531,32 @@ public class ProductAmz {
     public String getParent_child() {
         return parent_child;
     }
+
+    public String getOuter_material_type1() {
+        return outer_material_type1;
+    }
+
+    public void setOuter_material_type1(String outer_material_type1) {
+        this.outer_material_type1 = outer_material_type1;
+    }
+
+    public String getMaterial_composition1() {
+        return material_composition1;
+    }
+
+    public void setMaterial_composition1(String material_composition1) {
+        this.material_composition1 = material_composition1;
+    }
+
+    public String getIs_adult_product() {
+        return is_adult_product;
+    }
+
+    public void setIs_adult_product(String is_adult_product) {
+        this.is_adult_product = is_adult_product;
+    }
+    
+    
 
     public void setParent_child(String parent_child) {
         this.parent_child = parent_child;
@@ -2990,8 +3018,14 @@ public class ProductAmz {
     }
 
     public void genDescriptions(String description) {
+        
+        if(description.startsWith("<p>")) {
+            product_description = description;
+            return;
+        }
+        
         StringBuilder sb = new StringBuilder();
-        sb.append("<p><b>").append(item_name).append("</b></p></br>\n");
+//        sb.append("<p><b>").append(item_name).append("</b></p></br>\n");
         sb.append("<p>");
         sb.append(description);
         sb.append("</p>");

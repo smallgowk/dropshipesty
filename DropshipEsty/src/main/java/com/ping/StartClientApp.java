@@ -5,24 +5,15 @@
  */
 package com.ping;
 
-import com.config.AppConfig;
-import com.config.AuthenConfig;
-import com.config.ClientInfo;
-import com.google.gson.Gson;
-import com.pong.server.http.HttpServerWrapper;
 import com.api.dropship.DropApiCall;
-import com.config.Configs;
 import static com.config.Configs.downloadUrl;
-import com.ping.control.LoginThread;
 import com.ping.tcpclient.ResponseObj;
-import com.utils.Constants;
 import com.utils.DialogUtil;
-import com.utils.EncryptUtil;
 import com.utils.OSUtil;
 import com.ping.view.AboutPannel;
 import com.ping.view.BasePanel;
 import com.ping.view.ClientHomePanel;
-import com.ping.view.SettingPannel;
+import com.utils.Constants;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -69,12 +60,12 @@ public class StartClientApp {
 //            return;
 //        }
         ResponseObj responseObj = DropApiCall.doSendGetInfo(null);
-
+//
         if (responseObj == null) {
             System.out.println("Can not check info!");
             return;
         }
-
+//
         switch (responseObj.getResultCode()) {
             case Constants.ResultCode.SERIAL_INVALID:
                 DialogUtil.showInfoMessage(null, "Máy tính cài đặt không hợp lệ. Liên hệ 0972071089 để được xác thực!");
@@ -98,33 +89,33 @@ public class StartClientApp {
             DialogUtil.showInfoMessage(null, responseObj.getMessage());
         }
 
-        String data = responseObj.getData();
+//        String data = responseObj.getData();
 
-        Gson gson = new Gson();
-        ClientInfo clientInfo = gson.fromJson(data, ClientInfo.class);
+//        Gson gson = new Gson();
+//        ClientInfo clientInfo = gson.fromJson(data, ClientInfo.class);
 
-        AuthenConfig.userLvel = clientInfo.getUserLv();
-        AuthenConfig.merchantUser = EncryptUtil.decrypt(clientInfo.getMerchantUser());
-        AuthenConfig.merchantPassword = EncryptUtil.decrypt(clientInfo.getMerchantPassword());
-        AuthenConfig.apiKey = EncryptUtil.decrypt(clientInfo.getApiKey());
-
-        AppConfig.randomPort();
+//        AuthenConfig.userLvel = clientInfo.getUserLv();
+//        AuthenConfig.merchantUser = EncryptUtil.decrypt(clientInfo.getMerchantUser());
+//        AuthenConfig.merchantPassword = EncryptUtil.decrypt(clientInfo.getMerchantPassword());
+//        AuthenConfig.apiKey = EncryptUtil.decrypt(clientInfo.getApiKey());
+//
+//        AppConfig.randomPort();
 
 //        System.out.println("" + AuthenConfig.userLvel);
 //        System.out.println("" + AuthenConfig.merchantUser);
 //        System.out.println("" + AuthenConfig.merchantPassword);
 //        System.out.println("" + AuthenConfig.apiKey);
         
-        String pathStr = null;
-        if (OSUtil.isWindows()) {
-            pathStr = Configs.CONFIG_FOLDER_PATH + "chromedriver.exe";
-        } else {
-            pathStr = Configs.CONFIG_FOLDER_PATH + "chromedriver";
-        }
-
-        if (pathStr != null) {
-            System.setProperty("webdriver.chrome.driver", pathStr);
-        }
+//        String pathStr = null;
+//        if (OSUtil.isWindows()) {
+//            pathStr = Configs.CONFIG_FOLDER_PATH + "chromedriver.exe";
+//        } else {
+//            pathStr = Configs.CONFIG_FOLDER_PATH + "chromedriver";
+//        }
+//
+//        if (pathStr != null) {
+//            System.setProperty("webdriver.chrome.driver", pathStr);
+//        }
 //        if (!AliexCrawlSvs.getInstance().isHasCookies()) {
 ////            AliexCrawlSvs.getInstance().initDriver();
 ////            MerchantSearchSvs.getInstance().login();

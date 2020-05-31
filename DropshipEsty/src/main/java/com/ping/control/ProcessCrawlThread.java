@@ -5,24 +5,17 @@
  */
 package com.ping.control;
 
-import com.google.gson.Gson;
 import com.models.aliex.store.inputdata.SnakeBaseStoreOrderInfo;
 import com.models.amazon.ProductAmz;
 import com.models.esty.EstyCrawlDataPageBase;
 import com.models.esty.EstyCrawlDataStoreBase;
 import com.models.esty.EstyCrawlProductItem;
-import com.models.esty.EstyScriptCrawl;
-import com.ping.service.crawl.aliex.AliexCrawlSvs;
 import com.ping.service.crawl.esty.EstyCrawlSvs;
 import com.pong.control.ProcessPageDataSvs;
 import com.pong.control.ProcessStoreInfoSvs;
 import com.pong.control.ProcessTransformEstyToAmz;
 import java.util.ArrayList;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 /**
  *
@@ -56,12 +49,18 @@ public class ProcessCrawlThread extends Thread {
             interrupt();
         } catch (Exception ex) {
 
+        } finally {
+            crawlProcessListener.onPushState("", "Stopped");
         }
     }
 
     @Override
     public void run() {
         //
+
+        if (isStop) {
+            return;
+        }
 
 //        EstyCrawlSvs.getInstance().goToPage(baseStoreOrderInfo.getLink());
         EstyCrawlDataStoreBase estyCrawlDataStoreBase = EstyCrawlSvs.getInstance().crawlStoreInfo(baseStoreOrderInfo.getLink());
@@ -74,6 +73,11 @@ public class ProcessCrawlThread extends Thread {
 //        EstyCrawlDataPageBase estyCrawlDataPageBase = EstyCrawlSvs.getInstance().crawlPage();
 
         while (pageCount < estyCrawlDataStoreBase.getPageTotal()) {
+
+            if (isStop) {
+                return;
+            }
+
             EstyCrawlDataPageBase estyCrawlDataPageBase = EstyCrawlSvs.getInstance().crawlPage(estyCrawlDataStoreBase, pageCount);
 
             ArrayList<ProductAmz> listProducts = new ArrayList<>();
@@ -86,16 +90,11 @@ public class ProcessCrawlThread extends Thread {
                     }
                 }
 
-                ProcessPageDataSvs.processPageData(listProducts, "Esty" + pageCount +  ".xlsx");
+                ProcessPageDataSvs.processPageData(listProducts, "Esty" + pageCount + ".xlsx");
             }
-            System.out.println("Finish page " + pageCount);
-            System.out.println("========================");
-            pageCount ++;
+            crawlProcessListener.onPushState("", "Finish page " + pageCount);
+            pageCount++;
         }
 
-    }
-    
-    private boolean isNotStopCondition() {
-        return pageCount < 10;
     }
 }

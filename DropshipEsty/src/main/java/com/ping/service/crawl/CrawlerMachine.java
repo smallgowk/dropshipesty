@@ -6,7 +6,6 @@
 package com.ping.service.crawl;
 
 import com.config.Configs;
-import static com.config.Configs.CACHE_PATH;
 import com.interfaces.CrawlPageInterface;
 import com.ping.StartClientApp;
 import com.ping.service.crawl.aliex.AliexCrawlSvs;

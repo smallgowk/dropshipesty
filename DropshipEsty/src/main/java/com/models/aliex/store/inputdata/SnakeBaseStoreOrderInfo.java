@@ -6,7 +6,7 @@
 package com.models.aliex.store.inputdata;
 
 import com.config.Configs;
-import com.models.esty.EstyVariation;
+import com.utils.StringUtils;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -20,30 +20,62 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
     public String tip;
     public String reasons;
     public String description;
-    public String link1;
-    public String link2;
+    public ArrayList<String> links;
     public String itemType;
     public String department;
-    public Set<String> listColor;
-    public Set<String> listSizes;
+    public String outerMaterialType;
+    public String materialComposition;
+    public int handlingTime;
+//    public Set<String> listColor;
+//    public Set<String> listSizes;
     public float basePrice;
-    public ArrayList<EstyVariation> listVariation;
+//    public ArrayList<EstyVariation> listVariation;
+    ArrayList<String> listBullets;
 
-    public static SnakeBaseStoreOrderInfo createInstance(String linkStore, Set<String> listColor, Set<String> listSizes, String category, String description, String link1, String link2, float basePrice) {
+    public static SnakeBaseStoreOrderInfo createInstance(String linkStore, String brandName,
+            Set<String> listColor, Set<String> listSizes, 
+            String category, String description, 
+            ArrayList<String> links, 
+            float basePrice,
+            ArrayList<String> bullets,
+            String outerMaterialType,
+            String materialComposition,
+            int handlingTime
+            ) {
         SnakeBaseStoreOrderInfo snakeBaseStoreOrderInfo = new SnakeBaseStoreOrderInfo();
         snakeBaseStoreOrderInfo.setLink(linkStore);
+        snakeBaseStoreOrderInfo.setBrand_name(brandName);
         snakeBaseStoreOrderInfo.setDescription(description);
-        snakeBaseStoreOrderInfo.setListColor(listColor);
-        snakeBaseStoreOrderInfo.setListSizes(listSizes);
+//        snakeBaseStoreOrderInfo.setListColor(listColor);
+//        snakeBaseStoreOrderInfo.setListSizes(listSizes);
         snakeBaseStoreOrderInfo.setCategory(category);
-        snakeBaseStoreOrderInfo.setLink1(link1);
-        snakeBaseStoreOrderInfo.setLink2(link2);
+        snakeBaseStoreOrderInfo.setLinks(links);
         snakeBaseStoreOrderInfo.setBasePrice(basePrice);
-        snakeBaseStoreOrderInfo.genListVariation();
+//        snakeBaseStoreOrderInfo.genListVariation();
         snakeBaseStoreOrderInfo.setItemType(Configs.hashMapCateType.get(category));
-        snakeBaseStoreOrderInfo.setDepartment(Configs.hashMapCateType.get(category));
+        snakeBaseStoreOrderInfo.setDepartment(Configs.hashMapDepartmentName.get(category));
+        snakeBaseStoreOrderInfo.setListBullets(bullets);
+        snakeBaseStoreOrderInfo.setOuterMaterialType(outerMaterialType);
+        snakeBaseStoreOrderInfo.setMaterialComposition(materialComposition);
+        snakeBaseStoreOrderInfo.setHandlingTime(handlingTime);
         
         return snakeBaseStoreOrderInfo;
+    }
+
+    public ArrayList<String> getLinks() {
+        return links;
+    }
+
+    public void setLinks(ArrayList<String> links) {
+        this.links = links;
+    }
+
+    public void setListBullets(ArrayList<String> listBullets) {
+        this.listBullets = listBullets;
+    }
+    
+    public ArrayList<String> getListBullets() {
+        return listBullets;
     }
 
     public String getDepartment() {
@@ -53,20 +85,28 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
     public void setDepartment(String department) {
         this.department = department;
     }
-    
-    
-    
-    public void genListVariation() {
-        if (listColor != null && listSizes != null) {
-            listVariation = new ArrayList<>();
-            for (String color : listColor) {
-                for (String size : listSizes) {
-                    float addPrice = Configs.hashMapSizePrice.containsKey(size) ? Configs.hashMapSizePrice.get(size) : 0;
-                    listVariation.add(new EstyVariation(color, size, basePrice + addPrice));
-                }
-            }
-        }
-    }
+
+//    public ArrayList<EstyVariation> getListVariation() {
+//        return listVariation;
+//    }
+//
+//    public void setListVariation(ArrayList<EstyVariation> listVariation) {
+//        this.listVariation = listVariation;
+//    }
+//    
+//    
+//    
+//    public void genListVariation() {
+//        if (listColor != null && listSizes != null) {
+//            listVariation = new ArrayList<>();
+//            for (String color : listColor) {
+//                for (String size : listSizes) {
+//                    float addPrice = Configs.hashMapSizePrice.containsKey(size) ? Configs.hashMapSizePrice.get(size) : 0;
+//                    listVariation.add(new EstyVariation(color, size, basePrice + addPrice));
+//                }
+//            }
+//        }
+//    }
 
     public String getItemType() {
         return itemType;
@@ -76,43 +116,51 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
         this.itemType = itemType;
     }
 
+    public String getOuterMaterialType() {
+        return outerMaterialType;
+    }
+
+    public void setOuterMaterialType(String outerMaterialType) {
+        this.outerMaterialType = outerMaterialType;
+    }
+
+    public String getMaterialComposition() {
+        return materialComposition;
+    }
+
+    public void setMaterialComposition(String materialComposition) {
+        this.materialComposition = materialComposition;
+    }
+
+    public int getHandlingTime() {
+        return handlingTime;
+    }
+
+    public void setHandlingTime(int handlingTime) {
+        this.handlingTime = handlingTime;
+    }
+
     
 
     public String getVariationType() {
         return "colorsize";
     }
 
-    public String getLink1() {
-        return link1;
-    }
-
-    public void setLink1(String link1) {
-        this.link1 = link1;
-    }
-
-    public String getLink2() {
-        return link2;
-    }
-
-    public void setLink2(String link2) {
-        this.link2 = link2;
-    }
-
-    public Set<String> getListColor() {
-        return listColor;
-    }
-
-    public void setListColor(Set<String> listColor) {
-        this.listColor = listColor;
-    }
-
-    public Set<String> getListSizes() {
-        return listSizes;
-    }
-
-    public void setListSizes(Set<String> listSizes) {
-        this.listSizes = listSizes;
-    }
+//    public Set<String> getListColor() {
+//        return listColor;
+//    }
+//
+//    public void setListColor(Set<String> listColor) {
+//        this.listColor = listColor;
+//    }
+//
+//    public Set<String> getListSizes() {
+//        return listSizes;
+//    }
+//
+//    public void setListSizes(Set<String> listSizes) {
+//        this.listSizes = listSizes;
+//    }
 
     public float getBasePrice() {
         return basePrice;
@@ -155,10 +203,31 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
     }
 
     public String[] getImagesUrl(String mainUrl) {
-        return new String[]{
-            mainUrl,
-            link1,
-            link2
-        };
+
+        ArrayList<String> listUrl = new ArrayList<>();
+        listUrl.add(mainUrl);
+        listUrl.addAll(links);
+        
+        return listUrl.toArray(new String[listUrl.size()]);
+//        return new String[]{
+//            mainUrl,
+//            link1,
+//            link2
+//        };
+    }
+    
+    public String prefix;
+    public String getPrefix() {
+
+        if (prefix != null) {
+            return prefix;
+        }
+
+        String brandBrief = StringUtils.getStringBrief(brand_name);
+        if (brandBrief.length() > 2) {
+            brandBrief = brandBrief.substring(0, 2);
+        }
+        prefix = brandBrief.toUpperCase();
+        return prefix;
     }
 }

@@ -103,10 +103,10 @@ public class AWSUtil {
                 }
             }
 
-            if (isSendData && sb != null && sb.length() > 0 && dataType != null) {
-                SendInfoThread sendInfoThread = new SendInfoThread(dataType, sb.toString(), null);
-                sendInfoThread.start();
-            }
+//            if (isSendData && sb != null && sb.length() > 0 && dataType != null) {
+//                SendInfoThread sendInfoThread = new SendInfoThread(dataType, sb.toString(), null);
+//                sendInfoThread.start();
+//            }
 
         } catch (IOException ex) {
 
@@ -205,10 +205,10 @@ public class AWSUtil {
                 }
             }
 
-            if (isSendData && sb != null && sb.length() > 0 && dataType != null) {
-                SendInfoThread sendInfoThread = new SendInfoThread(dataType, sb.toString(), null);
-                sendInfoThread.start();
-            }
+//            if (isSendData && sb != null && sb.length() > 0 && dataType != null) {
+//                SendInfoThread sendInfoThread = new SendInfoThread(dataType, sb.toString(), null);
+//                sendInfoThread.start();
+//            }
 
         } catch (IOException ex) {
 
