@@ -14,6 +14,7 @@ import com.ping.service.crawl.esty.EstyCrawlSvs;
 import com.pong.control.ProcessPageDataSvs;
 import com.pong.control.ProcessStoreInfoSvs;
 import com.pong.control.ProcessTransformEstyToAmz;
+import com.utils.StringUtils;
 import java.util.ArrayList;
 import org.apache.log4j.Logger;
 
@@ -72,29 +73,49 @@ public class ProcessCrawlThread extends Thread {
 //        }
 //        EstyCrawlDataPageBase estyCrawlDataPageBase = EstyCrawlSvs.getInstance().crawlPage();
 
-        while (pageCount < estyCrawlDataStoreBase.getPageTotal()) {
+        while (pageCount <= estyCrawlDataStoreBase.getPageTotal()) {
 
             if (isStop) {
                 return;
             }
-
+            crawlProcessListener.onPushState("", "Đang cào trang " + pageCount);
             EstyCrawlDataPageBase estyCrawlDataPageBase = EstyCrawlSvs.getInstance().crawlPage(estyCrawlDataStoreBase, pageCount);
 
             ArrayList<ProductAmz> listProducts = new ArrayList<>();
 
             if (estyCrawlDataPageBase.getListProductItems() != null) {
+
+                int size = estyCrawlDataPageBase.getListProductItems().size();
+                int count = 1;
+
                 for (EstyCrawlProductItem estyCrawlProductItem : estyCrawlDataPageBase.getListProductItems()) {
+                    if (isStop) {
+                        return;
+                    }
+                    if (baseStoreOrderInfo.isFilterImage) {
+                        crawlProcessListener.onProgress("Hoàn thành " + (int) ((1f * (count++) / size) * 100) + " %");
+
+                        String mailUrl = EstyCrawlSvs.getInstance().crawlMainUrl(estyCrawlProductItem.getDetailUrl());
+                        if (StringUtils.isEmpty(mailUrl)) {
+                            continue;
+                        }
+                        estyCrawlProductItem.setImageUrl(mailUrl);
+                    }
                     ArrayList<ProductAmz> list = ProcessTransformEstyToAmz.transform(estyCrawlProductItem, baseStoreOrderInfo);
                     if (list != null) {
                         listProducts.addAll(list);
                     }
                 }
 
+                crawlProcessListener.onPushState("", "--> Đã hoàn thành trang " + pageCount);
+
                 ProcessPageDataSvs.processPageData(listProducts, "Esty" + pageCount + ".xlsx");
             }
-            crawlProcessListener.onPushState("", "Finish page " + pageCount);
+//            crawlProcessListener.onPushState("", "Finish page " + pageCount);
             pageCount++;
         }
+        
+        crawlProcessListener.onFinishPage("");
 
     }
 }

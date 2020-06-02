@@ -78,6 +78,9 @@ public class EstyCrawlSvs extends CrawlerMachine {
                 if(aElements != null) {
                     String title = aElements.first().attr("title");
                     estyCrawlProductItem.setTitle(title);
+                    
+                    String detailLink = aElements.first().attr("href");
+                    estyCrawlProductItem.setDetailUrl(detailLink);
                 }
 //                
                 Elements elements = element.select("div[class='height-placeholder'] > img");
@@ -133,6 +136,27 @@ public class EstyCrawlSvs extends CrawlerMachine {
         System.out.println("Total Page: " + page);
 
         return estyCrawlDataStoreBase;
+    }
+    
+    public String crawlMainUrl(String detailLink) {
+        Document doc = EstyCrawlSvs.getInstance().processPage(detailLink);
+        Elements items = doc.select("li");
+        String mailUrl = null;
+        int count = 1;
+        for (Element element : items) {
+            if (!StringUtils.isEmpty(element.attr("data-image-id"))) {
+                Elements aElements = element.select("img");
+                if(aElements != null) {
+                    mailUrl = aElements.first().attr("data-src-zoom-image");
+                    if(count == 4) {
+                        break;
+                    }
+                    count++;
+                }
+            }
+        }
+        
+        return mailUrl;
     }
 
     public void logout() {

@@ -29,6 +29,7 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
 //    public Set<String> listColor;
 //    public Set<String> listSizes;
     public float basePrice;
+    public boolean isFilterImage;
 //    public ArrayList<EstyVariation> listVariation;
     ArrayList<String> listBullets;
 
@@ -40,7 +41,8 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
             ArrayList<String> bullets,
             String outerMaterialType,
             String materialComposition,
-            int handlingTime
+            int handlingTime,
+            boolean isFilterImage
             ) {
         SnakeBaseStoreOrderInfo snakeBaseStoreOrderInfo = new SnakeBaseStoreOrderInfo();
         snakeBaseStoreOrderInfo.setLink(linkStore);
@@ -58,8 +60,17 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
         snakeBaseStoreOrderInfo.setOuterMaterialType(outerMaterialType);
         snakeBaseStoreOrderInfo.setMaterialComposition(materialComposition);
         snakeBaseStoreOrderInfo.setHandlingTime(handlingTime);
+        snakeBaseStoreOrderInfo.setIsFilterImage(isFilterImage);
         
         return snakeBaseStoreOrderInfo;
+    }
+
+    public boolean isIsFilterImage() {
+        return isFilterImage;
+    }
+
+    public void setIsFilterImage(boolean isFilterImage) {
+        this.isFilterImage = isFilterImage;
     }
 
     public ArrayList<String> getLinks() {

@@ -171,6 +171,8 @@ public class ClientHomePanel extends BasePanel {
         txtOuterMaterial = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         txtMaterialComposition = new javax.swing.JTextField();
+        lbStatus = new javax.swing.JLabel();
+        checkBoxFilterImage = new javax.swing.JCheckBox();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         txtDesciption = new javax.swing.JTextArea();
@@ -228,6 +230,13 @@ public class ClientHomePanel extends BasePanel {
 
         txtMaterialComposition.setText("100% cotton");
 
+        checkBoxFilterImage.setText("Lọc ảnh");
+        checkBoxFilterImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkBoxFilterImageActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -235,6 +244,7 @@ public class ClientHomePanel extends BasePanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(5, 5, 5)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -248,20 +258,22 @@ public class ClientHomePanel extends BasePanel {
                         .addComponent(jLabel9))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 179, Short.MAX_VALUE)
                         .addComponent(jLabel3))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtMaterialComposition, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtHandlingTime))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtOuterMaterial)
+                            .addComponent(checkBoxFilterImage, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
                             .addComponent(jLabel4)
                             .addComponent(jLabel1))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtMaterialComposition, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
-                            .addComponent(txtHandlingTime))
-                        .addGap(18, 18, 18)
-                        .addComponent(txtOuterMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -294,8 +306,11 @@ public class ClientHomePanel extends BasePanel {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtMaterialComposition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(103, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtMaterialComposition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkBoxFilterImage))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                .addComponent(lbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Nội dung"));
@@ -348,11 +363,11 @@ public class ClientHomePanel extends BasePanel {
                 .addGap(0, 0, 0)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -566,6 +581,7 @@ public class ClientHomePanel extends BasePanel {
             return;
         }
         
+        
         mainController.doAction();
 
     }//GEN-LAST:event_btnStartCrawlActionPerformed
@@ -618,6 +634,11 @@ public class ClientHomePanel extends BasePanel {
             DialogUtil.showErrorMessage(topFrame, "", responseObj.getMessage());
         }
 
+        @Override
+        public void onProgress(String percent) {
+            lbStatus.setText(percent);
+        }
+
     };
 
     ActionListener actionListener = new ActionListener() {
@@ -628,6 +649,7 @@ public class ClientHomePanel extends BasePanel {
 //                    btnStartCrawl.setText("Start");
                     btnStartCrawl.setEnabled(true);
                     btnStop.setEnabled(false);
+                    lbStatus.setText("");
                     break;
                 case RUNNING:
 //                    btnStartCrawl.setText("Pause");
@@ -738,9 +760,15 @@ public class ClientHomePanel extends BasePanel {
         mainController.setCategory(Configs.hashMapCateType.get(select));
     }//GEN-LAST:event_jComboBoxActionPerformed
 
+    private void checkBoxFilterImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxFilterImageActionPerformed
+        // TODO add your handling code here:
+        mainController.setIsFilterImage(checkBoxFilterImage.isSelected());
+    }//GEN-LAST:event_checkBoxFilterImageActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnStartCrawl;
     private javax.swing.JButton btnStop;
+    private javax.swing.JCheckBox checkBoxFilterImage;
     private javax.swing.JComboBox<String> jComboBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -761,6 +789,7 @@ public class ClientHomePanel extends BasePanel {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JLabel lbStatus;
     private javax.swing.JTextField txtBasePrice;
     private javax.swing.JTextField txtBrandName;
     private javax.swing.JTextArea txtBullets;

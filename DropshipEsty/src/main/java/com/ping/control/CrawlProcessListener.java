@@ -14,6 +14,7 @@ import com.ping.tcpclient.ResponseObj;
  */
 public interface CrawlProcessListener {
     public void onPushState(String storeSign, String state);
+    public void onProgress(String percent);
     public void onPushErrorRequest(String storeSign, ResponseObj responseObj);
     public void onStartProcess(String storeSign, String accNo);
     public void onStop(String storeSign);

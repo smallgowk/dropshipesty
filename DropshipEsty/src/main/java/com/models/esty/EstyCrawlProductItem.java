@@ -13,6 +13,7 @@ public class EstyCrawlProductItem {
     public String id;
     public String title;
     public String imageUrl;
+    public String detailUrl;
 
     public String getTitle() {
         return title;
@@ -37,6 +38,16 @@ public class EstyCrawlProductItem {
     public void setId(String id) {
         this.id = id;
     }
+
+    public String getDetailUrl() {
+        return detailUrl;
+    }
+
+    public void setDetailUrl(String detailUrl) {
+        this.detailUrl = detailUrl;
+    }
+    
+    
 
     @Override
     public String toString() {

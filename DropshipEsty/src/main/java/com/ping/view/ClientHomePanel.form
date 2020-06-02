@@ -72,6 +72,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="lbStatus" max="32767" attributes="0"/>
                       <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -88,8 +89,19 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="179" max="32767" attributes="0"/>
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="txtMaterialComposition" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txtHandlingTime" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="txtOuterMaterial" max="32767" attributes="0"/>
+                              <Component id="checkBoxFilterImage" pref="158" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -98,14 +110,6 @@
                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="txtMaterialComposition" alignment="0" pref="165" max="32767" attributes="0"/>
-                              <Component id="txtHandlingTime" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="txtOuterMaterial" min="-2" pref="158" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -146,8 +150,12 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="txtMaterialComposition" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="103" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="txtMaterialComposition" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="checkBoxFilterImage" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="72" max="32767" attributes="0"/>
+                  <Component id="lbStatus" min="-2" pref="17" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -245,6 +253,16 @@
             <Property name="text" type="java.lang.String" value="100% cotton"/>
           </Properties>
         </Component>
+        <Component class="javax.swing.JLabel" name="lbStatus">
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="checkBoxFilterImage">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="L&#x1ecd;c &#x1ea3;nh"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkBoxFilterImageActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="jPanel1">
@@ -284,11 +302,11 @@
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane4" min="-2" pref="108" max="-2" attributes="0"/>
+                  <Component id="jScrollPane4" min="-2" pref="113" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane7" min="-2" pref="133" max="-2" attributes="0"/>
+                  <Component id="jScrollPane7" min="-2" pref="128" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
