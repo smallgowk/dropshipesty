@@ -3493,7 +3493,7 @@ public class ProductAmz {
 
     public void setImageUrl(String[] productImages) {
 
-        main_image_url = MarketUtil.processImgUrl(productImages[0]);
+        main_image_url = productImages[0];
 
         if (productImages.length <= 1) {
             return;
@@ -3507,7 +3507,7 @@ public class ProductAmz {
                 continue;
             }
 
-            url = MarketUtil.processImgUrl(url);
+//            url = MarketUtil.processImgUrl(url);
 
             try {
                 Field field = aClass.getField("other_image_url" + i);

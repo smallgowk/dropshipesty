@@ -5,7 +5,6 @@
  */
 package com.ping.service.crawl.esty;
 
-import com.config.Configs;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.models.aliex.store.AliexStoreInfo;
@@ -17,18 +16,10 @@ import com.models.esty.EstyCrawlDataStoreBase;
 import com.models.esty.EstyCrawlProductItem;
 import com.models.esty.EstyScriptCrawl;
 import com.ping.service.crawl.CrawlerMachine;
-import com.ping.service.crawl.aliex.AliexCrawlSvs;
 import com.utils.CookieUtil;
 import com.utils.EncryptUtil;
 import com.utils.StringUtils;
-import com.utils.Utils;
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

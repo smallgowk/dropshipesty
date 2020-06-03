@@ -47,18 +47,8 @@ public class ProcessTransformEstyToAmz {
         ArrayList<ProductAmz> results = new ArrayList<>();
 
         ProductAmz productAmz = createBasicProductAmz(estyCrawlProductItem, snakeBaseStoreOrderInfo);
-
-//        productAmz.setItem_name(AWSUtil.processTrademarkAndBrandname(productAmz.getItem_name()));
-
-        productAmz.setGeneric_keywords(estyCrawlProductItem.getTitle());
-
-//        productAmz.genBulletPoints();
         results.add(productAmz);
 
-        productAmz.genDescriptions(snakeBaseStoreOrderInfo.getDescription());
-
-//        ArrayList<ProductAmz> listChilds = createChilds(estyCrawlProductItem, snakeBaseStoreOrderInfo, productAmz);
-//        results.addAll(listChilds);
         return results;
     }
 
@@ -337,6 +327,9 @@ public class ProcessTransformEstyToAmz {
         productAmz.setMaterial_type("other");
         productAmz.setManufacturer(productAmz.getBrand_name());
         productAmz.setStandard_price("" + Utils.getCEOPrice(snakeBaseStoreOrderInfo.getBasePrice()));
+        
+        productAmz.setGeneric_keywords(estyCrawlProductItem.getTitle());
+        productAmz.genDescriptions(snakeBaseStoreOrderInfo.getDescription());
         
 //        productAmz.setVariationTheme(snakeBaseStoreOrderInfo.getVariationType());
 

@@ -10,11 +10,8 @@ import static com.config.Configs.listCategories;
 import com.ping.control.ActionListener;
 import com.ping.control.CrawlProcessListener;
 import com.ping.control.MainController;
-import com.models.state.ProcessState;
 import com.models.aliex.store.BaseStoreInfo;
 import com.models.aliex.store.inputdata.BaseStoreOrderInfo;
-import com.models.aliex.store.inputdata.SnakeBaseStoreOrderInfo;
-import com.ping.service.crawl.aliex.AliexCrawlSvs;
 import com.ping.tcpclient.ResponseObj;
 import com.utils.DialogUtil;
 import java.awt.Dimension;
@@ -22,7 +19,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -55,32 +51,28 @@ public class ClientHomePanel extends BasePanel {
         setTitle("Home");
         setMenuActionCommand("MainHome");
         initData();
+        
+        fakeData();
 
     }
     
     public void fakeData() {
-        txtStoreLink.setText("https://www.etsy.com/shop/cormaidesign");
-        txtSubImageLinks.setText("https://cdn.pixabay.com/photo/2015/12/01/20/28/road-1072823_960_720.jpg\n"
-                + "https://image.shutterstock.com/image-photo/fabulous-spring-view-cameo-island-600w-790346161.jpg");
+//        txtStoreLink.setText("https://www.etsy.com/shop/cormaidesign");
+        txtStoreLink.setText("dropshiptool.vn");
         
-        Set<String> colors = new HashSet<>();
-        for(String color : Configs.listColor) {
-            colors.add(color);
-        }
         
-        Set<String> sizes = new HashSet<>();
-//        sizes.add(Configs.listSize[0]);
-        for(String size : Configs.listSize) {
-            sizes.add(size);
-        }
 //        mainController.setListColor(colors);
 //        mainController.setListSizes(sizes);
         
 //        txtColors.setText(mainController.getColorStr());
 //        txtSizes.setText(mainController.getSizeStr());
-        txtBrandName.setText("Fake Brand");
-        txtDesciption.setText("Fake Description");
+        txtDesciption.setText("The customer is best");
+        txtBullets.setText("The customer is best");
+        txtSubImageLinks.setText("http://dropshiptool.vn/IMG-0989.jpg\n" +
+"http://dropshiptool.vn/IMG-0987.jpg\n" +
+"http://dropshiptool.vn/IMG-0988.jpg");
         txtBasePrice.setText("23");
+        txtImageFolder.setText("D:\\ImageTest");
     }
 
     public void initData() {
@@ -171,7 +163,7 @@ public class ClientHomePanel extends BasePanel {
         txtMaterialComposition = new javax.swing.JTextField();
         lbStatus = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtImageFolder = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -226,9 +218,14 @@ public class ClientHomePanel extends BasePanel {
 
         txtMaterialComposition.setText("100% cotton");
 
-        jLabel2.setText("Image Folder");
+        jLabel2.setText("Image Folder (Dành cho cào data tự tạo)");
 
         jButton1.setText("Browse...");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -264,8 +261,8 @@ public class ClientHomePanel extends BasePanel {
                             .addComponent(jLabel1))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtImageFolder)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1)))
                 .addContainerGap())
         );
@@ -280,9 +277,9 @@ public class ClientHomePanel extends BasePanel {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtImageFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
-                .addGap(7, 7, 7)
+                .addGap(50, 50, 50)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -302,7 +299,7 @@ public class ClientHomePanel extends BasePanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtOuterMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtMaterialComposition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(lbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -434,29 +431,25 @@ public class ClientHomePanel extends BasePanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(4, 4, 4)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -488,19 +481,19 @@ public class ClientHomePanel extends BasePanel {
 
     private void btnStartCrawlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartCrawlActionPerformed
 
-        if (txtStoreLink.getText().isEmpty()) {
+        if (txtStoreLink.getText().trim().isEmpty()) {
             DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập link store!");
             return;
         }
         
-        mainController.setLinkStore(txtStoreLink.getText());
+        mainController.setLinkStore(txtStoreLink.getText().trim());
         
-        if (txtBrandName.getText().isEmpty()) {
+        if (txtBrandName.getText().trim().isEmpty()) {
             DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập brand name!");
             return;
         }
         
-        mainController.setBrandName(txtBrandName.getText());
+        mainController.setBrandName(txtBrandName.getText().trim());
         
 //        if(mainController.getListColor() == null) {
 //            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng chọn màu!");
@@ -512,23 +505,23 @@ public class ClientHomePanel extends BasePanel {
 //            return;
 //        }
         
-        if (txtDesciption.getText().isEmpty()) {
+        if (txtDesciption.getText().trim().isEmpty()) {
             DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập description!");
             return;
         }
-        mainController.setDescription(txtDesciption.getText());
+        mainController.setDescription(txtDesciption.getText().trim());
         
-        if (txtSubImageLinks.getText().isEmpty()) {
+        if (txtSubImageLinks.getText().trim().isEmpty()) {
             DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập link ảnh!");
             return;
         }
-        mainController.setImageLinks(txtSubImageLinks.getText());
+        mainController.setImageLinks(txtSubImageLinks.getText().trim());
         
-        if (txtBasePrice.getText().isEmpty()) {
+        if (txtBasePrice.getText().trim().isEmpty()) {
             DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập giá !");
             return;
         }
-        String priceStr = txtBasePrice.getText();
+        String priceStr = txtBasePrice.getText().trim();
         try {
             float price = Float.parseFloat(priceStr);
             mainController.setBasePrice(price);
@@ -542,23 +535,25 @@ public class ClientHomePanel extends BasePanel {
 //        mainController.setCategory(Configs.hashMapCateType.get(select));
         mainController.setCategory(select);
         
-        if (txtBullets.getText().isEmpty()) {
+        if (txtBullets.getText().trim().isEmpty()) {
             DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập bullet points !");
             return;
         }
-        mainController.setBullets(txtBullets.getText());
+        mainController.setBullets(txtBullets.getText().trim());
         
-        if (txtOuterMaterial.getText().isEmpty()) {
+        if (txtOuterMaterial.getText().trim().isEmpty()) {
             DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập Outer Material (VD: Cashmere)");
             return;
         }
-        mainController.setOuterMaterialType(txtOuterMaterial.getText());
+        mainController.setOuterMaterialType(txtOuterMaterial.getText().trim());
         
-        if (txtMaterialComposition.getText().isEmpty()) {
+        if (txtMaterialComposition.getText().trim().isEmpty()) {
             DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập Material Composition (VD: 100% cotton)");
             return;
         }
-        mainController.setMaterialComposition(txtMaterialComposition.getText());
+        mainController.setMaterialComposition(txtMaterialComposition.getText().trim());
+        
+        mainController.setImageFolder(txtImageFolder.getText().trim());
         
         mainController.doAction();
     }//GEN-LAST:event_btnStartCrawlActionPerformed
@@ -737,6 +732,26 @@ public class ClientHomePanel extends BasePanel {
         mainController.setCategory(Configs.hashMapCateType.get(select));
     }//GEN-LAST:event_jComboBoxActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        choosertitle = "Select folder:";
+        chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new java.io.File("."));
+        chooser.setDialogTitle(choosertitle);
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        //
+        // disable the "All files" option.
+        //
+        chooser.setAcceptAllFileFilterUsed(false);
+        //
+        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            String path = chooser.getSelectedFile().getPath();
+            txtImageFolder.setText(path);
+        } else {
+            System.out.println("No Selection ");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnStartCrawl;
     private javax.swing.JButton btnStop;
@@ -761,12 +776,12 @@ public class ClientHomePanel extends BasePanel {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lbStatus;
     private javax.swing.JTextField txtBasePrice;
     private javax.swing.JTextField txtBrandName;
     private javax.swing.JTextArea txtBullets;
     private javax.swing.JTextArea txtDesciption;
+    private javax.swing.JTextField txtImageFolder;
     private javax.swing.JTextArea txtLogs;
     private javax.swing.JTextField txtMaterialComposition;
     private javax.swing.JTextField txtOuterMaterial;

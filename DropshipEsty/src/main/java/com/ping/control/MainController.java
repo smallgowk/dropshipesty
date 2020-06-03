@@ -39,6 +39,7 @@ public class MainController {
     float basePrice;
     public String outerMaterialType;
     public String materialComposition;
+    public String imageFolder;
 
 //    public Set<String> getListColor() {
 //        return listColor;
@@ -56,6 +57,16 @@ public class MainController {
 //        this.listSizes = listSizes;
 //    }
 
+    public String getImageFolder() {
+        return imageFolder;
+    }
+
+    public void setImageFolder(String imageFolder) {
+        this.imageFolder = imageFolder;
+    }
+
+    
+    
     public String getCategory() {
         return category;
     }
@@ -152,7 +163,15 @@ public class MainController {
         if(null != state) switch (state) {
             case STOP:
                 System.out.println("" + this.toString());
-                SnakeBaseStoreOrderInfo baseStoreOrderInfo = SnakeBaseStoreOrderInfo.createInstance(linkStore, brandName,
+                String ip = null;
+                String link = null;
+                if(!linkStore.contains("etsy.com")) {
+                    ip = linkStore;
+                } else {
+                    link = linkStore;
+                }
+                
+                SnakeBaseStoreOrderInfo baseStoreOrderInfo = SnakeBaseStoreOrderInfo.createInstance(link, ip, imageFolder, brandName,
                         null, null, 
                         category, description, 
                         links,

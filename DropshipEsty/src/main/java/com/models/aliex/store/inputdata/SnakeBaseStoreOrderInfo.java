@@ -7,8 +7,14 @@ package com.models.aliex.store.inputdata;
 
 import com.config.Configs;
 import com.utils.StringUtils;
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -30,8 +36,12 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
     public float basePrice;
 //    public ArrayList<EstyVariation> listVariation;
     ArrayList<String> listBullets;
+    
+    public String imageFolder;
+    public String imageFolderName;
+    public String ip;
 
-    public static SnakeBaseStoreOrderInfo createInstance(String linkStore, String brandName,
+    public static SnakeBaseStoreOrderInfo createInstance(String linkStore, String ip, String imageFolder, String brandName,
             Set<String> listColor, Set<String> listSizes, 
             String category, String description, 
             ArrayList<String> links, 
@@ -42,6 +52,8 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
             ) {
         SnakeBaseStoreOrderInfo snakeBaseStoreOrderInfo = new SnakeBaseStoreOrderInfo();
         snakeBaseStoreOrderInfo.setLink(linkStore);
+        snakeBaseStoreOrderInfo.setIp(ip);
+        snakeBaseStoreOrderInfo.setImageFolder(imageFolder);
         snakeBaseStoreOrderInfo.setBrand_name(brandName);
         snakeBaseStoreOrderInfo.setDescription(description);
 //        snakeBaseStoreOrderInfo.setListColor(listColor);
@@ -57,6 +69,39 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
         snakeBaseStoreOrderInfo.setMaterialComposition(materialComposition);
         
         return snakeBaseStoreOrderInfo;
+    }
+    
+    public boolean isEtsy() {
+        return StringUtils.isEmpty(ip);
+    }
+
+    public String getImageFolder() {
+        return imageFolder;
+    }
+
+    public void setImageFolder(String imageFolder) {
+        this.imageFolder = imageFolder;
+        
+        File file = new File(imageFolder);
+        if(file.exists()) {
+            imageFolderName = file.getName();
+        }
+    }
+
+    public String getImageFolderName() {
+        return imageFolderName;
+    }
+    
+    public String genMainUrlFromIp(String fileName) {
+        return "http://" + ip + "/" + imageFolderName + "/" + fileName.replaceAll(Pattern.quote(" "), "%20");
+    }
+    
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
     public ArrayList<String> getLinks() {

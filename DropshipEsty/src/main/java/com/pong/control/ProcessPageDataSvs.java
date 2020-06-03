@@ -46,16 +46,10 @@ public class ProcessPageDataSvs {
     }
     
     public static void processPageData(ArrayList<ProductAmz> listProducts, String fileName) {
+        
+        if(listProducts == null || listProducts.isEmpty()) return;
+        
         try {
-//            System.out.println("" + listProducts.size());
-//            int totalProduct = 0;
-//            
-//            ArrayList<ProductAmz> list = new ArrayList<>();
-//            for(ProductAmz productAmz : listProducts) {
-//                
-//            }
-            
-            
             ExcelUtils.saveListProductsToExcel(listProducts, fileName, Configs.excelSampleFilePath);
         } catch (EncryptedDocumentException | InvalidFormatException | IOException ex) {
             Logger.getLogger(CrawlPageServerThread.class.getName()).log(Level.SEVERE, null, ex);
