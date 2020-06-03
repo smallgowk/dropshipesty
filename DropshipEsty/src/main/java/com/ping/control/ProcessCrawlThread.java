@@ -85,22 +85,22 @@ public class ProcessCrawlThread extends Thread {
 
             if (estyCrawlDataPageBase.getListProductItems() != null) {
 
-                int size = estyCrawlDataPageBase.getListProductItems().size();
-                int count = 1;
+//                int size = estyCrawlDataPageBase.getListProductItems().size();
+//                int count = 1;
 
                 for (EstyCrawlProductItem estyCrawlProductItem : estyCrawlDataPageBase.getListProductItems()) {
                     if (isStop) {
                         return;
                     }
-                    if (baseStoreOrderInfo.isFilterImage) {
-                        crawlProcessListener.onProgress("Hoàn thành " + (int) ((1f * (count++) / size) * 100) + " %");
-
-                        String mailUrl = EstyCrawlSvs.getInstance().crawlMainUrl(estyCrawlProductItem.getDetailUrl());
-                        if (StringUtils.isEmpty(mailUrl)) {
-                            continue;
-                        }
-                        estyCrawlProductItem.setImageUrl(mailUrl);
-                    }
+//                    if (baseStoreOrderInfo.isFilterImage) {
+//                        crawlProcessListener.onProgress("Hoàn thành " + (int) ((1f * (count++) / size) * 100) + " %");
+//
+//                        String mailUrl = EstyCrawlSvs.getInstance().crawlMainUrl(estyCrawlProductItem.getDetailUrl());
+//                        if (StringUtils.isEmpty(mailUrl)) {
+//                            continue;
+//                        }
+//                        estyCrawlProductItem.setImageUrl(mailUrl);
+//                    }
                     ArrayList<ProductAmz> list = ProcessTransformEstyToAmz.transform(estyCrawlProductItem, baseStoreOrderInfo);
                     if (list != null) {
                         listProducts.addAll(list);

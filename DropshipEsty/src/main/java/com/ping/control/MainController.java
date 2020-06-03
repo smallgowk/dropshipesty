@@ -39,8 +39,6 @@ public class MainController {
     float basePrice;
     public String outerMaterialType;
     public String materialComposition;
-    public int handlingTime;
-    public boolean isFilterImage;
 
 //    public Set<String> getListColor() {
 //        return listColor;
@@ -110,16 +108,6 @@ public class MainController {
         this.linkStore = linkStore;
     }
 
-    public boolean isIsFilterImage() {
-        return isFilterImage;
-    }
-
-    public void setIsFilterImage(boolean isFilterImage) {
-        this.isFilterImage = isFilterImage;
-    }
-    
-    
-    
 //    public String getColorStr() {
 //        if(listColor == null) return "";
 //        
@@ -171,9 +159,7 @@ public class MainController {
                         basePrice,
                         bullets,
                         outerMaterialType,
-                        materialComposition,
-                        handlingTime,
-                        isFilterImage
+                        materialComposition
                         );
                 startCrawl(baseStoreOrderInfo);
                 break;
@@ -222,12 +208,6 @@ public class MainController {
     public void setMaterialComposition(String materialComposition) {
         this.materialComposition = materialComposition;
     }
-
-    public void setHandlingTime(int handlingTime) {
-        this.handlingTime = handlingTime;
-    }
-
-    
 
     public void stopCrawl() {
         if (processCrawlThread != null) {

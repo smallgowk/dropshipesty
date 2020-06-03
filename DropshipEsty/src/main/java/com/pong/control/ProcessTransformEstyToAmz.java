@@ -298,7 +298,7 @@ public class ProcessTransformEstyToAmz {
         productAmz.setExternal_product_id_type("UPC");
         productAmz.setFeed_product_type("shirt");
         productAmz.setQuantity("200");
-        productAmz.setFulfillment_latency("" + snakeBaseStoreOrderInfo.getHandlingTime());
+        productAmz.setFulfillment_latency("5");
         productAmz.setMfg_minimum("10");
         productAmz.setUnit_count("1");
         productAmz.setUnit_count_type("PC");

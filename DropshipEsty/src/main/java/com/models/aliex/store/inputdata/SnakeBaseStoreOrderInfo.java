@@ -25,11 +25,9 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
     public String department;
     public String outerMaterialType;
     public String materialComposition;
-    public int handlingTime;
 //    public Set<String> listColor;
 //    public Set<String> listSizes;
     public float basePrice;
-    public boolean isFilterImage;
 //    public ArrayList<EstyVariation> listVariation;
     ArrayList<String> listBullets;
 
@@ -40,9 +38,7 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
             float basePrice,
             ArrayList<String> bullets,
             String outerMaterialType,
-            String materialComposition,
-            int handlingTime,
-            boolean isFilterImage
+            String materialComposition
             ) {
         SnakeBaseStoreOrderInfo snakeBaseStoreOrderInfo = new SnakeBaseStoreOrderInfo();
         snakeBaseStoreOrderInfo.setLink(linkStore);
@@ -59,18 +55,8 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
         snakeBaseStoreOrderInfo.setListBullets(bullets);
         snakeBaseStoreOrderInfo.setOuterMaterialType(outerMaterialType);
         snakeBaseStoreOrderInfo.setMaterialComposition(materialComposition);
-        snakeBaseStoreOrderInfo.setHandlingTime(handlingTime);
-        snakeBaseStoreOrderInfo.setIsFilterImage(isFilterImage);
         
         return snakeBaseStoreOrderInfo;
-    }
-
-    public boolean isIsFilterImage() {
-        return isFilterImage;
-    }
-
-    public void setIsFilterImage(boolean isFilterImage) {
-        this.isFilterImage = isFilterImage;
     }
 
     public ArrayList<String> getLinks() {
@@ -142,16 +128,6 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
     public void setMaterialComposition(String materialComposition) {
         this.materialComposition = materialComposition;
     }
-
-    public int getHandlingTime() {
-        return handlingTime;
-    }
-
-    public void setHandlingTime(int handlingTime) {
-        this.handlingTime = handlingTime;
-    }
-
-    
 
     public String getVariationType() {
         return "colorsize";
