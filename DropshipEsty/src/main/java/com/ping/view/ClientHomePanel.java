@@ -42,35 +42,32 @@ public class ClientHomePanel extends BasePanel {
     JPanel controls;
 
 //    ProcessPannel processPannel;
-
     public ClientHomePanel() {
         initComponents();
-        
+
         jComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(listCategories));
-        
+
         setTitle("Home");
         setMenuActionCommand("MainHome");
         initData();
-        
+
         fakeData();
 
     }
-    
+
     public void fakeData() {
 //        txtStoreLink.setText("https://www.etsy.com/shop/cormaidesign");
         txtStoreLink.setText("dropshiptool.vn");
-        
-        
+
 //        mainController.setListColor(colors);
 //        mainController.setListSizes(sizes);
-        
 //        txtColors.setText(mainController.getColorStr());
 //        txtSizes.setText(mainController.getSizeStr());
         txtDesciption.setText("The customer is best");
         txtBullets.setText("The customer is best");
-        txtSubImageLinks.setText("http://dropshiptool.vn/IMG-0989.jpg\n" +
-"http://dropshiptool.vn/IMG-0987.jpg\n" +
-"http://dropshiptool.vn/IMG-0988.jpg");
+        txtSubImageLinks.setText("http://dropshiptool.vn/IMG-0989.jpg\n"
+                + "http://dropshiptool.vn/IMG-0987.jpg\n"
+                + "http://dropshiptool.vn/IMG-0988.jpg");
         txtBasePrice.setText("23");
         txtImageFolder.setText("D:\\ImageTest");
     }
@@ -130,7 +127,6 @@ public class ClientHomePanel extends BasePanel {
 //                statePannel.validate();
 //            }
 //        });
-
 //        fakeData();
     }
 
@@ -485,16 +481,16 @@ public class ClientHomePanel extends BasePanel {
             DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập link store!");
             return;
         }
-        
+
         mainController.setLinkStore(txtStoreLink.getText().trim());
-        
+
         if (txtBrandName.getText().trim().isEmpty()) {
             DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập brand name!");
             return;
         }
-        
+
         mainController.setBrandName(txtBrandName.getText().trim());
-        
+
 //        if(mainController.getListColor() == null) {
 //            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng chọn màu!");
 //            return;
@@ -504,19 +500,18 @@ public class ClientHomePanel extends BasePanel {
 //            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng chọn size!");
 //            return;
 //        }
-        
         if (txtDesciption.getText().trim().isEmpty()) {
             DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập description!");
             return;
         }
         mainController.setDescription(txtDesciption.getText().trim());
-        
+
         if (txtSubImageLinks.getText().trim().isEmpty()) {
             DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập link ảnh!");
             return;
         }
         mainController.setImageLinks(txtSubImageLinks.getText().trim());
-        
+
         if (txtBasePrice.getText().trim().isEmpty()) {
             DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập giá !");
             return;
@@ -525,7 +520,7 @@ public class ClientHomePanel extends BasePanel {
         try {
             float price = Float.parseFloat(priceStr);
             mainController.setBasePrice(price);
-            
+
         } catch (NumberFormatException ex) {
             DialogUtil.showErrorMessage(topFrame, "", "Thông tin giá không hợp lệ !");
             return;
@@ -534,27 +529,33 @@ public class ClientHomePanel extends BasePanel {
         String select = (String) jComboBox.getSelectedItem();
 //        mainController.setCategory(Configs.hashMapCateType.get(select));
         mainController.setCategory(select);
-        
+
         if (txtBullets.getText().trim().isEmpty()) {
             DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập bullet points !");
             return;
         }
         mainController.setBullets(txtBullets.getText().trim());
-        
+
         if (txtOuterMaterial.getText().trim().isEmpty()) {
             DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập Outer Material (VD: Cashmere)");
             return;
         }
         mainController.setOuterMaterialType(txtOuterMaterial.getText().trim());
-        
+
         if (txtMaterialComposition.getText().trim().isEmpty()) {
             DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập Material Composition (VD: 100% cotton)");
             return;
         }
         mainController.setMaterialComposition(txtMaterialComposition.getText().trim());
-        
-        mainController.setImageFolder(txtImageFolder.getText().trim());
-        
+
+        if (!mainController.isEtsy()) {
+            if (txtImageFolder.getText().trim().isEmpty()) {
+                DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập đường dẫn ảnh !");
+                return;
+            }
+            mainController.setImageFolder(txtImageFolder.getText().trim());
+        }
+
         mainController.doAction();
     }//GEN-LAST:event_btnStartCrawlActionPerformed
 
@@ -591,7 +592,6 @@ public class ClientHomePanel extends BasePanel {
 //            LoginThread loginThread = new LoginThread(true, currentUrl);
 //            loginThread.start();
 //            AliexCrawlSvs.getInstance().goToLogin(currentUrl);
-
 //            DialogUtil.showInfoMessage(null, "Vui lòng thực hiện đăng nhập lại sau đó ấn Resume!");
         }
 
@@ -599,6 +599,8 @@ public class ClientHomePanel extends BasePanel {
         public void onFinishPage(String storeSign) {
             mainController.finish();
             actionListener.onFinish(MainController.STATE.STOP);
+            txtLogs.append("Done!");
+            txtLogs.append("\n");
         }
 
         @Override
@@ -724,6 +726,8 @@ public class ClientHomePanel extends BasePanel {
 
         btnStartCrawl.setText("Start");
         btnStop.setEnabled(false);
+        txtLogs.append("Stopped");
+        txtLogs.append("\n");
     }//GEN-LAST:event_btnStopActionPerformed
 
     private void jComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxActionPerformed

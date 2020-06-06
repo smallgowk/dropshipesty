@@ -52,7 +52,7 @@ public class ProcessCrawlThread extends Thread {
         } catch (Exception ex) {
 
         } finally {
-            crawlProcessListener.onPushState("", "Stopped");
+//            crawlProcessListener.onPushState("", "Stopped");
         }
     }
 

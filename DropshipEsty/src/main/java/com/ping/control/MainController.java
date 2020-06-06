@@ -6,6 +6,7 @@
 package com.ping.control;
 
 import com.models.aliex.store.inputdata.SnakeBaseStoreOrderInfo;
+import com.utils.StringUtils;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -17,20 +18,21 @@ import java.util.regex.Pattern;
 public class MainController {
 
     public enum STATE {
-        STOP,RUNNING,PAUSING
+        STOP, RUNNING, PAUSING
     }
-       
+
     public STATE state = STATE.STOP;
-    
+
     public int currentIndex;
 
     ProcessCrawlThread processCrawlThread;
     CrawlProcessListener crawlProcessListener;
     ActionListener actionListener;
-    
+
 //    Set<String> listColor;
 //    Set<String> listSizes;
     String linkStore;
+    String ip;
     String brandName;
     String category;
     String description;
@@ -56,7 +58,6 @@ public class MainController {
 //    public void setListSizes(Set<String> listSizes) {
 //        this.listSizes = listSizes;
 //    }
-
     public String getImageFolder() {
         return imageFolder;
     }
@@ -65,8 +66,6 @@ public class MainController {
         this.imageFolder = imageFolder;
     }
 
-    
-    
     public String getCategory() {
         return category;
     }
@@ -85,24 +84,24 @@ public class MainController {
 
     public void setImageLinks(String linkData) {
         String[] linkParts = linkData.split(Pattern.quote("\n"));
-        
+
         links = new ArrayList<>();
-        
-        for(String s : linkParts) {
+
+        for (String s : linkParts) {
             links.add(s);
         }
     }
-    
+
     public void setBullets(String bulletData) {
         String[] bulletParts = bulletData.split(Pattern.quote("\n"));
-        
+
         bullets = new ArrayList<>();
-        
-        for(String s : bulletParts) {
+
+        for (String s : bulletParts) {
             bullets.add(s);
         }
     }
-    
+
     public float getBasePrice() {
         return basePrice;
     }
@@ -116,7 +115,14 @@ public class MainController {
     }
 
     public void setLinkStore(String linkStore) {
-        this.linkStore = linkStore;
+
+        if (!linkStore.contains("etsy.com")) {
+            ip = linkStore;
+            this.linkStore = null;
+        } else {
+            ip = null;
+            this.linkStore = linkStore;
+        }
     }
 
 //    public String getColorStr() {
@@ -149,7 +155,6 @@ public class MainController {
 //        
 //        return sb.toString();
 //    }
-
     public void setCrawlProcessListener(CrawlProcessListener crawlProcessListener) {
         this.crawlProcessListener = crawlProcessListener;
     }
@@ -159,42 +164,41 @@ public class MainController {
     }
 
     public void doAction() {
-        
-        if(null != state) switch (state) {
-            case STOP:
-                System.out.println("" + this.toString());
-                String ip = null;
-                String link = null;
-                if(!linkStore.contains("etsy.com")) {
-                    ip = linkStore;
-                } else {
-                    link = linkStore;
-                }
-                
-                SnakeBaseStoreOrderInfo baseStoreOrderInfo = SnakeBaseStoreOrderInfo.createInstance(link, ip, imageFolder, brandName,
-                        null, null, 
-                        category, description, 
-                        links,
-                        basePrice,
-                        bullets,
-                        outerMaterialType,
-                        materialComposition
-                        );
-                startCrawl(baseStoreOrderInfo);
-                break;
-            case RUNNING:
+
+        if (null != state) {
+            switch (state) {
+                case STOP:
+                    System.out.println("" + this.toString());
+
+                    SnakeBaseStoreOrderInfo baseStoreOrderInfo = SnakeBaseStoreOrderInfo.createInstance(linkStore, ip, imageFolder, brandName,
+                            null, null,
+                            category, description,
+                            links,
+                            basePrice,
+                            bullets,
+                            outerMaterialType,
+                            materialComposition
+                    );
+                    startCrawl(baseStoreOrderInfo);
+                    break;
+                case RUNNING:
 //                pause();
-                break;
-            case PAUSING:
+                    break;
+                case PAUSING:
 //                resume();
-                break;
-            default:
-                break;
+                    break;
+                default:
+                    break;
+            }
         }
     }
-    
+
     public boolean isStop() {
         return state == STATE.STOP;
+    }
+
+    public boolean isEtsy() {
+        return StringUtils.isEmpty(ip);
     }
 
     public void startCrawl(SnakeBaseStoreOrderInfo baseStoreOrderInfo) {
@@ -202,12 +206,12 @@ public class MainController {
         if (processCrawlThread != null) {
             processCrawlThread.doStop();
         }
-        
+
         processCrawlThread = new ProcessCrawlThread(baseStoreOrderInfo, crawlProcessListener);
         processCrawlThread.start();
 
         state = STATE.RUNNING;
-        
+
         actionListener.onFinish(state);
 
     }
@@ -232,22 +236,22 @@ public class MainController {
         if (processCrawlThread != null) {
             processCrawlThread.doStop();
         }
-        
+
         state = STATE.STOP;
-        
+
         actionListener.onFinish(state);
-        
+
     }
-    
+
     public void finish() {
         if (processCrawlThread != null) {
             processCrawlThread.doStop();
         }
-        
+
         currentIndex = 0;
         state = STATE.STOP;
     }
-    
+
 //    public void pause() {
 //        if (processCrawlThread != null) {
 //            processCrawlThread.doStop();
@@ -260,7 +264,6 @@ public class MainController {
 //        
 //        actionListener.onFinish(state);
 //    }
-    
 //    public void resume() {
 //        if (processCrawlThread != null) {
 //            processCrawlThread.doStop();
@@ -273,7 +276,6 @@ public class MainController {
 //        
 //        actionListener.onFinish(state);
 //    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -286,5 +288,4 @@ public class MainController {
         return sb.toString(); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
 }

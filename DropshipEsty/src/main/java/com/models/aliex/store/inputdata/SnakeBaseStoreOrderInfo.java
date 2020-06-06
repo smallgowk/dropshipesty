@@ -80,6 +80,9 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
     }
 
     public void setImageFolder(String imageFolder) {
+        
+        if(imageFolder == null) return;
+        
         this.imageFolder = imageFolder;
         
         File file = new File(imageFolder);
