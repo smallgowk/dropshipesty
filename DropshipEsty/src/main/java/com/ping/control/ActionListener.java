@@ -12,7 +12,7 @@ import com.ping.control.MainController.STATE;
  * @author duyuno
  */
 public interface ActionListener {
-    public void onFinish(STATE state);
+    public void onStateChange(STATE state);
     public void onNotAuthen();
     public void onLicenseInvalid();
 }

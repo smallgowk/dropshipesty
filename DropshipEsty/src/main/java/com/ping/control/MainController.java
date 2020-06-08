@@ -39,8 +39,8 @@ public class MainController {
     ArrayList<String> links;
     ArrayList<String> bullets;
     float basePrice;
-    public String outerMaterialType;
-    public String materialComposition;
+    public String outerMaterialType = "Cotton";
+    public String materialComposition = "100% cotton";
     public String imageFolder;
 
 //    public Set<String> getListColor() {
@@ -196,9 +196,17 @@ public class MainController {
     public boolean isStop() {
         return state == STATE.STOP;
     }
+    
+    public boolean isRunning() {
+        return state == STATE.RUNNING;
+    }
 
     public boolean isEtsy() {
         return StringUtils.isEmpty(ip);
+    }
+    
+    public void changeState(STATE state) {
+        this.state = state;
     }
 
     public void startCrawl(SnakeBaseStoreOrderInfo baseStoreOrderInfo) {
@@ -212,7 +220,7 @@ public class MainController {
 
         state = STATE.RUNNING;
 
-        actionListener.onFinish(state);
+        actionListener.onStateChange(state);
 
     }
 
@@ -239,7 +247,7 @@ public class MainController {
 
         state = STATE.STOP;
 
-        actionListener.onFinish(state);
+        actionListener.onStateChange(state);
 
     }
 

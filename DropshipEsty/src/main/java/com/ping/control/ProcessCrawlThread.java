@@ -53,6 +53,7 @@ public class ProcessCrawlThread extends Thread {
 
         } finally {
 //            crawlProcessListener.onPushState("", "Stopped");
+//            crawlProcessListener.onFinishPage("");
         }
     }
 
@@ -61,6 +62,7 @@ public class ProcessCrawlThread extends Thread {
         //
 
         if (isStop) {
+            crawlProcessListener.onFinishPage("");
             return;
         }
         

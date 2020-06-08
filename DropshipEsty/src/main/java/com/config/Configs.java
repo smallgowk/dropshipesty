@@ -164,16 +164,16 @@ public class Configs {
 //        hashMapCateType.put("Men Hoodie", "Clothing, Shoes & Jewelry/Men/Clothing/Active/Active Hoodies");
 //        hashMapCateType.put("Women Hoodie", "Clothing, Shoes & Jewelry/Women/Clothing/Active/Active Hoodies");
         
-        hashMapCateType.put("Men T-Shirt", "fashion-t-shirts");
+        hashMapCateType.put("Men T-Shirt", "novelty-t-shirts");
         hashMapDepartmentName.put("Men T-Shirt", "mens");
         
-        hashMapCateType.put("Women T-Shirt", "fashion-t-shirts");
+        hashMapCateType.put("Women T-Shirt", "novelty-t-shirts");
         hashMapDepartmentName.put("Women T-Shirt", "girls");
         
-        hashMapCateType.put("Men Hoodie", "athletic-hoodies");
+        hashMapCateType.put("Men Hoodie", "novelty-hoodies");
         hashMapDepartmentName.put("Men Hoodie", "mens");
         
-        hashMapCateType.put("Women Hoodie", "athletic-hoodies");
+        hashMapCateType.put("Women Hoodie", "novelty-hoodies");
         hashMapDepartmentName.put("Women Hoodie", "womens");
 
         appIconPath = "Images" + pathChar + "appIcon.png";

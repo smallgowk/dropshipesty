@@ -74,11 +74,11 @@ public class GenAmazonFromImageSvs {
         productAmz.setPart_number(productAmz.getItem_sku().substring(0, productAmz.getItem_sku().length() - 2));
         productAmz.setOuter_material_type1(snakeBaseStoreOrderInfo.getOuterMaterialType());
         productAmz.setMaterial_composition1(snakeBaseStoreOrderInfo.getMaterialComposition());
-        productAmz.setIs_adult_product("TRUE");
-        productAmz.setColor_map("White");
-        productAmz.setColor_name("Black");
-        productAmz.setSize_map("Large");
-        productAmz.setSize_name("Large");
+        productAmz.setIs_adult_product("FALSE");
+        productAmz.setColor_map("option");
+        productAmz.setColor_name("option");
+        productAmz.setSize_map("option");
+        productAmz.setSize_name("option");
 
 //        if(title == null) return null;
         productAmz.setItem_name(title);
