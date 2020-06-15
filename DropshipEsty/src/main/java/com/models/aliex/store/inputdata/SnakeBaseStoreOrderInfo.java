@@ -6,6 +6,7 @@
 package com.models.aliex.store.inputdata;
 
 import com.config.Configs;
+import com.utils.EncryptUtil;
 import com.utils.StringUtils;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -95,8 +96,9 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
         return imageFolderName;
     }
     
-    public String genMainUrlFromIp(String fileName) {
-        return "http://" + ip + "/" + imageFolderName + "/" + fileName.replaceAll(Pattern.quote(" "), "%20");
+    public String genMainUrlFromIp(String title) {
+        String imageEncodeName = EncryptUtil.encrypt(title) + ".jpg";
+        return "http://" + ip + "/" + imageFolderName + "/" + imageEncodeName;
     }
     
     public String getIp() {

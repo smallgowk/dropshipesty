@@ -168,7 +168,7 @@ public class Configs {
         hashMapDepartmentName.put("Men T-Shirt", "mens");
         
         hashMapCateType.put("Women T-Shirt", "novelty-t-shirts");
-        hashMapDepartmentName.put("Women T-Shirt", "girls");
+        hashMapDepartmentName.put("Women T-Shirt", "womens");
         
         hashMapCateType.put("Men Hoodie", "novelty-hoodies");
         hashMapDepartmentName.put("Men Hoodie", "mens");

@@ -65,7 +65,7 @@ public class GenAmazonFromImageSvs {
         productAmz.setNumber_of_items("1");
         productAmz.setMaterial_type("other");
         productAmz.setBrand_name(snakeBaseStoreOrderInfo.getBrand_name());
-        productAmz.setImageUrl(snakeBaseStoreOrderInfo.getImagesUrl(snakeBaseStoreOrderInfo.genMainUrlFromIp(name)));
+        productAmz.setImageUrl(snakeBaseStoreOrderInfo.getImagesUrl(snakeBaseStoreOrderInfo.genMainUrlFromIp(title)));
         productAmz.setItem_type(snakeBaseStoreOrderInfo.getItemType());
 //        productAmz.setVariation_theme(snakeBaseStoreOrderInfo.getVariationType());
 
