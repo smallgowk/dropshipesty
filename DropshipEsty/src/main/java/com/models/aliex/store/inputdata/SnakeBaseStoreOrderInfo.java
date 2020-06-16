@@ -96,9 +96,8 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
         return imageFolderName;
     }
     
-    public String genMainUrlFromIp(String title) {
-        String imageEncodeName = EncryptUtil.encrypt(title) + ".jpg";
-        return "http://" + ip + "/" + imageFolderName + "/" + imageEncodeName;
+    public String genMainUrlFromIp(String vpsFolder, String imageName) {
+        return "http://" + ip + "/" + vpsFolder + "/" + imageName;
     }
     
     public String getIp() {

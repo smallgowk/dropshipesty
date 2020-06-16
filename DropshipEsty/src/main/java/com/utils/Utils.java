@@ -15,6 +15,7 @@ import com.models.aliex.store.AliexStoreCommon;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -401,6 +402,22 @@ public class Utils {
 
         FileUtils.writeStringToFile(new File(filePath), data);
 
+    }
+    
+    public static void copyNewImage(String parentPath, String fromFolder, String fromFileName, String toFolder, String toFileName) {
+        File fromFile = new File(parentPath + Configs.pathChar + fromFolder + Configs.pathChar + fromFileName);
+        
+        if(!fromFile.exists()) {
+            return;
+        }
+        
+        File newFile = new File(parentPath + Configs.pathChar + toFolder + Configs.pathChar + toFileName);
+        
+        try {
+            Files.copy(fromFile.toPath(), newFile.toPath());
+        } catch (IOException ex) {
+            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

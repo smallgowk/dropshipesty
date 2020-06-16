@@ -5,13 +5,19 @@
  */
 package com.ping.service.local;
 
+import com.config.Configs;
 import com.models.aliex.store.inputdata.SnakeBaseStoreOrderInfo;
 import com.models.amazon.ProductAmz;
+import com.utils.EncryptUtil;
 import com.utils.FuncUtil;
 import com.utils.StringUtils;
 import com.utils.Utils;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -32,11 +38,20 @@ public class GenAmazonFromImageSvs {
         ArrayList<ProductAmz> results = null;
 
         File file = new File(snakeBaseStoreOrderInfo.getImageFolder());
+        
         if (file.exists()) {
+            
+            File vpsImageFolder = new File(file .getParent() + Configs.pathChar + "VPS_" + snakeBaseStoreOrderInfo.getImageFolderName());
+            if(!vpsImageFolder.exists()) {
+                vpsImageFolder.mkdir();
+            }
+            
             String[] paths = file.list();
             for (String s : paths) {
-
-                ProductAmz productAmz = genProductAmz(s, snakeBaseStoreOrderInfo);
+                ProductAmz productAmz = genProductAmz(snakeBaseStoreOrderInfo.getImageFolder() + Configs.pathChar + s, vpsImageFolder.getPath(), snakeBaseStoreOrderInfo);
+                
+                if(productAmz == null) continue;
+                
                 if (results == null) {
                     results = new ArrayList<>();
                 }
@@ -46,11 +61,28 @@ public class GenAmazonFromImageSvs {
         return results;
     }
 
-    private ProductAmz genProductAmz(String filePath, SnakeBaseStoreOrderInfo snakeBaseStoreOrderInfo) {
+    private ProductAmz genProductAmz(String filePath, String vpsFolder, SnakeBaseStoreOrderInfo snakeBaseStoreOrderInfo) {
 
         File imageFile = new File(filePath);
+        
         String name = imageFile.getName();
-        String title = name.substring(0, name.lastIndexOf("."));
+        
+        if(name.lastIndexOf(".jpg") < 0) {
+            System.out.println("name: " + name);
+            return null;
+        }
+        
+        String title = name.substring(0, name.lastIndexOf(".jpg"));
+        
+        int hashCode = name.hashCode();
+        String vpsImage = "" + (hashCode > 0 ? hashCode : hashCode * (-1)) + ".jpg";
+        
+        File vpsImageFile = new File(vpsFolder + Configs.pathChar + vpsImage);
+        try {
+            Files.copy(imageFile.toPath(), vpsImageFile.toPath());
+        } catch (IOException ex) {
+//            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         ProductAmz productAmz = new ProductAmz();
 
@@ -65,7 +97,7 @@ public class GenAmazonFromImageSvs {
         productAmz.setNumber_of_items("1");
         productAmz.setMaterial_type("other");
         productAmz.setBrand_name(snakeBaseStoreOrderInfo.getBrand_name());
-        productAmz.setImageUrl(snakeBaseStoreOrderInfo.getImagesUrl(snakeBaseStoreOrderInfo.genMainUrlFromIp(title)));
+        productAmz.setImageUrl(snakeBaseStoreOrderInfo.getImagesUrl(snakeBaseStoreOrderInfo.genMainUrlFromIp("VPS_" + snakeBaseStoreOrderInfo.getImageFolderName(), vpsImage)));
         productAmz.setItem_type(snakeBaseStoreOrderInfo.getItemType());
 //        productAmz.setVariation_theme(snakeBaseStoreOrderInfo.getVariationType());
 
