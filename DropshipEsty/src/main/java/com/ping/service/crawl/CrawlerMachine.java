@@ -111,7 +111,7 @@ public class CrawlerMachine {
 
         return null;
     }
-    
+
     private boolean loginAliex(String account, String password, String redirectUrl) {
 //        if (driver == null) {
 //            return false;
@@ -184,22 +184,30 @@ public class CrawlerMachine {
             return true;
         }
         System.out.println("init driver");
-        ChromeOptions options = new ChromeOptions();
-        options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-        options.addArguments("start-maximized");
-        options.addArguments("disable-infobars");
-        options.addArguments("disable-javascript");
-
+//        ChromeOptions options = new ChromeOptions();
+//        options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
 //        options.addArguments("start-maximized");
-//        options.addArguments("enable-automation");
-//        options.addArguments("--no-sandbox");
-//        options.addArguments("--disable-infobars");
-//        options.addArguments("--disable-dev-shm-usage");
-//        options.addArguments("--disable-browser-side-navigation");
-//        options.addArguments("--disable-gpu");
+//        options.addArguments("disable-infobars");
+//        options.addArguments("disable-javascript");
+//        options.addArguments("user-data-dir=C:\\Users\\PhanDuy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 16");
+//
+////        options.addArguments("start-maximized");
+////        options.addArguments("enable-automation");
+////        options.addArguments("--no-sandbox");
+////        options.addArguments("--disable-infobars");
+////        options.addArguments("--disable-dev-shm-usage");
+////        options.addArguments("--disable-browser-side-navigation");
+////        options.addArguments("--disable-gpu");
+//        options.setCapability(CapabilityType.HAS_NATIVE_EVENTS, false);
 
-        options.setCapability(CapabilityType.HAS_NATIVE_EVENTS, false);
-        
+//        String userProfile = "C:\\Users\\PhanDuy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 16\\";
+        ChromeOptions options = new ChromeOptions();
+//        options.addArguments("user-data-dir=" + userProfile);
+        options.addArguments("--user-data-dir=C:/Users/PhanDuy/AppData/Local/Google/Chrome/User Data/");
+//        options.addArguments("--user-data-dir=C:/Users/PhanDuy/AppData/Local/Google/Chrome/User Data/Profile 16");
+        options.addArguments("--profile-directory=Profile 16");
+        options.addArguments("--start-maximized");
+
 //        options.addArguments("disable-javascript");
 //        options.addArguments("user-data-dir", Configs.CONFIG_FOLDER_PATH);
 //        options.setCapability("pageLoadStrategy", "eager");
@@ -234,10 +242,10 @@ public class CrawlerMachine {
             file.delete();
         }
     }
-    
+
     public boolean rechiveCookies() {
 //        long start = System.currentTimeMillis();
-            cookies = CookieUtil.getCookiesFromDriver(driver);
+        cookies = CookieUtil.getCookiesFromDriver(driver);
 //            System.out.println("Time get cookies: " + (System.currentTimeMillis() - start));
 //
 //            if (cookies == null) {
@@ -262,25 +270,25 @@ public class CrawlerMachine {
 ////                }
 //            }
 
-            if (cookies == null) {
-                if (driver == null) {
-                    initDriver();
-                }
+        if (cookies == null) {
+            if (driver == null) {
+                initDriver();
+            }
+            return false;
+        } else {
+            if (!CookieUtil.isValidCookie(cookies)) {
                 return false;
             } else {
-                if(!CookieUtil.isValidCookie(cookies)) {
-                    return false;
-                } else {
 //                    start = System.currentTimeMillis();
-                    CookieUtil.saveCookies(cookies);
+                CookieUtil.saveCookies(cookies);
 //                    System.out.println("Time save cookies: " + (System.currentTimeMillis() - start));
-                    return true;
-                }
+                return true;
             }
+        }
     }
 
     public Document processPage(String URL) {
-        
+
         Document doc = null;
         try {
             Connection connection = Jsoup.connect(URL)
@@ -367,7 +375,7 @@ public class CrawlerMachine {
     }
 
     public boolean goToPage(String url) {
-        
+
         try {
             if (!isReady()) {
 //                close();
@@ -452,7 +460,7 @@ public class CrawlerMachine {
 
     public boolean goToLogin(String redirectUrl) {
         System.out.println("Go To Login");
-        
+
         if (driver == null) {
             initDriver();
         }

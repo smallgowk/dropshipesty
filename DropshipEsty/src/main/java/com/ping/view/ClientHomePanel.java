@@ -12,8 +12,11 @@ import com.ping.control.CrawlProcessListener;
 import com.ping.control.MainController;
 import com.models.aliex.store.BaseStoreInfo;
 import com.models.aliex.store.inputdata.BaseStoreOrderInfo;
+import com.ping.service.crawl.CrawlerMachine;
+import com.ping.service.crawl.aliex.AliexCrawlSvs;
 import com.ping.tcpclient.ResponseObj;
 import com.utils.DialogUtil;
+import com.utils.OSUtil;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -80,17 +83,18 @@ public class ClientHomePanel extends BasePanel {
 
         topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 
-//        String pathStr = null;
-//        if (OSUtil.isWindows()) {
-//            pathStr = Configs.CONFIG_FOLDER_PATH + "chromedriver.exe";
-//        } else {
-//            pathStr = Configs.CONFIG_FOLDER_PATH + "chromedriver";
-//        }
-//
-//        if (pathStr != null) {
-//            System.setProperty("webdriver.chrome.driver", pathStr);
-//        }
-//        AliexCrawlSvs.getInstance().initDriver();
+        String pathStr = null;
+        if (OSUtil.isWindows()) {
+            pathStr = Configs.CONFIG_FOLDER_PATH + "chromedriver.exe";
+        } else {
+            pathStr = Configs.CONFIG_FOLDER_PATH + "chromedriver";
+        }
+
+        if (pathStr != null) {
+            System.setProperty("webdriver.chrome.driver", pathStr);
+        }
+        AliexCrawlSvs.getInstance().initDriver();
+        AliexCrawlSvs.getInstance().goToPage("https://sellercentral.amazon.com/gestalt/managecustomization/index.html?sku=TLT96593_32602048616_3");
 //        if (!AliexCrawlSvs.getInstance().isHasCookies()) {
 ////            AliexCrawlSvs.getInstance().initDriver();
 ////            MerchantSearchSvs.getInstance().login();
@@ -444,76 +448,78 @@ public class ClientHomePanel extends BasePanel {
 
     private void btnStartCrawlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartCrawlActionPerformed
 
-        if(!mainController.isStop()) return;
-        
-        if (txtStoreLink.getText().trim().isEmpty()) {
-            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập link store!");
-            return;
-        }
-
-        mainController.setLinkStore(txtStoreLink.getText().trim());
-
-        if (txtBrandName.getText().trim().isEmpty()) {
-            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập brand name!");
-            return;
-        }
-
-        mainController.setBrandName(txtBrandName.getText().trim());
-
-//        if(mainController.getListColor() == null) {
-//            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng chọn màu!");
-//            return;
-//        }
+//        if(!mainController.isStop()) return;
 //        
-//        if(mainController.getListSizes() == null) {
-//            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng chọn size!");
+//        if (txtStoreLink.getText().trim().isEmpty()) {
+//            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập link store!");
 //            return;
 //        }
-        if (txtDesciption.getText().trim().isEmpty()) {
-            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập description!");
-            return;
-        }
-        mainController.setDescription(txtDesciption.getText().trim());
+//
+//        mainController.setLinkStore(txtStoreLink.getText().trim());
+//
+//        if (txtBrandName.getText().trim().isEmpty()) {
+//            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập brand name!");
+//            return;
+//        }
+//
+//        mainController.setBrandName(txtBrandName.getText().trim());
+//
+////        if(mainController.getListColor() == null) {
+////            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng chọn màu!");
+////            return;
+////        }
+////        
+////        if(mainController.getListSizes() == null) {
+////            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng chọn size!");
+////            return;
+////        }
+//        if (txtDesciption.getText().trim().isEmpty()) {
+//            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập description!");
+//            return;
+//        }
+//        mainController.setDescription(txtDesciption.getText().trim());
+//
+//        if (txtSubImageLinks.getText().trim().isEmpty()) {
+//            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập link ảnh!");
+//            return;
+//        }
+//        mainController.setImageLinks(txtSubImageLinks.getText().trim());
+//
+//        if (txtBasePrice.getText().trim().isEmpty()) {
+//            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập giá !");
+//            return;
+//        }
+//        String priceStr = txtBasePrice.getText().trim();
+//        try {
+//            float price = Float.parseFloat(priceStr);
+//            mainController.setBasePrice(price);
+//
+//        } catch (NumberFormatException ex) {
+//            DialogUtil.showErrorMessage(topFrame, "", "Thông tin giá không hợp lệ !");
+//            return;
+//        }
+//
+//        String select = (String) jComboBox.getSelectedItem();
+////        mainController.setCategory(Configs.hashMapCateType.get(select));
+//        mainController.setCategory(select);
+//
+//        if (txtBullets.getText().trim().isEmpty()) {
+//            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập bullet points !");
+//            return;
+//        }
+//        mainController.setBullets(txtBullets.getText().trim());
+//
+//        if (!mainController.isEtsy()) {
+//            if (txtImageFolder.getText().trim().isEmpty()) {
+//                DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập đường dẫn ảnh !");
+//                return;
+//            }
+//            mainController.setImageFolder(txtImageFolder.getText().trim());
+//        }
+//
+//        mainController.doAction();
 
-        if (txtSubImageLinks.getText().trim().isEmpty()) {
-            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập link ảnh!");
-            return;
-        }
-        mainController.setImageLinks(txtSubImageLinks.getText().trim());
-
-        if (txtBasePrice.getText().trim().isEmpty()) {
-            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập giá !");
-            return;
-        }
-        String priceStr = txtBasePrice.getText().trim();
-        try {
-            float price = Float.parseFloat(priceStr);
-            mainController.setBasePrice(price);
-
-        } catch (NumberFormatException ex) {
-            DialogUtil.showErrorMessage(topFrame, "", "Thông tin giá không hợp lệ !");
-            return;
-        }
-
-        String select = (String) jComboBox.getSelectedItem();
-//        mainController.setCategory(Configs.hashMapCateType.get(select));
-        mainController.setCategory(select);
-
-        if (txtBullets.getText().trim().isEmpty()) {
-            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập bullet points !");
-            return;
-        }
-        mainController.setBullets(txtBullets.getText().trim());
-
-        if (!mainController.isEtsy()) {
-            if (txtImageFolder.getText().trim().isEmpty()) {
-                DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập đường dẫn ảnh !");
-                return;
-            }
-            mainController.setImageFolder(txtImageFolder.getText().trim());
-        }
-
-        mainController.doAction();
+        
     }//GEN-LAST:event_btnStartCrawlActionPerformed
 
     CrawlProcessListener crawlProcessListener = new CrawlProcessListener() {

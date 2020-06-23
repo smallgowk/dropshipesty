@@ -29,6 +29,8 @@ import javax.mail.search.FlagTerm;
 import static com.utils.AWSUtil.getListKeywordIndex;
 import com.utils.DialogUtil;
 import com.utils.StringUtils;
+import com.utils.WindowsShortcut;
+import java.io.File;
 import java.util.Set;
 
 /**
@@ -56,10 +58,17 @@ public class Test {
     static long crawlTimeTotal = 0;
 
     public static void main(String[] str) throws Exception {
-        String strs = "https://i.etsystatic.com/18207802/d/il/71600d/2330731027/il_340x270.2330731027_s11y.jpg?version=0";
-        strs = StringUtils.convertEstyImageLink(strs);
         
-        System.out.println("" + strs);
+        WindowsShortcut windowsShortcut = new WindowsShortcut(new File("C:\\Users\\PhanDuy\\Desktop\\Profiles\\long (SnakeAccount) - Chrome.lnk"));
+        System.out.println(windowsShortcut.getRealFilename());
+        System.out.println(windowsShortcut.getCommandLineArguments());
+        System.out.println(windowsShortcut.getDescription());
+        System.out.println(windowsShortcut.getWorkingDirectory());
+        
+//        String strs = "https://i.etsystatic.com/18207802/d/il/71600d/2330731027/il_340x270.2330731027_s11y.jpg?version=0";
+//        strs = StringUtils.convertEstyImageLink(strs);
+//        
+//        System.out.println("" + strs);
         
 //        ArrayList<String> listString = new ArrayList<>();
 //        listString.add("Red");
