@@ -70,6 +70,7 @@ public class Configs {
     public static String CACHE_PATH;
     public static String COOKIE_PATH;
     public static String LOG_PATH;
+    public static String IMAGE_PATH;
     public static String LOG_CONFIG_PATH;
 
     public static String CONFIG_FOLDER_PATH;
@@ -188,6 +189,7 @@ public class Configs {
         CONFIG_FOLDER_PATH = dir + pathChar + "etc" + pathChar + CONFIGS_DIRECTORY + pathChar;
 //        CONFIG_FOLDER_PATH = String.valueOf(TOOL_DATA_PATH + pathChar + CONFIGS_DIRECTORY + pathChar);
         LOG_CONFIG_PATH = String.valueOf(CONFIG_FOLDER_PATH + pathChar + "log4j.properties");
+        IMAGE_PATH = String.valueOf(CONFIG_FOLDER_PATH + pathChar + "Image") + pathChar;
 
 //        TOOL_DATA_PATH = dir + pathChar + "etc" + pathChar + DATA_DIRECTORY + pathChar;
 

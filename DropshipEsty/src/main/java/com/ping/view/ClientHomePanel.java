@@ -12,6 +12,7 @@ import com.ping.control.CrawlProcessListener;
 import com.ping.control.MainController;
 import com.models.aliex.store.BaseStoreInfo;
 import com.models.aliex.store.inputdata.BaseStoreOrderInfo;
+import com.ping.control.UploadImagelThread;
 import com.ping.service.crawl.CrawlerMachine;
 import com.ping.service.crawl.aliex.AliexCrawlSvs;
 import com.ping.tcpclient.ResponseObj;
@@ -21,6 +22,8 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -55,7 +58,6 @@ public class ClientHomePanel extends BasePanel {
         initData();
 
 //        fakeData();
-
     }
 
     public void fakeData() {
@@ -95,6 +97,12 @@ public class ClientHomePanel extends BasePanel {
         }
         AliexCrawlSvs.getInstance().initDriver();
         AliexCrawlSvs.getInstance().goToPage("https://sellercentral.amazon.com/gestalt/managecustomization/index.html?sku=TLT96593_32602048616_3");
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(ClientHomePanel.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        AliexCrawlSvs.getInstance().doAutoClick(null);
 //        if (!AliexCrawlSvs.getInstance().isHasCookies()) {
 ////            AliexCrawlSvs.getInstance().initDriver();
 ////            MerchantSearchSvs.getInstance().login();
@@ -447,7 +455,8 @@ public class ClientHomePanel extends BasePanel {
     }
 
     private void btnStartCrawlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartCrawlActionPerformed
-
+        UploadImagelThread uploadImagelThread = new UploadImagelThread(topFrame);
+        uploadImagelThread.start();
 //        if(!mainController.isStop()) return;
 //        
 //        if (txtStoreLink.getText().trim().isEmpty()) {
@@ -519,7 +528,7 @@ public class ClientHomePanel extends BasePanel {
 //
 //        mainController.doAction();
 
-        
+
     }//GEN-LAST:event_btnStartCrawlActionPerformed
 
     CrawlProcessListener crawlProcessListener = new CrawlProcessListener() {

@@ -267,6 +267,11 @@
             <artifactId>c3p0</artifactId>
             <version>0.9.0.4</version>
         </dependency>
+        <dependency>
+            <groupId>com.sikulix</groupId>
+            <artifactId>sikulixapi</artifactId>
+            <version>1.1.0</version>
+        </dependency>
     </dependencies>
     <name>DropshipEsty</name>
 </project>
