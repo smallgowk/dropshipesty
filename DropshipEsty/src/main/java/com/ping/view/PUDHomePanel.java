@@ -18,17 +18,12 @@ import com.ping.service.crawl.aliex.AliexCrawlSvs;
 import com.ping.tcpclient.ResponseObj;
 import com.utils.DialogUtil;
 import com.utils.OSUtil;
-import com.utils.WindowsShortcut;
 import java.awt.Dimension;
-import java.io.File;
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
 import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -40,7 +35,7 @@ import javax.swing.SwingUtilities;
  *
  * @author Admin
  */
-public class ClientHomePanel extends BasePanel {
+public class PUDHomePanel extends BasePanel {
 
     JFrame topFrame;
     JFileChooser chooser;
@@ -53,18 +48,33 @@ public class ClientHomePanel extends BasePanel {
     JPanel controls;
 
 //    ProcessPannel processPannel;
-    public ClientHomePanel() {
+    public PUDHomePanel() {
         initComponents();
+
+        jComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(listCategories));
 
         setTitle("Home");
         setMenuActionCommand("MainHome");
         initData();
 
-        fakeData();
+//        fakeData();
     }
 
-    private void fakeData() {
-        txtProfilePath.setText("C:\\Users\\PhanDuy\\Desktop\\Profiles\\long (SnakeAccount) - Chrome.lnk");
+    public void fakeData() {
+//        txtStoreLink.setText("https://www.etsy.com/shop/cormaidesign");
+        txtStoreLink.setText("dropshiptool.vn");
+
+//        mainController.setListColor(colors);
+//        mainController.setListSizes(sizes);
+//        txtColors.setText(mainController.getColorStr());
+//        txtSizes.setText(mainController.getSizeStr());
+        txtDesciption.setText("The customer is best");
+        txtBullets.setText("The customer is best");
+        txtSubImageLinks.setText("http://dropshiptool.vn/IMG-0989.jpg\n"
+                + "http://dropshiptool.vn/IMG-0987.jpg\n"
+                + "http://dropshiptool.vn/IMG-0988.jpg");
+        txtBasePrice.setText("23");
+        txtImageFolder.setText("D:\\ImageTest");
     }
 
     public void initData() {
@@ -85,8 +95,8 @@ public class ClientHomePanel extends BasePanel {
         if (pathStr != null) {
             System.setProperty("webdriver.chrome.driver", pathStr);
         }
-//        AliexCrawlSvs.getInstance().initDriver();
-//        AliexCrawlSvs.getInstance().goToPage("https://sellercentral.amazon.com/gestalt/managecustomization/index.html?sku=TLT96593_32602048616_3");
+        AliexCrawlSvs.getInstance().initDriver(null);
+        AliexCrawlSvs.getInstance().goToPage("https://sellercentral.amazon.com/gestalt/managecustomization/index.html?sku=TLT96593_32602048616_3");
 //        try {
 //            Thread.sleep(1000);
 //        } catch (InterruptedException ex) {
@@ -146,11 +156,29 @@ public class ClientHomePanel extends BasePanel {
     private void initComponents() {
 
         jPanel3 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtStoreLink = new javax.swing.JTextArea();
+        jComboBox = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txtBasePrice = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        txtBrandName = new javax.swing.JTextField();
         lbStatus = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtProfilePath = new javax.swing.JTextField();
+        txtImageFolder = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtDesciption = new javax.swing.JTextArea();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        txtBullets = new javax.swing.JTextArea();
+        jLabel6 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        txtSubImageLinks = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
         btnStartCrawl = new javax.swing.JButton();
         btnStop = new javax.swing.JButton();
@@ -158,22 +186,39 @@ public class ClientHomePanel extends BasePanel {
         jScrollPane12 = new javax.swing.JScrollPane();
         txtLogs = new javax.swing.JTextArea();
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Cài đặt"));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Thuộc tính"));
         jPanel3.setFocusTraversalPolicyProvider(true);
 
-        jLabel2.setText("Profile Path");
+        jLabel1.setText("Store Link (Esty) hoặc VPS IP");
+
+        txtStoreLink.setColumns(20);
+        txtStoreLink.setLineWrap(true);
+        txtStoreLink.setRows(2);
+        txtStoreLink.setWrapStyleWord(true);
+        jScrollPane1.setViewportView(txtStoreLink);
+
+        jComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ" }));
+        jComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Chọn category");
+
+        jLabel8.setText("Giá cơ bản");
+
+        jLabel9.setText("Nhập brand");
+
+        txtBrandName.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtBrandName.setText("Abbey Stores");
+
+        jLabel2.setText("Image Folder (Dành cho cào data tự tạo)");
 
         jButton1.setText("Browse...");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("Load Profile");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
             }
         });
 
@@ -186,29 +231,114 @@ public class ClientHomePanel extends BasePanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(txtProfilePath, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel9))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(txtImageFolder, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2)
-                            .addComponent(jLabel2))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtBasePrice)
+                                    .addComponent(jComboBox, 0, 168, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addComponent(txtBrandName, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel1))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtProfilePath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtImageFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
-                .addGap(26, 26, 26)
-                .addComponent(jButton2)
+                .addGap(50, 50, 50)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtBasePrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBrandName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Nội dung"));
+
+        txtDesciption.setColumns(20);
+        txtDesciption.setLineWrap(true);
+        txtDesciption.setRows(5);
+        txtDesciption.setWrapStyleWord(true);
+        jScrollPane4.setViewportView(txtDesciption);
+
+        jLabel5.setText("Description");
+
+        jLabel10.setText("Bullets (phân biệt link bằng kí tự xuống dòng)");
+
+        txtBullets.setColumns(20);
+        txtBullets.setLineWrap(true);
+        txtBullets.setRows(2);
+        txtBullets.setWrapStyleWord(true);
+        jScrollPane7.setViewportView(txtBullets);
+
+        jLabel6.setText("Link ảnh (phân biệt link bằng kí tự xuống dòng)");
+
+        txtSubImageLinks.setColumns(20);
+        txtSubImageLinks.setLineWrap(true);
+        txtSubImageLinks.setRows(2);
+        txtSubImageLinks.setWrapStyleWord(true);
+        jScrollPane5.setViewportView(txtSubImageLinks);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel6))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         btnStartCrawl.setText("Start");
@@ -267,7 +397,7 @@ public class ClientHomePanel extends BasePanel {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -277,7 +407,9 @@ public class ClientHomePanel extends BasePanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(4, 4, 4)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
@@ -290,6 +422,7 @@ public class ClientHomePanel extends BasePanel {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
@@ -322,78 +455,76 @@ public class ClientHomePanel extends BasePanel {
     }
 
     private void btnStartCrawlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartCrawlActionPerformed
-        UploadImagelThread uploadImagelThread = new UploadImagelThread(topFrame);
-        uploadImagelThread.start();
-//        if(!mainController.isStop()) return;
+        if(!mainController.isStop()) return;
+        
+        if (txtStoreLink.getText().trim().isEmpty()) {
+            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập link store!");
+            return;
+        }
+
+        mainController.setLinkStore(txtStoreLink.getText().trim());
+
+        if (txtBrandName.getText().trim().isEmpty()) {
+            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập brand name!");
+            return;
+        }
+
+        mainController.setBrandName(txtBrandName.getText().trim());
+
+//        if(mainController.getListColor() == null) {
+//            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng chọn màu!");
+//            return;
+//        }
 //        
-//        if (txtStoreLink.getText().trim().isEmpty()) {
-//            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập link store!");
+//        if(mainController.getListSizes() == null) {
+//            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng chọn size!");
 //            return;
 //        }
-//
-//        mainController.setLinkStore(txtStoreLink.getText().trim());
-//
-//        if (txtBrandName.getText().trim().isEmpty()) {
-//            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập brand name!");
-//            return;
-//        }
-//
-//        mainController.setBrandName(txtBrandName.getText().trim());
-//
-////        if(mainController.getListColor() == null) {
-////            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng chọn màu!");
-////            return;
-////        }
-////        
-////        if(mainController.getListSizes() == null) {
-////            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng chọn size!");
-////            return;
-////        }
-//        if (txtDesciption.getText().trim().isEmpty()) {
-//            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập description!");
-//            return;
-//        }
-//        mainController.setDescription(txtDesciption.getText().trim());
-//
-//        if (txtSubImageLinks.getText().trim().isEmpty()) {
-//            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập link ảnh!");
-//            return;
-//        }
-//        mainController.setImageLinks(txtSubImageLinks.getText().trim());
-//
-//        if (txtBasePrice.getText().trim().isEmpty()) {
-//            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập giá !");
-//            return;
-//        }
-//        String priceStr = txtBasePrice.getText().trim();
-//        try {
-//            float price = Float.parseFloat(priceStr);
-//            mainController.setBasePrice(price);
-//
-//        } catch (NumberFormatException ex) {
-//            DialogUtil.showErrorMessage(topFrame, "", "Thông tin giá không hợp lệ !");
-//            return;
-//        }
-//
-//        String select = (String) jComboBox.getSelectedItem();
-////        mainController.setCategory(Configs.hashMapCateType.get(select));
-//        mainController.setCategory(select);
-//
-//        if (txtBullets.getText().trim().isEmpty()) {
-//            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập bullet points !");
-//            return;
-//        }
-//        mainController.setBullets(txtBullets.getText().trim());
-//
-//        if (!mainController.isEtsy()) {
-//            if (txtImageFolder.getText().trim().isEmpty()) {
-//                DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập đường dẫn ảnh !");
-//                return;
-//            }
-//            mainController.setImageFolder(txtImageFolder.getText().trim());
-//        }
-//
-//        mainController.doAction();
+        if (txtDesciption.getText().trim().isEmpty()) {
+            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập description!");
+            return;
+        }
+        mainController.setDescription(txtDesciption.getText().trim());
+
+        if (txtSubImageLinks.getText().trim().isEmpty()) {
+            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập link ảnh!");
+            return;
+        }
+        mainController.setImageLinks(txtSubImageLinks.getText().trim());
+
+        if (txtBasePrice.getText().trim().isEmpty()) {
+            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập giá !");
+            return;
+        }
+        String priceStr = txtBasePrice.getText().trim();
+        try {
+            float price = Float.parseFloat(priceStr);
+            mainController.setBasePrice(price);
+
+        } catch (NumberFormatException ex) {
+            DialogUtil.showErrorMessage(topFrame, "", "Thông tin giá không hợp lệ !");
+            return;
+        }
+
+        String select = (String) jComboBox.getSelectedItem();
+//        mainController.setCategory(Configs.hashMapCateType.get(select));
+        mainController.setCategory(select);
+
+        if (txtBullets.getText().trim().isEmpty()) {
+            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập bullet points !");
+            return;
+        }
+        mainController.setBullets(txtBullets.getText().trim());
+
+        if (!mainController.isEtsy()) {
+            if (txtImageFolder.getText().trim().isEmpty()) {
+                DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập đường dẫn ảnh !");
+                return;
+            }
+            mainController.setImageFolder(txtImageFolder.getText().trim());
+        }
+
+        mainController.doAction();
 
 
     }//GEN-LAST:event_btnStartCrawlActionPerformed
@@ -569,13 +700,19 @@ public class ClientHomePanel extends BasePanel {
         txtLogs.append("\n");
     }//GEN-LAST:event_btnStopActionPerformed
 
+    private void jComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxActionPerformed
+        // TODO add your handling code here:
+        String select = (String) jComboBox.getSelectedItem();
+        mainController.setCategory(Configs.hashMapCateType.get(select));
+    }//GEN-LAST:event_jComboBoxActionPerformed
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        choosertitle = "Select file:";
+        choosertitle = "Select folder:";
         chooser = new JFileChooser();
         chooser.setCurrentDirectory(new java.io.File("."));
         chooser.setDialogTitle(choosertitle);
-        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         //
         // disable the "All files" option.
         //
@@ -583,46 +720,42 @@ public class ClientHomePanel extends BasePanel {
         //
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             String path = chooser.getSelectedFile().getPath();
-            txtProfilePath.setText(path);
+            txtImageFolder.setText(path);
         } else {
             System.out.println("No Selection ");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String path = txtProfilePath.getText();
-        
-        File file = new File(path);
-        if(!file.exists()) return;
-        
-        try {
-            WindowsShortcut windowsShortcut = new WindowsShortcut(file);
-            String params = windowsShortcut.getCommandLineArguments();
-            String[] parts = params.split(Pattern.quote("="));
-            String profileName = parts[1].substring(1, parts[1].length() - 1);
-            
-            AliexCrawlSvs.getInstance().initDriver(profileName);
-            AliexCrawlSvs.getInstance().goToPage("https://sellercentral.amazon.com/gestalt/managecustomization/index.html?sku=TLT96593_32602048616_3");
-            
-        } catch (IOException ex) {
-            Logger.getLogger(ClientHomePanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(ClientHomePanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnStartCrawl;
     private javax.swing.JButton btnStop;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> jComboBox;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane12;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JLabel lbStatus;
+    private javax.swing.JTextField txtBasePrice;
+    private javax.swing.JTextField txtBrandName;
+    private javax.swing.JTextArea txtBullets;
+    private javax.swing.JTextArea txtDesciption;
+    private javax.swing.JTextField txtImageFolder;
     private javax.swing.JTextArea txtLogs;
-    private javax.swing.JTextField txtProfilePath;
+    private javax.swing.JTextArea txtStoreLink;
+    private javax.swing.JTextArea txtSubImageLinks;
     // End of variables declaration//GEN-END:variables
 }

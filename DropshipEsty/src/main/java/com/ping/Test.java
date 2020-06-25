@@ -32,6 +32,7 @@ import com.utils.StringUtils;
 import com.utils.WindowsShortcut;
 import java.io.File;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -60,10 +61,15 @@ public class Test {
     public static void main(String[] str) throws Exception {
         
         WindowsShortcut windowsShortcut = new WindowsShortcut(new File("C:\\Users\\PhanDuy\\Desktop\\Profiles\\long (SnakeAccount) - Chrome.lnk"));
+        String params = windowsShortcut.getCommandLineArguments();
+            String[] parts = params.split(Pattern.quote("="));
+            String profileName = parts[1].substring(1, parts[1].length() - 1);
         System.out.println(windowsShortcut.getRealFilename());
-        System.out.println(windowsShortcut.getCommandLineArguments());
+        System.out.println(profileName);
         System.out.println(windowsShortcut.getDescription());
         System.out.println(windowsShortcut.getWorkingDirectory());
+        System.out.println(windowsShortcut.getRelativePath());
+        System.out.println(System.getProperty("user.home"));
         
 //        String strs = "https://i.etsystatic.com/18207802/d/il/71600d/2330731027/il_340x270.2330731027_s11y.jpg?version=0";
 //        strs = StringUtils.convertEstyImageLink(strs);

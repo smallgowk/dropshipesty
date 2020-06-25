@@ -596,12 +596,12 @@ public class AliexCrawlSvs extends CrawlerMachine {
 //        Document doc = AliexCrawlSvs.getInstance().processPage(pageUrl);
         crawlDataPageAliex.updateStatus(doc);
 
-        if (!crawlDataPageAliex.isSuccess()) {
-            rechiveCookies();
-//            System.out.println("Current cookies: " + cookies);
-            CookieUtil.saveCookies(cookies, "errorCookies_" + System.currentTimeMillis() + ".txt");
-            return crawlDataPageAliex;
-        }
+//        if (!crawlDataPageAliex.isSuccess()) {
+//            rechiveCookies();
+////            System.out.println("Current cookies: " + cookies);
+//            CookieUtil.saveCookies(cookies, "errorCookies_" + System.currentTimeMillis() + ".txt");
+//            return crawlDataPageAliex;
+//        }
 
         Elements questions = doc.select("li[class='item']");
 

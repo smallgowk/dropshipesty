@@ -117,10 +117,9 @@ public class CrawlerMachine {
 //            return false;
 //        }
 
-        if (!goToLogin(redirectUrl)) {
-            return false;
-        }
-
+//        if (!goToLogin(redirectUrl)) {
+//            return false;
+//        }
 //        List<WebElement> we = driver.findElements(By.xpath("//iframe[@id='alibaba-login-box']"));
 //        driver.switchTo().frame(we.get(0)); //Switch to iframe.
 //        WebElement activeElement = driver.switchTo().activeElement();
@@ -177,13 +176,13 @@ public class CrawlerMachine {
 //        driver = null;
 //        Configs.hashMapAccountState.put(currentAccount, Boolean.TRUE);
 //    }
-    public boolean initDriver() {
+    public boolean initDriver(String profileName) {
 
         if (driver != null) {
             System.out.println("driver ready");
             return true;
         }
-        System.out.println("init driver");
+//        System.out.println("init driver");
 //        ChromeOptions options = new ChromeOptions();
 //        options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
 //        options.addArguments("start-maximized");
@@ -203,9 +202,12 @@ public class CrawlerMachine {
 //        String userProfile = "C:\\Users\\PhanDuy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 16\\";
         ChromeOptions options = new ChromeOptions();
 //        options.addArguments("user-data-dir=" + userProfile);
-        options.addArguments("--user-data-dir=C:/Users/PhanDuy/AppData/Local/Google/Chrome/User Data/");
-//        options.addArguments("--user-data-dir=C:/Users/PhanDuy/AppData/Local/Google/Chrome/User Data/Profile 16");
-        options.addArguments("--profile-directory=Profile 16");
+        if (profileName != null) {
+            String userDir = System.getProperty("user.home") + Configs.pathChar + "AppData/Local/Google/Chrome/User Data/";
+            options.addArguments("--user-data-dir=" + userDir);
+            options.addArguments("--profile-directory=" + profileName);
+        }
+
         options.addArguments("--start-maximized");
 
 //        options.addArguments("disable-javascript");
@@ -243,50 +245,49 @@ public class CrawlerMachine {
         }
     }
 
-    public boolean rechiveCookies() {
-//        long start = System.currentTimeMillis();
-        cookies = CookieUtil.getCookiesFromDriver(driver);
-//            System.out.println("Time get cookies: " + (System.currentTimeMillis() - start));
-//
-//            if (cookies == null) {
-//                if (driver == null) {
-//                    initDriver();
-//                }
-//
-////                if (driver.manage() != null) {
-////                    driver.manage().deleteAllCookies();
+//    public boolean rechiveCookies() {
+////        long start = System.currentTimeMillis();
+//        cookies = CookieUtil.getCookiesFromDriver(driver);
+////            System.out.println("Time get cookies: " + (System.currentTimeMillis() - start));
+////
+////            if (cookies == null) {
+////                if (driver == null) {
+////                    initDriver();
 ////                }
-//                cookies = CookieUtil.getCookies(driver);
-//
-//                if (cookies != null) {
-//                    CookieUtil.saveCookies(cookies);
-//                } else {
-//                    return null;
-//                }
-//
-////                if (cookies == null) {
-////                    driver.get("https://login.aliexpress.com");
+////
+//////                if (driver.manage() != null) {
+//////                    driver.manage().deleteAllCookies();
+//////                }
+////                cookies = CookieUtil.getCookies(driver);
+////
+////                if (cookies != null) {
+////                    CookieUtil.saveCookies(cookies);
+////                } else {
 ////                    return null;
 ////                }
+////
+//////                if (cookies == null) {
+//////                    driver.get("https://login.aliexpress.com");
+//////                    return null;
+//////                }
+////            }
+//
+//        if (cookies == null) {
+//            if (driver == null) {
+//                initDriver();
 //            }
-
-        if (cookies == null) {
-            if (driver == null) {
-                initDriver();
-            }
-            return false;
-        } else {
-            if (!CookieUtil.isValidCookie(cookies)) {
-                return false;
-            } else {
-//                    start = System.currentTimeMillis();
-                CookieUtil.saveCookies(cookies);
-//                    System.out.println("Time save cookies: " + (System.currentTimeMillis() - start));
-                return true;
-            }
-        }
-    }
-
+//            return false;
+//        } else {
+//            if (!CookieUtil.isValidCookie(cookies)) {
+//                return false;
+//            } else {
+////                    start = System.currentTimeMillis();
+//                CookieUtil.saveCookies(cookies);
+////                    System.out.println("Time save cookies: " + (System.currentTimeMillis() - start));
+//                return true;
+//            }
+//        }
+//    }
     public Document processPage(String URL) {
 
         Document doc = null;
@@ -354,16 +355,17 @@ public class CrawlerMachine {
 //                    addCookies(CookieUtil.getCookiesFromCache(CookieUtil.COOKIE_MERCHANT));
 //                    driver.navigate().to(url);
 //                }
-            } else {
-                initDriver();
-//                addCookies(CookieUtil.getCookiesFromCache(CookieUtil.COOKIE_MERCHANT));
-                driver.get(url);
-
-//                if (cookies != null) {
-//                    addCookies(CookieUtil.getCookiesFromCache(CookieUtil.COOKIE_MERCHANT));
-//                    driver.get(url);
-//                }
             }
+//            else {
+//                initDriver();
+////                addCookies(CookieUtil.getCookiesFromCache(CookieUtil.COOKIE_MERCHANT));
+//                driver.get(url);
+//
+////                if (cookies != null) {
+////                    addCookies(CookieUtil.getCookiesFromCache(CookieUtil.COOKIE_MERCHANT));
+////                    driver.get(url);
+////                }
+//            }
 
         } catch (Exception ex) {
 //            ex.printStackTrace();
@@ -377,16 +379,17 @@ public class CrawlerMachine {
     public boolean goToPage(String url) {
 
         try {
-            if (!isReady()) {
-//                close();
-                initDriver();
-            }
+//            if (!isReady()) {
+////                close();
+//                initDriver();
+//            }
             if (driver != null) {
                 driver.get(url);
                 return true;
-            } else {
-                return false;
             }
+//            else {
+//                return false;
+//            }
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -458,39 +461,38 @@ public class CrawlerMachine {
         return cookieValue;
     }
 
-    public boolean goToLogin(String redirectUrl) {
-        System.out.println("Go To Login");
-
-        if (driver == null) {
-            initDriver();
-        }
-//        driver.get("https://passport.aliexpress.com/mini_login.htm?lang=en_us&appName=aebuyer&appEntrance=default&styleType=auto&bizParams=&notLoadSsoView=false&notKeepLogin=true&isMobile=false");
-        if (driver != null) {
-            CookieUtil.deleteCookies();
-            driver.manage().deleteAllCookies();
-            driver.get("https://login.aliexpress.com/?flag=1" + (StringUtils.isEmpty(redirectUrl) ? "" : "&return=" + redirectUrl));
-            return true;
-        } else {
-//            int option = DialogUtil.showOptionsQuestionDialog(null, null, "Phiên bản trình duyệt chrome và phiên bản chromedriver không tương thích.\n"
-//                    + "Vui lòng download chromedriver theo phiên bản trình duyệt chrome trên máy tính!\n"
-//                    + "Sau đó thực hiện cập nhật như hướng dẫn.",
-//                    "Cập nhật", "Đóng");
-//            if (option == 0) {
+//    public boolean goToLogin(String redirectUrl) {
+//        System.out.println("Go To Login");
 //
-//                if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-//                    try {
-//                        Desktop.getDesktop().browse(new URI("http://103.130.213.180/dropship2G.html"));
-//                        Desktop.getDesktop().browse(new URI("https://chromedriver.chromium.org/downloads?fbclid=IwAR1I_wfvE-sipnM0-ZsU-nTBZhLYX3exGq9u1ive6mEDZ8922fWQQ_B1p1M"));
-//                    } catch (IOException | URISyntaxException ex) {
-//                        Logger.getLogger(StartClientApp.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//                }
-//            }
-            return false;
-        }
-
-    }
-
+////        if (driver == null) {
+////            initDriver();
+////        }
+////        driver.get("https://passport.aliexpress.com/mini_login.htm?lang=en_us&appName=aebuyer&appEntrance=default&styleType=auto&bizParams=&notLoadSsoView=false&notKeepLogin=true&isMobile=false");
+//        if (driver != null) {
+//            CookieUtil.deleteCookies();
+//            driver.manage().deleteAllCookies();
+//            driver.get("https://login.aliexpress.com/?flag=1" + (StringUtils.isEmpty(redirectUrl) ? "" : "&return=" + redirectUrl));
+//            return true;
+//        } else {
+////            int option = DialogUtil.showOptionsQuestionDialog(null, null, "Phiên bản trình duyệt chrome và phiên bản chromedriver không tương thích.\n"
+////                    + "Vui lòng download chromedriver theo phiên bản trình duyệt chrome trên máy tính!\n"
+////                    + "Sau đó thực hiện cập nhật như hướng dẫn.",
+////                    "Cập nhật", "Đóng");
+////            if (option == 0) {
+////
+////                if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+////                    try {
+////                        Desktop.getDesktop().browse(new URI("http://103.130.213.180/dropship2G.html"));
+////                        Desktop.getDesktop().browse(new URI("https://chromedriver.chromium.org/downloads?fbclid=IwAR1I_wfvE-sipnM0-ZsU-nTBZhLYX3exGq9u1ive6mEDZ8922fWQQ_B1p1M"));
+////                    } catch (IOException | URISyntaxException ex) {
+////                        Logger.getLogger(StartClientApp.class.getName()).log(Level.SEVERE, null, ex);
+////                    }
+////                }
+////            }
+//            return false;
+//        }
+//
+//    }
     public void aliexCookies() {
 
 //            Map<String, String> mapCookies = new HashMap<String, String>();
