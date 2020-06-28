@@ -328,6 +328,8 @@ public class ClientHomePanel extends BasePanel {
     private void btnStartCrawlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartCrawlActionPerformed
 //        UploadImagelThread uploadImagelThread = new UploadImagelThread(topFrame);
 //        uploadImagelThread.start();
+        
+
 
         txtLogs.setText("");
 
@@ -345,6 +347,11 @@ public class ClientHomePanel extends BasePanel {
             return;
         }
         mainController.setImageFolderPath(txtImageFolder.getText().trim());
+        
+        if(!AmzListingCrawlSvs.getInstance().isReady()) {
+            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng load profile. Sau đó vào trang quản lý listing sản phẩm!");
+            return;
+        }
 
         mainController.doAction();
     }//GEN-LAST:event_btnStartCrawlActionPerformed
@@ -564,10 +571,9 @@ public class ClientHomePanel extends BasePanel {
 //            AmzListingCrawlSvs.getInstance().goToPage("https://sellercentral.amazon.com");
             AmzListingCrawlSvs.getInstance().goToPage("https://sellercentral.amazon.com/inventory");
             
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(ClientHomePanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(ClientHomePanel.class.getName()).log(Level.SEVERE, null, ex);
+            DialogUtil.showErrorMessage(topFrame, "", "" + ex.getMessage());
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 

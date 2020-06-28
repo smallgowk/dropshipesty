@@ -176,7 +176,7 @@ public class CrawlerMachine {
 //        driver = null;
 //        Configs.hashMapAccountState.put(currentAccount, Boolean.TRUE);
 //    }
-    public boolean initDriver(String profileName) {
+    public boolean initDriver(String profileName) throws Exception{
 
         if (driver != null) {
             System.out.println("driver ready");
@@ -212,6 +212,7 @@ public class CrawlerMachine {
         options.addArguments("disable-infobars");
         options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
         options.addArguments("disable-javascript");
+        options.setCapability(CapabilityType.HAS_NATIVE_EVENTS, false);
 
 //        options.addArguments("disable-javascript");
 //        options.addArguments("user-data-dir", Configs.CONFIG_FOLDER_PATH);
@@ -222,8 +223,7 @@ public class CrawlerMachine {
 
             return true;
         } catch (Exception ex) {
-            System.out.println("Error: " + ex);
-            return false;
+            throw ex;
         }
 
     }

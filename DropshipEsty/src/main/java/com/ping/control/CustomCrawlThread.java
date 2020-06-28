@@ -5,10 +5,14 @@
  */
 package com.ping.control;
 
+import com.config.Configs;
 import com.models.aliex.store.inputdata.SnakeBaseStoreOrderInfo;
 import com.models.amazon.AmzListingItem;
+import com.ping.service.crawl.aliex.AliexCrawlProductInfoSvs;
 import com.ping.service.crawl.amzlisting.AmzListingCrawlSvs;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 
 /**
@@ -61,17 +65,20 @@ public class CustomCrawlThread extends Thread {
         }
 
         ArrayList<AmzListingItem> listItems = AmzListingCrawlSvs.getInstance().crawlData();
+        crawlProcessListener.onPushState("", "Found " + listItems.size() + " result");
 
-        for (AmzListingItem item : listItems) {
-            if (isStop) {
-                crawlProcessListener.onFinishPage("");
-                return;
-            }
-            process(item);
-        }
+//        for (AmzListingItem item : listItems) {
+//            if (isStop) {
+//                crawlProcessListener.onFinishPage("");
+//                return;
+//            }
+//            crawlProcessListener.onPushState("", "Processing for " + item.getSku());
+//            process(item);
+//        }
+        
+        process(listItems.get(0));
 
-        crawlProcessListener.onFinishPage("Total: " + listItems.size());
-
+        crawlProcessListener.onFinishPage("");
     }
 
     private ArrayList<AmzListingItem> crawlData() {
@@ -81,6 +88,36 @@ public class CustomCrawlThread extends Thread {
     }
 
     private void process(AmzListingItem item) {
+        AmzListingCrawlSvs.getInstance().goToPage(item.getCustomLink());
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
+//        File imageFile = new File(imageFolderPath + Configs.pathChar + item.sku + ".jpg");
+        File imageFile = new File(imageFolderPath + Configs.pathChar + "TLT96593_32602048616_3" + ".jpg");
+        if(!imageFile.exists()) {
+            return;
+        }
+        
+        AmzListingCrawlSvs.getInstance().doFillBaseInfo(imageFile.getPath());
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        for(int i = 0; i < 3; i++) {
+            AmzListingCrawlSvs.getInstance().doAddingCustomizePanel();
+        }
+        
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        AmzListingCrawlSvs.getInstance().doUpdateCustomizationIfno();
     }
 }

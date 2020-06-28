@@ -95,8 +95,7 @@ public class PUDHomePanel extends BasePanel {
         if (pathStr != null) {
             System.setProperty("webdriver.chrome.driver", pathStr);
         }
-        AliexCrawlSvs.getInstance().initDriver(null);
-        AliexCrawlSvs.getInstance().goToPage("https://sellercentral.amazon.com/gestalt/managecustomization/index.html?sku=TLT96593_32602048616_3");
+        
 //        try {
 //            Thread.sleep(1000);
 //        } catch (InterruptedException ex) {
