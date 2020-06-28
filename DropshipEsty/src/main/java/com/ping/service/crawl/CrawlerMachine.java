@@ -209,6 +209,9 @@ public class CrawlerMachine {
         }
 
         options.addArguments("--start-maximized");
+        options.addArguments("disable-infobars");
+        options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+        options.addArguments("disable-javascript");
 
 //        options.addArguments("disable-javascript");
 //        options.addArguments("user-data-dir", Configs.CONFIG_FOLDER_PATH);

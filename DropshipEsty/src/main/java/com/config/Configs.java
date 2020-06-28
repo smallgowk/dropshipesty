@@ -92,6 +92,10 @@ public class Configs {
 
     public static float priceLimit;
     public static float priceRate;
+    
+    public static String profilePath;
+    public static String infoCustomPath;
+    public static String imageCustomPath;
 
     public static boolean isOnlyUS;
     public static int dataSaveType;
@@ -372,11 +376,14 @@ public class Configs {
             String lastPriceLimitIndexStr = cnfParamsTmp.getProperty("lastPriceLimitSelect", "5");
             String lastPriceRateIndexStr = cnfParamsTmp.getProperty("lastPriceRateSelect", "2");
             String dataSaveTypeStr = cnfParamsTmp.getProperty("dataSaveType", "0");
-            String dataLevelStr = cnfParamsTmp.getProperty("dataLevel", "1");
 //            String portStr = cnfParamsTmp.getProperty("serverPort", "89");
 
             excelSampleFilePath = cnfParamsTmp.getProperty("excelSamplePath", DEFAULT_SAMPLE_XLSX_FILE_PATH);
             storeFilePath = cnfParamsTmp.getProperty("storeFilePath", "");
+            
+            profilePath = cnfParamsTmp.getProperty("profilePath", "");
+            infoCustomPath = cnfParamsTmp.getProperty("infoCustomPath", "");
+            imageCustomPath = cnfParamsTmp.getProperty("imageFolderCustom", "");
 
             createProductFolders();
 
@@ -525,6 +532,36 @@ public class Configs {
         try {
             changeConfigValues(CONTENT_CONFIG_FILE, new String[]{"dataSaveType", "" + mode});
             dataSaveType = mode;
+        } catch (IOException ex) {
+            Logger.getLogger(Configs.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    public static void changeProfilePath(String path) {
+        try {
+            changeConfigValues(CONTENT_CONFIG_FILE, new String[]{"profilePath", path});
+            profilePath = path;
+        } catch (IOException ex) {
+            Logger.getLogger(Configs.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    public static void changeInfoCustomPathPath(String path) {
+        try {
+            changeConfigValues(CONTENT_CONFIG_FILE, new String[]{"infoCustomPath", path});
+            infoCustomPath = path;
+        } catch (IOException ex) {
+            Logger.getLogger(Configs.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    public static void changeImageFolderCustomPathPath(String path) {
+        try {
+            changeConfigValues(CONTENT_CONFIG_FILE, new String[]{"imageFolderCustom", path});
+            imageCustomPath = path;
         } catch (IOException ex) {
             Logger.getLogger(Configs.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -6,15 +6,15 @@
 package com.ping.view;
 
 import com.config.Configs;
-import static com.config.Configs.listCategories;
-import com.ping.control.ActionListener;
 import com.ping.control.CrawlProcessListener;
 import com.ping.control.MainController;
 import com.models.aliex.store.BaseStoreInfo;
 import com.models.aliex.store.inputdata.BaseStoreOrderInfo;
-import com.ping.control.UploadImagelThread;
-import com.ping.service.crawl.CrawlerMachine;
+import com.ping.control.CustomController;
+import com.ping.control.CustomController.ActionListener;
+import com.ping.control.CustomController.STATE;
 import com.ping.service.crawl.aliex.AliexCrawlSvs;
+import com.ping.service.crawl.amzlisting.AmzListingCrawlSvs;
 import com.ping.tcpclient.ResponseObj;
 import com.utils.DialogUtil;
 import com.utils.OSUtil;
@@ -24,8 +24,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -48,7 +46,7 @@ public class ClientHomePanel extends BasePanel {
 
     ArrayList<BaseStoreInfo> listStorePage = new ArrayList<>();
 
-    MainController mainController;
+    CustomController mainController;
 
     JPanel controls;
 
@@ -60,16 +58,16 @@ public class ClientHomePanel extends BasePanel {
         setMenuActionCommand("MainHome");
         initData();
 
-        fakeData();
+//        fakeData();
     }
 
-    private void fakeData() {
-        txtProfilePath.setText("C:\\Users\\PhanDuy\\Desktop\\Profiles\\long (SnakeAccount) - Chrome.lnk");
-    }
+//    private void fakeData() {
+//        txtProfilePath.setText("C:\\Users\\PhanDuy\\Desktop\\Profiles\\long (SnakeAccount) - Chrome.lnk");
+//    }
 
     public void initData() {
 
-        mainController = new MainController();
+        mainController = new CustomController();
         mainController.setCrawlProcessListener(crawlProcessListener);
         mainController.setActionListener(actionListener);
 
@@ -85,51 +83,10 @@ public class ClientHomePanel extends BasePanel {
         if (pathStr != null) {
             System.setProperty("webdriver.chrome.driver", pathStr);
         }
-//        AliexCrawlSvs.getInstance().initDriver();
-//        AliexCrawlSvs.getInstance().goToPage("https://sellercentral.amazon.com/gestalt/managecustomization/index.html?sku=TLT96593_32602048616_3");
-//        try {
-//            Thread.sleep(1000);
-//        } catch (InterruptedException ex) {
-//            Logger.getLogger(ClientHomePanel.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        AliexCrawlSvs.getInstance().doAutoClick(null);
-//        if (!AliexCrawlSvs.getInstance().isHasCookies()) {
-////            AliexCrawlSvs.getInstance().initDriver();
-////            MerchantSearchSvs.getInstance().login();
-//            boolean login = AliexCrawlSvs.getInstance().autoLoginAliex();
-//            if(!login) {
-//                int option = DialogUtil.showOptionsQuestionDialog(null, null, "Phiên bản trình duyệt chrome và phiên bản chromedriver không tương thích. Vui lòng cập nhật chromedriver theo phiên bản trình duyệt chrome trên máy tính!",
-//                        "Cập nhật", "Đóng");
-//                if (option == 0) {
-//
-//                    if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-//                        try {
-//                            Desktop.getDesktop().browse(new URI("https://chromedriver.chromium.org/downloads?fbclid=IwAR1I_wfvE-sipnM0-ZsU-nTBZhLYX3exGq9u1ive6mEDZ8922fWQQ_B1p1M"));
-//                        } catch (IOException ex) {
-//                            Logger.getLogger(StartClientApp.class.getName()).log(Level.SEVERE, null, ex);
-//                        } catch (URISyntaxException ex) {
-//                            Logger.getLogger(StartClientApp.class.getName()).log(Level.SEVERE, null, ex);
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        MerchantSearchSvs.getInstance().login();
-//        AliexCrawlSvs.getInstance().autoLoginAliex();
-//        btnStop.setEnabled(false);
-
-//        if (!AliexCrawlSvs.getInstance().isHasCookies()) {
-//            AliexCrawlSvs.getInstance().autoLoginAliex();
-//        }
-//        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-//            public void run() {
-//                processPannel = new ProcessPannel(statePannel.getWidth(), statePannel.getHeight());
-//                processPannel.setBackground(Color.red);
-//                statePannel.add(processPannel);
-//                statePannel.validate();
-//            }
-//        });
-//        fakeData();
+        
+        txtProfilePath.setText(Configs.profilePath);
+        txtInfoPath.setText(Configs.infoCustomPath);
+        txtImageFolder.setText(Configs.imageCustomPath);
     }
 
     public void disableButton() {
@@ -150,10 +107,16 @@ public class ClientHomePanel extends BasePanel {
         jLabel2 = new javax.swing.JLabel();
         txtProfilePath = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        txtInfoPath = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        txtImageFolder = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         btnStartCrawl = new javax.swing.JButton();
         btnStop = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane12 = new javax.swing.JScrollPane();
         txtLogs = new javax.swing.JTextArea();
@@ -170,10 +133,21 @@ public class ClientHomePanel extends BasePanel {
             }
         });
 
-        jButton2.setText("Load Profile");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jLabel1.setText("Customization Info");
+
+        jButton3.setText("Browse...");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Image folder");
+
+        jButton4.setText("Browse...");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
             }
         });
 
@@ -186,14 +160,21 @@ public class ClientHomePanel extends BasePanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(txtProfilePath, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel1)
                             .addComponent(jLabel2))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtImageFolder, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtInfoPath, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtProfilePath, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -205,8 +186,18 @@ public class ClientHomePanel extends BasePanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtProfilePath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
-                .addGap(26, 26, 26)
-                .addComponent(jButton2)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtInfoPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtImageFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -225,24 +216,37 @@ public class ClientHomePanel extends BasePanel {
             }
         });
 
+        jButton2.setText("Load Profile");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnStartCrawl, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(btnStop, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnStartCrawl, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnStop, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnStartCrawl, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnStop, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(20, 20, 20))
         );
 
@@ -279,10 +283,10 @@ public class ClientHomePanel extends BasePanel {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -322,80 +326,27 @@ public class ClientHomePanel extends BasePanel {
     }
 
     private void btnStartCrawlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartCrawlActionPerformed
-        UploadImagelThread uploadImagelThread = new UploadImagelThread(topFrame);
-        uploadImagelThread.start();
-//        if(!mainController.isStop()) return;
-//        
-//        if (txtStoreLink.getText().trim().isEmpty()) {
-//            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập link store!");
-//            return;
-//        }
-//
-//        mainController.setLinkStore(txtStoreLink.getText().trim());
-//
-//        if (txtBrandName.getText().trim().isEmpty()) {
-//            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập brand name!");
-//            return;
-//        }
-//
-//        mainController.setBrandName(txtBrandName.getText().trim());
-//
-////        if(mainController.getListColor() == null) {
-////            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng chọn màu!");
-////            return;
-////        }
-////        
-////        if(mainController.getListSizes() == null) {
-////            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng chọn size!");
-////            return;
-////        }
-//        if (txtDesciption.getText().trim().isEmpty()) {
-//            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập description!");
-//            return;
-//        }
-//        mainController.setDescription(txtDesciption.getText().trim());
-//
-//        if (txtSubImageLinks.getText().trim().isEmpty()) {
-//            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập link ảnh!");
-//            return;
-//        }
-//        mainController.setImageLinks(txtSubImageLinks.getText().trim());
-//
-//        if (txtBasePrice.getText().trim().isEmpty()) {
-//            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập giá !");
-//            return;
-//        }
-//        String priceStr = txtBasePrice.getText().trim();
-//        try {
-//            float price = Float.parseFloat(priceStr);
-//            mainController.setBasePrice(price);
-//
-//        } catch (NumberFormatException ex) {
-//            DialogUtil.showErrorMessage(topFrame, "", "Thông tin giá không hợp lệ !");
-//            return;
-//        }
-//
-//        String select = (String) jComboBox.getSelectedItem();
-////        mainController.setCategory(Configs.hashMapCateType.get(select));
-//        mainController.setCategory(select);
-//
-//        if (txtBullets.getText().trim().isEmpty()) {
-//            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập bullet points !");
-//            return;
-//        }
-//        mainController.setBullets(txtBullets.getText().trim());
-//
-//        if (!mainController.isEtsy()) {
-//            if (txtImageFolder.getText().trim().isEmpty()) {
-//                DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập đường dẫn ảnh !");
-//                return;
-//            }
-//            mainController.setImageFolder(txtImageFolder.getText().trim());
-//        }
-//
-//        mainController.doAction();
+//        UploadImagelThread uploadImagelThread = new UploadImagelThread(topFrame);
+//        uploadImagelThread.start();
 
+        txtLogs.setText("");
 
+        if(!mainController.isStop()) return;
+        
+        if (txtInfoPath.getText().trim().isEmpty()) {
+            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập đường dẫn file info!");
+            return;
+        }
+
+        mainController.setInfoPath(txtInfoPath.getText().trim());
+
+        if (txtImageFolder.getText().trim().isEmpty()) {
+            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập đường dẫn thư mục ảnh!");
+            return;
+        }
+        mainController.setImageFolderPath(txtImageFolder.getText().trim());
+
+        mainController.doAction();
     }//GEN-LAST:event_btnStartCrawlActionPerformed
 
     CrawlProcessListener crawlProcessListener = new CrawlProcessListener() {
@@ -437,7 +388,7 @@ public class ClientHomePanel extends BasePanel {
         @Override
         public void onFinishPage(String storeSign) {
             mainController.finish();
-            actionListener.onStateChange(MainController.STATE.STOP);
+            actionListener.onStateChange(STATE.STOP);
             txtLogs.append("Done!");
             txtLogs.append("\n");
         }
@@ -456,7 +407,7 @@ public class ClientHomePanel extends BasePanel {
 
     ActionListener actionListener = new ActionListener() {
         @Override
-        public void onStateChange(MainController.STATE state) {
+        public void onStateChange(STATE state) {
             switch (state) {
                 case STOP:
 //                    btnStartCrawl.setText("Start");
@@ -583,14 +534,21 @@ public class ClientHomePanel extends BasePanel {
         //
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             String path = chooser.getSelectedFile().getPath();
-            txtProfilePath.setText(path);
+            Configs.changeProfilePath(path);
+            txtProfilePath.setText(Configs.profilePath);
         } else {
             System.out.println("No Selection ");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String path = txtProfilePath.getText();
+        
+        if (txtProfilePath.getText().trim().isEmpty()) {
+            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập đường dẫn profile chrome!");
+            return;
+        }
+        
+        String path = txtProfilePath.getText().trim();
         
         File file = new File(path);
         if(!file.exists()) return;
@@ -601,8 +559,10 @@ public class ClientHomePanel extends BasePanel {
             String[] parts = params.split(Pattern.quote("="));
             String profileName = parts[1].substring(1, parts[1].length() - 1);
             
-            AliexCrawlSvs.getInstance().initDriver(profileName);
-            AliexCrawlSvs.getInstance().goToPage("https://sellercentral.amazon.com/gestalt/managecustomization/index.html?sku=TLT96593_32602048616_3");
+            AmzListingCrawlSvs.getInstance().initDriver(profileName);
+//            AliexCrawlSvs.getInstance().goToPage("https://sellercentral.amazon.com/gestalt/managecustomization/index.html?sku=TLT96593_32602048616_3");
+//            AmzListingCrawlSvs.getInstance().goToPage("https://sellercentral.amazon.com");
+            AmzListingCrawlSvs.getInstance().goToPage("https://sellercentral.amazon.com/inventory");
             
         } catch (IOException ex) {
             Logger.getLogger(ClientHomePanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -611,17 +571,65 @@ public class ClientHomePanel extends BasePanel {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        choosertitle = "Select file:";
+        chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new java.io.File("."));
+        chooser.setDialogTitle(choosertitle);
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        //
+        // disable the "All files" option.
+        //
+        chooser.setAcceptAllFileFilterUsed(false);
+        //
+        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            String path = chooser.getSelectedFile().getPath();
+            Configs.changeInfoCustomPathPath(path);
+            txtInfoPath.setText(Configs.infoCustomPath);
+        } else {
+            System.out.println("No Selection ");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        choosertitle = "Select file:";
+        chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new java.io.File("."));
+        chooser.setDialogTitle(choosertitle);
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        //
+        // disable the "All files" option.
+        //
+        chooser.setAcceptAllFileFilterUsed(false);
+        //
+        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            String path = chooser.getSelectedFile().getPath();
+            Configs.changeImageFolderCustomPathPath(path);
+            txtImageFolder.setText(Configs.imageCustomPath);
+        } else {
+            System.out.println("No Selection ");
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnStartCrawl;
     private javax.swing.JButton btnStop;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JLabel lbStatus;
+    private javax.swing.JTextField txtImageFolder;
+    private javax.swing.JTextField txtInfoPath;
     private javax.swing.JTextArea txtLogs;
     private javax.swing.JTextField txtProfilePath;
     // End of variables declaration//GEN-END:variables
