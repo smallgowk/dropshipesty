@@ -62,6 +62,7 @@ public class CrawlerMachine {
 
     public Map<String, String> cookies;
     public WebDriver driver;
+    public JavascriptExecutor executor;
     public Actions actions;
     public String currentAccount;
 
@@ -219,6 +220,7 @@ public class CrawlerMachine {
 //        options.setCapability("pageLoadStrategy", "eager");
         try {
             driver = new ChromeDriver(options);
+            executor = (JavascriptExecutor) driver;
             actions = new Actions(driver);
 
             return true;

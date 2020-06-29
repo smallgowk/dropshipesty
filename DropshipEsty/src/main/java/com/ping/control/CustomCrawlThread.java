@@ -8,9 +8,12 @@ package com.ping.control;
 import com.config.Configs;
 import com.models.aliex.store.inputdata.SnakeBaseStoreOrderInfo;
 import com.models.amazon.AmzListingItem;
+import com.models.amazon.SurfaceModel;
 import com.ping.service.crawl.aliex.AliexCrawlProductInfoSvs;
 import com.ping.service.crawl.amzlisting.AmzListingCrawlSvs;
+import com.utils.ExcelAmzCustomizeUtil;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import org.apache.log4j.Logger;
@@ -63,6 +66,15 @@ public class CustomCrawlThread extends Thread {
             crawlProcessListener.onFinishPage("");
             return;
         }
+        
+        SurfaceModel surfaceModel = null;
+        
+        try {
+            surfaceModel = ExcelAmzCustomizeUtil.readDataInfo(infoPath);
+        } catch (FileNotFoundException ex) {
+            crawlProcessListener.onPushState("", "Error: " + ex.getMessage());
+            return;
+        }
 
         ArrayList<AmzListingItem> listItems = AmzListingCrawlSvs.getInstance().crawlData();
         crawlProcessListener.onPushState("", "Found " + listItems.size() + " result");
@@ -76,18 +88,12 @@ public class CustomCrawlThread extends Thread {
 //            process(item);
 //        }
         
-        process(listItems.get(0));
+        process(listItems.get(0), surfaceModel);
 
         crawlProcessListener.onFinishPage("");
     }
 
-    private ArrayList<AmzListingItem> crawlData() {
-        ArrayList<AmzListingItem> list = new ArrayList<>();
-
-        return list;
-    }
-
-    private void process(AmzListingItem item) {
+    private void process(AmzListingItem item, SurfaceModel surfaceModel) {
         AmzListingCrawlSvs.getInstance().goToPage(item.getCustomLink());
         try {
             Thread.sleep(1000);
@@ -101,7 +107,7 @@ public class CustomCrawlThread extends Thread {
             return;
         }
         
-        AmzListingCrawlSvs.getInstance().doFillBaseInfo(imageFile.getPath());
+        AmzListingCrawlSvs.getInstance().doFillBaseInfo(imageFile.getPath(), surfaceModel);
         try {
             Thread.sleep(1000);
         } catch (InterruptedException ex) {
@@ -118,6 +124,7 @@ public class CustomCrawlThread extends Thread {
             java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        AmzListingCrawlSvs.getInstance().doUpdateCustomizationIfno();
+        AmzListingCrawlSvs.getInstance().doUpdateCustomizationIfno(surfaceModel);
+        AmzListingCrawlSvs.getInstance().doSave();
     }
 }

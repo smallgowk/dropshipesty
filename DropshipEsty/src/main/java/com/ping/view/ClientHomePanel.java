@@ -348,10 +348,10 @@ public class ClientHomePanel extends BasePanel {
         }
         mainController.setImageFolderPath(txtImageFolder.getText().trim());
         
-        if(!AmzListingCrawlSvs.getInstance().isReady()) {
-            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng load profile. Sau đó vào trang quản lý listing sản phẩm!");
-            return;
-        }
+//        if(!AmzListingCrawlSvs.getInstance().isReady()) {
+//            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng load profile. Sau đó vào trang quản lý listing sản phẩm!");
+//            return;
+//        }
 
         mainController.doAction();
     }//GEN-LAST:event_btnStartCrawlActionPerformed
