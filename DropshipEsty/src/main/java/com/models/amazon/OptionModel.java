@@ -32,7 +32,7 @@ public class OptionModel {
     public String getPriceStr() {
         if(price == 0) return "";
         
-        return "" + price + "$";
+        return (int) price + ".00";
     }
     
     @Override

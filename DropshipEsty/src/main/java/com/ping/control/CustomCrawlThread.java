@@ -79,21 +79,20 @@ public class CustomCrawlThread extends Thread {
         ArrayList<AmzListingItem> listItems = AmzListingCrawlSvs.getInstance().crawlData();
         crawlProcessListener.onPushState("", "Found " + listItems.size() + " result");
 
-//        for (AmzListingItem item : listItems) {
-//            if (isStop) {
-//                crawlProcessListener.onFinishPage("");
-//                return;
-//            }
-//            crawlProcessListener.onPushState("", "Processing for " + item.getSku());
-//            process(item);
-//        }
-        
-        process(listItems.get(0), surfaceModel);
+        for (AmzListingItem item : listItems) {
+            if (isStop) {
+                crawlProcessListener.onFinishPage("");
+                return;
+            }
+            
+            process(item, surfaceModel);
+        }
 
         crawlProcessListener.onFinishPage("");
     }
 
     private void process(AmzListingItem item, SurfaceModel surfaceModel) {
+        crawlProcessListener.onPushState("", "Processing for " + item.getSku());
         AmzListingCrawlSvs.getInstance().goToPage(item.getCustomLink());
         try {
             Thread.sleep(1000);
@@ -101,30 +100,35 @@ public class CustomCrawlThread extends Thread {
             java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-//        File imageFile = new File(imageFolderPath + Configs.pathChar + item.sku + ".jpg");
-        File imageFile = new File(imageFolderPath + Configs.pathChar + "TLT96593_32602048616_3" + ".jpg");
+        File imageFile = new File(imageFolderPath + Configs.pathChar + item.sku + ".jpg");
         if(!imageFile.exists()) {
+            crawlProcessListener.onPushState("", "Not found image for " + item.sku);
             return;
         }
         
         AmzListingCrawlSvs.getInstance().doFillBaseInfo(imageFile.getPath(), surfaceModel);
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException ex) {
             java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        for(int i = 0; i < 3; i++) {
-            AmzListingCrawlSvs.getInstance().doAddingCustomizePanel();
-        }
+//        for(int i = 0; i < 3; i++) {
+//            AmzListingCrawlSvs.getInstance().doAddingCustomizePanel();
+//        }
         
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-            java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException ex) {
+//            java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         
         AmzListingCrawlSvs.getInstance().doUpdateCustomizationIfno(surfaceModel);
         AmzListingCrawlSvs.getInstance().doSave();
+        try {
+            Thread.sleep(6000);
+        } catch (InterruptedException ex) {
+            java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

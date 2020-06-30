@@ -51,6 +51,7 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.swing.JFrame;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -111,7 +112,6 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
 ////        executor.executeScript("arguments[0].sendKeys();", element1);
 //        element1.clear();
 //        element1.sendKeys(surfaceModel.getLabel());
-
 //        WebDriverWait wait2 = new WebDriverWait(driver, 100);
 //        WebElement element2 = wait2.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[1]/div[1]/div/div[2]/div/div/div[2]/kat-textarea/textarea")));
         WebElement element2 = findWithFullXPath("/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[1]/div[1]/div/div[2]/div/div/div[2]/kat-textarea");
@@ -120,21 +120,42 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
 //        element2.clear();
 //        element2.sendKeys(surfaceModel.getInstruction());
         executor.executeScript("arguments[0].setAttribute('value', arguments[1])", element2, surfaceModel.getInstruction());
-        
-        WebElement uploadImageElement = findWithFullXPath("/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[1]/div[2]/div/div[1]/div[2]/div/div/div");
-        uploadImageElement.click();
-        
-        try {
-            Screen s = new Screen();
-//            s.click(imageUpload);
-            s.wait(fileInputTextBox, 20);
-            s.type(fileInputTextBox, imagePath);
-            s.click(openButton);
 
+        Screen s = new Screen();
+
+        try {
             s.wait(imageUploaded, 20);
         } catch (FindFailed ex) {
             Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
+
+            try {
+
+                WebElement uploadImageElement = findWithFullXPath("/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[1]/div[2]/div/div[1]/div[2]/div/div/div");
+                uploadImageElement.click();
+//            s.click(imageUpload);
+                s.wait(fileInputTextBox, 20);
+                s.type(fileInputTextBox, imagePath);
+                s.click(openButton);
+
+                s.wait(imageUploaded, 20);
+            } catch (FindFailed ex1) {
+                Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+
+//        WebElement uploadImageElement = findWithFullXPath("/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[1]/div[2]/div/div[1]/div[2]/div/div/div");
+//        uploadImageElement.click();
+//
+//        try {
+////            s.click(imageUpload);
+//            s.wait(fileInputTextBox, 20);
+//            s.type(fileInputTextBox, imagePath);
+//            s.click(openButton);
+//
+//            s.wait(imageUploaded, 20);
+//        } catch (FindFailed ex) {
+//            Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     public void doAddingCustomizePanel() {
@@ -185,12 +206,12 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
     public void doUpdateCustomizationIfno(SurfaceModel surfaceModel) {
         for (int i = 0; i < 3; i++) {
             CustomizationModel customizationModel = surfaceModel.getCustomizationModel(i);
-            doAddingOptions(i, customizationModel.listOptions.size());
+//            doAddingOptions(i, customizationModel.listOptions.size());
             setCustomizationInfo(i, customizationModel);
         }
 
     }
-    
+
     public void doSave() {
         WebElement ele = findWithFullXPath("/html/body/div[1]/div[2]/div[1]/div/div[2]/div[2]/div/kat-button[2]/button");
         executor.executeScript("arguments[0].click();", ele);
@@ -199,23 +220,31 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
     public void setCustomizationInfo(int index, CustomizationModel customizationModel) {
         WebElement elementOptionLabel = findWithFullXPath(getCustomLabelXpath(index));
 
-//        elementOptionLabel.clear();
-//        elementOptionLabel.sendKeys(customizationModel.label);
-        executor.executeScript("arguments[0].setAttribute('value', arguments[1])", elementOptionLabel, customizationModel.label);
+        if (elementOptionLabel == null) {
+            doAddingCustomizePanel();
+//            try {
+//                Thread.sleep(500);
+//            } catch (InterruptedException ex) {
+//                java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+        }
+        elementOptionLabel = findWithFullXPath(getCustomLabelXpath(index));
+
+        elementOptionLabel.clear();
+        elementOptionLabel.sendKeys(customizationModel.label);
+//        executor.executeScript("arguments[0].setAttribute('value', arguments[1])", elementOptionLabel, customizationModel.label);
 
         WebElement elementInstruction = findWithFullXPath(getCustomInstructXpath(index));
-//        elementInstruction.clear();
-//        elementInstruction.sendKeys(customizationModel.instruction);
-        executor.executeScript("arguments[0].setAttribute('value', arguments[1])", elementInstruction, customizationModel.instruction);
+        elementInstruction.clear();
+        elementInstruction.sendKeys(customizationModel.instruction);
+//        executor.executeScript("arguments[0].setAttribute('value', arguments[1])", elementInstruction, customizationModel.instruction);
 
 //        try {
 //            Thread.sleep(500);
 //        } catch (InterruptedException ex) {
 //            java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-        
 //        JavascriptExecutor executor = (JavascriptExecutor) driver;
-
         for (int i = 0, size = customizationModel.getListOptions().size(); i < size; i++) {
             OptionModel optionModel = customizationModel.getOptionModel(i);
 
@@ -224,50 +253,57 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
 //            } catch (InterruptedException ex) {
 //                java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
 //            }
-
             WebElement optionLabel = findWithFullXPath(getOptionLabelXpath(index, (i + 1)));
-//            optionLabel.clear();
-//            optionLabel.sendKeys(optionModel.label);
-            executor.executeScript("arguments[0].setAttribute('value', arguments[1])", optionLabel, optionModel.label);
+
+            if (optionLabel == null) {
+                doAddingOptionPanel(index, i + 1);
+                optionLabel = findWithFullXPath(getOptionLabelXpath(index, (i + 1)));
+            }
+
+            optionLabel.clear();
+            optionLabel.sendKeys(optionModel.label);
+            optionLabel.sendKeys(Keys.ENTER);
+//            executor.executeScript("arguments[0].setAttribute('value', arguments[1])", optionLabel, optionModel.label);
 //            try {
 //                Thread.sleep(500);
 //            } catch (InterruptedException ex) {
 //                java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
 //            }
             if (!optionModel.getPriceStr().trim().isEmpty()) {
-                
+
                 String xpath = getOptionPriceXpath(index, (i + 1));
-                System.out.println(optionModel.getPriceStr() + ": " + xpath);
+                String xpathGroup = getOptionPriceKatXpath(index, (i + 1));
+                WebElement optionPriceKat = findWithFullXPath(xpathGroup);
+                String value = optionPriceKat.getAttribute("value");
+
                 WebElement optionPrice = findWithFullXPath(xpath);
-//                WebElement optionPrice = driver.findElement(By.xpath(xpath));
-                
-//                JavascriptExecutor executor = (JavascriptExecutor) driver;
-//                executor.executeScript("arguments[0].click();", optionPrice);
-//                executor.executeScript("arguments[0].setAttribute('value', '" +optionModel.getPriceStr()+"')", optionPrice);
-                executor.executeScript("arguments[0].setAttribute('value', arguments[1])", optionPrice, optionModel.getPriceStr());
-                
-//                optionPrice.clear();
-//                optionPrice.sendKeys("" + optionModel.getPriceStr());
+                for (int j = 0, length = value.length(); j < length; j++) {
+                    optionPrice.sendKeys(Keys.BACK_SPACE);
+                }
+
+                optionPrice.sendKeys(optionModel.getPriceStr());
+
+//                executor.executeScript("arguments[0].setAttribute('value', arguments[1])", optionPrice, optionModel.getPriceStr());
+//                executor.executeScript("arguments[0].enter();", optionPrice);
             }
         }
 
     }
 
-    public void doAddingOptions(int customIndex, int size) {
-        for (int i = 3; i <= size; i++) {
-            doAddingOptionPanel(customIndex, i);
-        }
-
-    }
-
+//    public void doAddingOptions(int customIndex, int size) {
+//        for (int i = 3; i <= size; i++) {
+//            doAddingOptionPanel(customIndex, i);
+//        }
+//
+//    }
     private String getCustomLabelXpath(int index) {
         switch (index) {
             case 0:
-                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[1]/div[2]/div/div[1]/div/kat-input";
+                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[1]/div[2]/div/div[1]/div/kat-input/input";
             case 1:
-                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[5]/div/div[2]/div/div/div[1]/div[2]/div/div[1]/div/kat-input";
+                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[5]/div/div[2]/div/div/div[1]/div[2]/div/div[1]/div/kat-input/input";
             case 2:
-                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[8]/div/div[2]/div/div/div[1]/div[2]/div/div[1]/div/kat-input";
+                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[8]/div/div[2]/div/div/div[1]/div[2]/div/div[1]/div/kat-input/input";
         }
         return null;
     }
@@ -275,11 +311,11 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
     private String getCustomInstructXpath(int index) {
         switch (index) {
             case 0:
-                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[1]/div[2]/div/div[2]/div/kat-input";
+                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[1]/div[2]/div/div[2]/div/kat-input/input";
             case 1:
-                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[5]/div/div[2]/div/div/div[1]/div[2]/div/div[2]/div/kat-input";
+                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[5]/div/div[2]/div/div/div[1]/div[2]/div/div[2]/div/kat-input/input";
             case 2:
-                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[8]/div/div[2]/div/div/div[1]/div[2]/div/div[2]/div/kat-input";
+                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[8]/div/div[2]/div/div/div[1]/div[2]/div/div[2]/div/kat-input/input";
         }
         return null;
     }
@@ -304,16 +340,28 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
     private String getOptionLabelXpath(int index, int i) {
         switch (index) {
             case 0:
-                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[1]/div/kat-input";
+                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[1]/div/kat-input/input";
             case 1:
-                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[5]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[1]/div/kat-input";
+                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[5]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[1]/div/kat-input/input";
             case 2:
-                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[8]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[1]/div/kat-input";
+                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[8]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[1]/div/kat-input/input";
         }
         return null;
     }
 
     private String getOptionPriceXpath(int index, int i) {
+        switch (index) {
+            case 0:
+                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[2]/div/kat-input-group/kat-input-group/kat-input/input";
+            case 1:
+                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[5]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[2]/div/kat-input-group/kat-input-group/kat-input/input";
+            case 2:
+                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[8]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[2]/div/kat-input-group/kat-input-group/kat-input/input";
+        }
+        return null;
+    }
+
+    private String getOptionPriceKatXpath(int index, int i) {
         switch (index) {
             case 0:
                 return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[2]/div/kat-input-group/kat-input-group/kat-input";
@@ -326,14 +374,29 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
     }
 
     private WebElement findWithFullXPath(String xpath) {
-        WebDriverWait waitele = new WebDriverWait(driver, 100);
-        waitele.ignoring(StaleElementReferenceException.class);
-        return waitele.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+        try {
+            WebDriverWait waitele = new WebDriverWait(driver, 2);
+            waitele.ignoring(StaleElementReferenceException.class);
+            return waitele.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+//            return waitele.until(ExpectedConditions.elementToBeSelected(By.xpath(xpath)));
+        } catch (Exception ex) {
+            return null;
+        }
+
     }
 
+//    private List<WebElement> findAllWithFullXPath(String xpath) {
+//        try {
+//            WebDriverWait waitele = new WebDriverWait(driver, 2);
+//            waitele.ignoring(StaleElementReferenceException.class);
+//            return waitele.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+//        } catch (Exception ex) {
+//            return null;
+//        }
+//
+//    }
     public void doAddingOptionPanel(int customIndex, int optionIndex) {
         WebElement ele = findWithFullXPath(getAddOptionXpath(customIndex, optionIndex));
-        JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("arguments[0].click();", ele);
 
 //        try {

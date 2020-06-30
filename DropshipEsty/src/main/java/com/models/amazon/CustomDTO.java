@@ -84,6 +84,6 @@ public class CustomDTO {
     }
     
     public boolean isHasData() {
-        return label != null && !label.trim().isEmpty();
+        return type != null && !type.trim().isEmpty();
     }
 }
