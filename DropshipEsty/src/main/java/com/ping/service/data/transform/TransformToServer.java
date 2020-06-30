@@ -102,6 +102,7 @@ public class TransformToServer {
         requestObj.setDiskSerialNumber(ComputerIdentifier.getDiskSerialNumber().replaceAll(" ", "-"));
         requestObj.setComputerName(ComputerIdentifier.getComputerName());
         requestObj.setVersion(AppUtil.getAppVersion());
-        requestObj.setModule("Esty");
+//        requestObj.setModule("Esty");
+        requestObj.setModule("PUD_FULL");
     }
 }
