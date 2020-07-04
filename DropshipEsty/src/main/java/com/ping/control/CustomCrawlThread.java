@@ -31,15 +31,13 @@ public class CustomCrawlThread extends Thread {
     SnakeBaseStoreOrderInfo baseStoreOrderInfo;
     CrawlProcessListener crawlProcessListener;
 
-    String infoPath;
-    String imageFolderPath;
+    CustomController controller;
 
     int pageCount = 1;
 
 //    StringBuffer sb;
-    public CustomCrawlThread(String infoPath, String imageFolderPath, CrawlProcessListener crawlProcessListener) {
-        this.infoPath = infoPath;
-        this.imageFolderPath = imageFolderPath;
+    public CustomCrawlThread(CustomController controller, CrawlProcessListener crawlProcessListener) {
+        this.controller = controller;
         this.crawlProcessListener = crawlProcessListener;
     }
 
@@ -66,11 +64,11 @@ public class CustomCrawlThread extends Thread {
             crawlProcessListener.onFinishPage("");
             return;
         }
-        
+
         SurfaceModel surfaceModel = null;
-        
+
         try {
-            surfaceModel = ExcelAmzCustomizeUtil.readDataInfo(infoPath);
+            surfaceModel = ExcelAmzCustomizeUtil.readDataInfo(controller.infoPath);
         } catch (FileNotFoundException ex) {
             crawlProcessListener.onPushState("", "Error: " + ex.getMessage());
             return;
@@ -79,13 +77,26 @@ public class CustomCrawlThread extends Thread {
         ArrayList<AmzListingItem> listItems = AmzListingCrawlSvs.getInstance().crawlData();
         crawlProcessListener.onPushState("", "Found " + listItems.size() + " result");
 
-        for (AmzListingItem item : listItems) {
-            if (isStop) {
-                crawlProcessListener.onFinishPage("");
-                return;
+        if (!controller.isTestMode || !controller.isRunOnlyOne) {
+            for (AmzListingItem item : listItems) {
+                if (isStop) {
+                    crawlProcessListener.onFinishPage("");
+                    return;
+                }
+                process(item, surfaceModel);
             }
-            
-            process(item, surfaceModel);
+        } else {
+            for (AmzListingItem item : listItems) {
+                if (isStop) {
+                    crawlProcessListener.onFinishPage("");
+                    return;
+                }
+                if(item.sku.equals(controller.skuTest)) {
+                    process(item, surfaceModel);
+                    break;
+                }
+                
+            }
         }
 
         crawlProcessListener.onFinishPage("");
@@ -99,32 +110,33 @@ public class CustomCrawlThread extends Thread {
         } catch (InterruptedException ex) {
             java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        File imageFile = new File(imageFolderPath + Configs.pathChar + item.sku + ".jpg");
-        if(!imageFile.exists()) {
+
+        File imageFile = new File(controller.imageFolderPath + Configs.pathChar + item.sku + ".jpg");
+        if (!imageFile.exists()) {
             crawlProcessListener.onPushState("", "Not found image for " + item.sku);
             return;
         }
-        
+
         AmzListingCrawlSvs.getInstance().doFillBaseInfo(imageFile.getPath(), surfaceModel);
         try {
             Thread.sleep(500);
         } catch (InterruptedException ex) {
             java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
 //        for(int i = 0; i < 3; i++) {
 //            AmzListingCrawlSvs.getInstance().doAddingCustomizePanel();
 //        }
-        
 //        try {
 //            Thread.sleep(1000);
 //        } catch (InterruptedException ex) {
 //            java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-        
         AmzListingCrawlSvs.getInstance().doUpdateCustomizationIfno(surfaceModel);
-        AmzListingCrawlSvs.getInstance().doSave();
+
+        if (!controller.isTestMode || controller.isSaveAfterFinish) {
+            AmzListingCrawlSvs.getInstance().doSave();
+        }
         try {
             Thread.sleep(6000);
         } catch (InterruptedException ex) {

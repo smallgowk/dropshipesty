@@ -57,6 +57,8 @@ public class ClientHomePanel extends BasePanel {
         setTitle("Home");
         setMenuActionCommand("MainHome");
         initData();
+        
+        enableTestMode();
 
 //        fakeData();
     }
@@ -103,7 +105,6 @@ public class ClientHomePanel extends BasePanel {
     private void initComponents() {
 
         jPanel3 = new javax.swing.JPanel();
-        lbStatus = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtProfilePath = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -113,6 +114,7 @@ public class ClientHomePanel extends BasePanel {
         jLabel3 = new javax.swing.JLabel();
         txtImageFolder = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
+        checkBoxIgnoreOld = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         btnStartCrawl = new javax.swing.JButton();
         btnStop = new javax.swing.JButton();
@@ -120,6 +122,12 @@ public class ClientHomePanel extends BasePanel {
         jPanel4 = new javax.swing.JPanel();
         jScrollPane12 = new javax.swing.JScrollPane();
         txtLogs = new javax.swing.JTextArea();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        txtSkuTest = new javax.swing.JTextField();
+        checkBoxRunTestOne = new javax.swing.JCheckBox();
+        checkBoxSaveAfterFinish = new javax.swing.JCheckBox();
+        checkBoxTestMode = new javax.swing.JCheckBox();
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Cài đặt"));
         jPanel3.setFocusTraversalPolicyProvider(true);
@@ -151,6 +159,8 @@ public class ClientHomePanel extends BasePanel {
             }
         });
 
+        checkBoxIgnoreOld.setText("Bỏ qua sản phẩm đã custom");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -158,7 +168,6 @@ public class ClientHomePanel extends BasePanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(5, 5, 5)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -176,6 +185,10 @@ public class ClientHomePanel extends BasePanel {
                             .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(checkBoxIgnoreOld)
+                .addContainerGap(201, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,8 +211,9 @@ public class ClientHomePanel extends BasePanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtImageFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(checkBoxIgnoreOld)
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         btnStartCrawl.setText("Start");
@@ -271,21 +285,75 @@ public class ClientHomePanel extends BasePanel {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Test Setting"));
+
+        jLabel4.setText("Specific SKU");
+
+        checkBoxRunTestOne.setText("Run Only One");
+
+        checkBoxSaveAfterFinish.setText("Save After Finish");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(checkBoxRunTestOne)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(txtSkuTest, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(checkBoxSaveAfterFinish))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSkuTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkBoxRunTestOne))
+                .addGap(18, 18, 18)
+                .addComponent(checkBoxSaveAfterFinish)
+                .addContainerGap(34, Short.MAX_VALUE))
+        );
+
+        checkBoxTestMode.setText("Test Mode");
+        checkBoxTestMode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkBoxTestModeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(4, 4, 4)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(checkBoxTestMode)
+                                    .addGap(309, 309, 309))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -294,9 +362,14 @@ public class ClientHomePanel extends BasePanel {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, 0))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(checkBoxTestMode)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(10, 10, 10))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -328,8 +401,6 @@ public class ClientHomePanel extends BasePanel {
     private void btnStartCrawlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartCrawlActionPerformed
 //        UploadImagelThread uploadImagelThread = new UploadImagelThread(topFrame);
 //        uploadImagelThread.start();
-        
-
 
         txtLogs.setText("");
 
@@ -347,6 +418,12 @@ public class ClientHomePanel extends BasePanel {
             return;
         }
         mainController.setImageFolderPath(txtImageFolder.getText().trim());
+        
+        mainController.setIsIgnoreCustomed(checkBoxIgnoreOld.isSelected());
+        mainController.setIsTestMode(checkBoxTestMode.isSelected());
+        mainController.setIsRunOnlyOne(checkBoxRunTestOne.isSelected());
+        mainController.setIsSaveAfterFinish(checkBoxSaveAfterFinish.isSelected());
+        mainController.setSkuTest(txtSkuTest.getText().trim());
         
 //        if(!AmzListingCrawlSvs.getInstance().isReady()) {
 //            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng load profile. Sau đó vào trang quản lý listing sản phẩm!");
@@ -407,7 +484,6 @@ public class ClientHomePanel extends BasePanel {
 
         @Override
         public void onProgress(String percent) {
-            lbStatus.setText(percent);
         }
 
     };
@@ -420,7 +496,6 @@ public class ClientHomePanel extends BasePanel {
 //                    btnStartCrawl.setText("Start");
 //                    btnStartCrawl.setEnabled(true);
 //                    btnStop.setEnabled(false);
-                    lbStatus.setText("");
                     break;
                 case RUNNING:
 //                    btnStartCrawl.setText("Pause");
@@ -619,9 +694,30 @@ public class ClientHomePanel extends BasePanel {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void checkBoxTestModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxTestModeActionPerformed
+        // TODO add your handling code here:
+        enableTestMode();
+    }//GEN-LAST:event_checkBoxTestModeActionPerformed
+
+    public void enableTestMode() {
+        if(checkBoxTestMode.isSelected()) {
+            checkBoxRunTestOne.setEnabled(true);
+            txtSkuTest.setEnabled(true);
+            checkBoxSaveAfterFinish.setEnabled(true);
+        } else {
+            checkBoxRunTestOne.setEnabled(false);
+            txtSkuTest.setEnabled(false);
+            checkBoxSaveAfterFinish.setEnabled(false);
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnStartCrawl;
     private javax.swing.JButton btnStop;
+    private javax.swing.JCheckBox checkBoxIgnoreOld;
+    private javax.swing.JCheckBox checkBoxRunTestOne;
+    private javax.swing.JCheckBox checkBoxSaveAfterFinish;
+    private javax.swing.JCheckBox checkBoxTestMode;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -629,14 +725,16 @@ public class ClientHomePanel extends BasePanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane12;
-    private javax.swing.JLabel lbStatus;
     private javax.swing.JTextField txtImageFolder;
     private javax.swing.JTextField txtInfoPath;
     private javax.swing.JTextArea txtLogs;
     private javax.swing.JTextField txtProfilePath;
+    private javax.swing.JTextField txtSkuTest;
     // End of variables declaration//GEN-END:variables
 }

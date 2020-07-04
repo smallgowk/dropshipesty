@@ -25,6 +25,11 @@ public class CustomController {
 
     String infoPath;
     String imageFolderPath;
+    boolean isIgnoreCustomed;
+    boolean isTestMode;
+    boolean isRunOnlyOne;
+    boolean isSaveAfterFinish;
+    String skuTest;
 
     public void setInfoPath(String infoPath) {
         this.infoPath = infoPath;
@@ -32,6 +37,26 @@ public class CustomController {
 
     public void setImageFolderPath(String imageFolderPath) {
         this.imageFolderPath = imageFolderPath;
+    }
+
+    public void setIsIgnoreCustomed(boolean isIgnoreCustomed) {
+        this.isIgnoreCustomed = isIgnoreCustomed;
+    }
+
+    public void setIsTestMode(boolean isTestMode) {
+        this.isTestMode = isTestMode;
+    }
+
+    public void setIsRunOnlyOne(boolean isRunOnlyOne) {
+        this.isRunOnlyOne = isRunOnlyOne;
+    }
+
+    public void setIsSaveAfterFinish(boolean isSaveAfterFinish) {
+        this.isSaveAfterFinish = isSaveAfterFinish;
+    }
+
+    public void setSkuTest(String skuTest) {
+        this.skuTest = skuTest;
     }
 
     public void setCrawlProcessListener(CrawlProcessListener crawlProcessListener) {
@@ -81,7 +106,7 @@ public class CustomController {
             processCrawlThread.doStop();
         }
 
-        processCrawlThread = new CustomCrawlThread(infoPath, imageFolderPath, crawlProcessListener);
+        processCrawlThread = new CustomCrawlThread(this, crawlProcessListener);
         processCrawlThread.start();
 
         state = STATE.RUNNING;

@@ -282,6 +282,7 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
                 }
 
                 optionPrice.sendKeys(optionModel.getPriceStr());
+                optionLabel.sendKeys(Keys.ENTER);
 
 //                executor.executeScript("arguments[0].setAttribute('value', arguments[1])", optionPrice, optionModel.getPriceStr());
 //                executor.executeScript("arguments[0].enter();", optionPrice);
@@ -378,7 +379,6 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
             WebDriverWait waitele = new WebDriverWait(driver, 2);
             waitele.ignoring(StaleElementReferenceException.class);
             return waitele.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
-//            return waitele.until(ExpectedConditions.elementToBeSelected(By.xpath(xpath)));
         } catch (Exception ex) {
             return null;
         }
@@ -398,12 +398,6 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
     public void doAddingOptionPanel(int customIndex, int optionIndex) {
         WebElement ele = findWithFullXPath(getAddOptionXpath(customIndex, optionIndex));
         executor.executeScript("arguments[0].click();", ele);
-
-//        try {
-//            Thread.sleep(200);
-//        } catch (InterruptedException ex) {
-//            java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
-//        }
     }
 
     public boolean doAutoClick(JFrame jFrame) {
