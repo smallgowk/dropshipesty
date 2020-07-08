@@ -74,8 +74,10 @@ public class GenAmazonFromImageSvs {
         
         String title = name.substring(0, name.lastIndexOf(".jpg"));
         
-        int hashCode = name.hashCode();
-        String vpsImage = "" + (hashCode > 0 ? hashCode : hashCode * (-1)) + ".jpg";
+        String sku = snakeBaseStoreOrderInfo.getPrefix().toUpperCase() + FuncUtil.createSaltNumber(5) + "_" + System.currentTimeMillis();
+        
+//        int hashCode = name.hashCode();
+        String vpsImage = sku + ".jpg";
         
         File vpsImageFile = new File(vpsFolder + Configs.pathChar + vpsImage);
         try {
@@ -102,7 +104,7 @@ public class GenAmazonFromImageSvs {
 //        productAmz.setVariation_theme(snakeBaseStoreOrderInfo.getVariationType());
 
         productAmz.setBulletPoints(snakeBaseStoreOrderInfo.getListBullets());
-        productAmz.setItem_sku(snakeBaseStoreOrderInfo.getPrefix().toUpperCase() + FuncUtil.createSaltNumber(5) + "_" + System.currentTimeMillis());
+        productAmz.setItem_sku(sku);
         productAmz.setPart_number(productAmz.getItem_sku().substring(0, productAmz.getItem_sku().length() - 2));
         productAmz.setOuter_material_type1(snakeBaseStoreOrderInfo.getOuterMaterialType());
         productAmz.setMaterial_composition1(snakeBaseStoreOrderInfo.getMaterialComposition());
