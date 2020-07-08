@@ -13,6 +13,7 @@ import com.utils.OSUtil;
 import com.ping.view.AboutPannel;
 import com.ping.view.BasePanel;
 import com.ping.view.ClientHomePanel;
+import com.ping.view.PUDHomePanel;
 import com.utils.Constants;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
@@ -89,80 +90,22 @@ public class StartClientApp {
             DialogUtil.showInfoMessage(null, responseObj.getMessage());
         }
 
-//        String data = responseObj.getData();
-
-//        Gson gson = new Gson();
-//        ClientInfo clientInfo = gson.fromJson(data, ClientInfo.class);
-
-//        AuthenConfig.userLvel = clientInfo.getUserLv();
-//        AuthenConfig.merchantUser = EncryptUtil.decrypt(clientInfo.getMerchantUser());
-//        AuthenConfig.merchantPassword = EncryptUtil.decrypt(clientInfo.getMerchantPassword());
-//        AuthenConfig.apiKey = EncryptUtil.decrypt(clientInfo.getApiKey());
-//
-//        AppConfig.randomPort();
-
-//        System.out.println("" + AuthenConfig.userLvel);
-//        System.out.println("" + AuthenConfig.merchantUser);
-//        System.out.println("" + AuthenConfig.merchantPassword);
-//        System.out.println("" + AuthenConfig.apiKey);
-        
-//        String pathStr = null;
-//        if (OSUtil.isWindows()) {
-//            pathStr = Configs.CONFIG_FOLDER_PATH + "chromedriver.exe";
-//        } else {
-//            pathStr = Configs.CONFIG_FOLDER_PATH + "chromedriver";
-//        }
-//
-//        if (pathStr != null) {
-//            System.setProperty("webdriver.chrome.driver", pathStr);
-//        }
-//        if (!AliexCrawlSvs.getInstance().isHasCookies()) {
-////            AliexCrawlSvs.getInstance().initDriver();
-////            MerchantSearchSvs.getInstance().login();
-////            AliexCrawlSvs.getInstance().autoLoginAliex();
-//            if(!AliexCrawlSvs.getInstance().autoLoginAliex()) {
-////                int option = DialogUtil.showOptionsQuestionDialog(null, null, "Phiên bản trình duyệt chrome và phiên bản chromedriver không tương thích.\n Vui lòng cập nhật chromedriver theo phiên bản trình duyệt chrome trên máy tính!",
-////                        "Cập nhật", "Đóng");
-////                if (option == 0) {
-////
-////                    if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-////                        try {
-////                            Desktop.getDesktop().browse(new URI("https://chromedriver.chromium.org/downloads?fbclid=IwAR1I_wfvE-sipnM0-ZsU-nTBZhLYX3exGq9u1ive6mEDZ8922fWQQ_B1p1M"));
-////                        } catch (IOException ex) {
-////                            Logger.getLogger(StartClientApp.class.getName()).log(Level.SEVERE, null, ex);
-////                        } catch (URISyntaxException ex) {
-////                            Logger.getLogger(StartClientApp.class.getName()).log(Level.SEVERE, null, ex);
-////                        }
-////                    }
-////                }
-////                
-//                return;
-//            } else {
-//                AliexCrawlSvs.getInstance().autoLoginAliex();
-//            }
-//        }
-
-//        HttpServerWrapper startApp = new HttpServerWrapper();
-//        startApp.start();
-
+        initPLModule();
+    }
+    
+    public void hideCurrentMode() {
+        container.removeAll();
+        jFrame.dispatchEvent(new WindowEvent(jFrame, WindowEvent.WINDOW_CLOSING));
+    }
+    
+    public void initCustomizationModule() {
         jFrame = new JFrame();
-        
-//        if(!StringUtils.isEmpty(CLIENT_SIGN)) {
-//            if(!ComputerIdentifier.getDiskSerialNumber().equals(CLIENT_SIGN)) {
-//                return;
-//            }
-//        }
         container = new JPanel();
-
-//        AliexParameterFactory.initClientId("");
         OSUtil.setAppTitle(jFrame);
-
         ClientHomePanel mainHomePanel = new ClientHomePanel();
-//        SettingPannel settingPannel = new SettingPannel();
         AboutPannel aboutPannel = new AboutPannel();
 
         listPanel.add(mainHomePanel);
-//        listPanel.add(settingPannel);
         listPanel.add(aboutPannel);
 
         JMenuBar mb = new JMenuBar();
@@ -175,17 +118,22 @@ public class StartClientApp {
 //        JMenuItem settingMenuItem = createMenuItem(settingPannel);
 //        menu.add(settingMenuItem);
 
-        JMenuItem jItem = new JMenuItem("Exit");
-        jItem.setActionCommand("exit");
-        menu.add(jItem);
+        JMenuItem jItemPL = new JMenuItem("PL tool");
+        jItemPL.setActionCommand("pltool");
+        menu.add(jItemPL);
+
+        JMenuItem jItemExit = new JMenuItem("Exit");
+        jItemExit.setActionCommand("exit");
+        menu.add(jItemExit);
 
         JMenuItem aboutMenuItem = createMenuItem(aboutPannel);
         helpMenu.add(aboutMenuItem);
 
 //        menuItem.addActionListener(actionListener);
 //        settingMenuItem.addActionListener(actionListener);
+        jItemPL.addActionListener(actionListener);
         aboutMenuItem.addActionListener(actionListener);
-        jItem.addActionListener(actionListener);
+        jItemExit.addActionListener(actionListener);
 
         addBasePanel(jFrame, container, mainHomePanel);
 
@@ -215,11 +163,73 @@ public class StartClientApp {
                 }
             }
         });
-        
-        
-//        LoginThread loginThread = new LoginThread(true, null);
-//        loginThread.start();
+    }
+    
+    public void initPLModule() {
+        jFrame = new JFrame();
+        container = new JPanel();
+        OSUtil.setAppTitle(jFrame);
+        PUDHomePanel mainHomePanel = new PUDHomePanel();
+        AboutPannel aboutPannel = new AboutPannel();
 
+        listPanel.add(mainHomePanel);
+        listPanel.add(aboutPannel);
+
+        JMenuBar mb = new JMenuBar();
+
+        JMenu menu = new JMenu("Menu");
+        JMenu helpMenu = new JMenu("Help");
+
+//        JMenuItem menuItem = createMenuItem(mainHomePanel);
+//        menu.add(menuItem);
+//        JMenuItem settingMenuItem = createMenuItem(settingPannel);
+//        menu.add(settingMenuItem);
+
+        JMenuItem jItemPL = new JMenuItem("Customize tool");
+        jItemPL.setActionCommand("customTool");
+        menu.add(jItemPL);
+
+        JMenuItem jItemExit = new JMenuItem("Exit");
+        jItemExit.setActionCommand("exit");
+        menu.add(jItemExit);
+
+        JMenuItem aboutMenuItem = createMenuItem(aboutPannel);
+        helpMenu.add(aboutMenuItem);
+
+//        menuItem.addActionListener(actionListener);
+//        settingMenuItem.addActionListener(actionListener);
+        jItemPL.addActionListener(actionListener);
+        aboutMenuItem.addActionListener(actionListener);
+        jItemExit.addActionListener(actionListener);
+
+        addBasePanel(jFrame, container, mainHomePanel);
+
+        mb.add(menu);
+        mb.add(helpMenu);
+
+        jFrame.setJMenuBar(mb);
+        jFrame.add(container);
+
+        jFrame.pack();
+        jFrame.setResizable(false);
+        jFrame.setVisible(true);
+        
+        jFrame.addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent evt) {
+//                System.out.println("windowClosing");
+                if (OSUtil.isWindows()) {
+                    String sc = "taskkill /F /IM chromedriver.exe";
+
+                    try {
+                        Process p = Runtime.getRuntime().exec(sc);
+                    } catch (IOException ex) {
+                        Logger.getLogger(StartClientApp.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
     }
 
     public static void main(String args[]) {
@@ -240,6 +250,18 @@ public class StartClientApp {
             }
 
             if (s.equals("MainHome")) {
+                return;
+            }
+            
+            if (s.equals("pltool")) {
+                hideCurrentMode();
+                initPLModule();
+                return;
+            }
+            
+            if (s.equals("customTool")) {
+                hideCurrentMode();
+                initCustomizationModule();
                 return;
             }
 
