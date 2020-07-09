@@ -53,7 +53,6 @@ public class ClientHomePanel extends BasePanel {
 //    ProcessPannel processPannel;
     public ClientHomePanel() {
         initComponents();
-
         setTitle("Home");
         setMenuActionCommand("MainHome");
         initData();

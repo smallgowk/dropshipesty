@@ -51,7 +51,7 @@ public class PUDHomePanel extends BasePanel {
     public PUDHomePanel() {
         initComponents();
 
-        jComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(listCategories));
+        jComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(listCategories.toArray(new String[listCategories.size()])));
 
         setTitle("Home");
         setMenuActionCommand("MainHome");

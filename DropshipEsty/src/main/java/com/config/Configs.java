@@ -135,12 +135,7 @@ public class Configs {
         "Adult - 5XL"
     };
     
-    public static String[] listCategories = new String[]{
-        "Men T-Shirt",
-        "Women T-Shirt",
-        "Men Hoodie",
-        "Women Hoodie"
-    };
+    public static ArrayList<String> listCategories = new ArrayList<>();
     
     public static HashMap<String, Float> hashMapSizePrice = new HashMap<>();
     public static HashMap<String, String> hashMapCateType = new HashMap<>();
@@ -169,17 +164,7 @@ public class Configs {
 //        hashMapCateType.put("Men Hoodie", "Clothing, Shoes & Jewelry/Men/Clothing/Active/Active Hoodies");
 //        hashMapCateType.put("Women Hoodie", "Clothing, Shoes & Jewelry/Women/Clothing/Active/Active Hoodies");
         
-        hashMapCateType.put("Men T-Shirt", "novelty-t-shirts");
-        hashMapDepartmentName.put("Men T-Shirt", "mens");
         
-        hashMapCateType.put("Women T-Shirt", "novelty-t-shirts");
-        hashMapDepartmentName.put("Women T-Shirt", "womens");
-        
-        hashMapCateType.put("Men Hoodie", "novelty-hoodies");
-        hashMapDepartmentName.put("Men Hoodie", "mens");
-        
-        hashMapCateType.put("Women Hoodie", "novelty-hoodies");
-        hashMapDepartmentName.put("Women Hoodie", "womens");
 
         appIconPath = "Images" + pathChar + "appIcon.png";
 
