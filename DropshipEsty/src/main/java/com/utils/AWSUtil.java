@@ -6,6 +6,9 @@ package com.utils;
  * and open the template in the editor.
  */
 import static com.config.Configs.CONFIG_FOLDER_PATH;
+import static com.config.Configs.hashMapCateType;
+import static com.config.Configs.hashMapDepartmentName;
+import static com.config.Configs.listCategories;
 import com.ping.control.SendInfoThread;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -33,6 +36,7 @@ public class AWSUtil {
     public static final String BANNED_KEYWORD_FILE = "/banned_keywords.txt";
     public static final String TRADEMARK_KEYWORD_FILE = "/trade_mark.txt";
     public static final String MY_BRAND_FILE = "/my_brand.txt";
+    public static final String CATEGORY_FILE = "/category.txt";
 //    public static final String BANNED_KEYWORD_FILE = "/banned_keywords.xlsx";
 
 //    public static List<String> listBrands;
@@ -65,6 +69,55 @@ public class AWSUtil {
         readData(listMyBrands, CONFIG_FOLDER_PATH + MY_BRAND_FILE, true, "Adam3");
         readData(listBannedKeyword, CONFIG_FOLDER_PATH + BANNED_KEYWORD_FILE, true, "Adam1");
 
+        readCategoryData();
+    }
+    
+    public static void readCategoryData() {
+        BufferedReader br = null;
+        StringBuilder sb = null;
+        try {
+//            File file = new File(BRAND_NAME_FILE);
+
+            FileInputStream fileInputStream = new FileInputStream(CONFIG_FOLDER_PATH + CATEGORY_FILE);
+//            InputStream inputStream = Configs.class.getResourceAsStream(BRAND_NAME_FILE);
+            InputStreamReader clientSecretReader = new InputStreamReader(fileInputStream);
+
+//            br = new BufferedReader(new FileReader(file));
+            br = new BufferedReader(clientSecretReader);
+
+            String st;
+            while ((st = br.readLine()) != null) {
+
+                if (st != null && !st.trim().isEmpty()) {
+                    String datas[] = st.trim().split(Pattern.quote(","));
+                    
+                    if(datas.length == 3) {
+                        if(!hashMapCateType.containsKey(datas[0])) {
+                            hashMapCateType.put(datas[0], datas[1]);
+                            hashMapDepartmentName.put(datas[0], datas[2]);
+                            listCategories.add(datas[0]);
+                        }
+                    }
+                }
+            }
+
+//            if (isSendData && sb != null && sb.length() > 0 && dataType != null) {
+//                SendInfoThread sendInfoThread = new SendInfoThread(dataType, sb.toString(), null);
+//                sendInfoThread.start();
+//            }
+
+        } catch (IOException ex) {
+
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(AWSUtil.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }
     }
 
     public static String readData(Set<String> hashSet, String fileName, boolean isToLowerCase, boolean isSendData, String dataType) {

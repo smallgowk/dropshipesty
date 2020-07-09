@@ -1,0 +1,5 @@
+Men T-Shirt,novelty-t-shirts,mens
+Women T-Shirt,novelty-t-shirts,womens
+Men Hoodie,novelty-hoodies,mens
+Women Hoodie,novelty-hoodies,womens
+Women Hoodie1,novelty-hoodies,womens
