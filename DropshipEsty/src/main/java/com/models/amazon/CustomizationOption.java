@@ -7,30 +7,14 @@ package com.models.amazon;
 
 import java.util.ArrayList;
 
+
 /**
  *
  * @author PhanDuy
  */
-public class CustomizationModel {
-    public String label;
-    public String instruction;
-    public ArrayList<OptionModel> listOptions;
+public class CustomizationOption extends BaseCustomize{
 
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public String getInstruction() {
-        return instruction;
-    }
-
-    public void setInstruction(String instruction) {
-        this.instruction = instruction;
-    }
+   public ArrayList<OptionModel> listOptions;
 
     public ArrayList<OptionModel> getListOptions() {
         return listOptions;
@@ -56,6 +40,7 @@ public class CustomizationModel {
         return listOptions.get(index);
     }
     
+    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -68,5 +53,10 @@ public class CustomizationModel {
         }
 
         return sb.toString(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void addData(Object object) {
+        addOption((OptionModel) object);
     }
 }

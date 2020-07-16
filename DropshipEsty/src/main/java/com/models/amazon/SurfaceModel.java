@@ -15,7 +15,7 @@ public class SurfaceModel {
 
     public String label;
     public String instruction;
-    public ArrayList<CustomizationModel> listCustomization;
+    public ArrayList<BaseCustomize> listCustomization;
 
     public String getLabel() {
         return label;
@@ -33,15 +33,15 @@ public class SurfaceModel {
         this.instruction = instruction;
     }
 
-    public ArrayList<CustomizationModel> getListCustomization() {
+    public ArrayList<BaseCustomize> getListCustomization() {
         return listCustomization;
     }
 
-    public void setListCustomization(ArrayList<CustomizationModel> listCustomization) {
+    public void setListCustomization(ArrayList<BaseCustomize> listCustomization) {
         this.listCustomization = listCustomization;
     }
 
-    public void addCustomization(CustomizationModel model) {
+    public void addCustomization(BaseCustomize model) {
         if (listCustomization == null) {
             listCustomization = new ArrayList<>();
         }
@@ -49,7 +49,7 @@ public class SurfaceModel {
         listCustomization.add(model);
     }
     
-    public CustomizationModel getCustomizationModel(int index) {
+    public BaseCustomize getCustomizationModel(int index) {
         if(index >= listCustomization.size()) {
             return null;
         }

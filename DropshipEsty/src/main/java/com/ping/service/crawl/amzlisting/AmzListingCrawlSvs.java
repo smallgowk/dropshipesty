@@ -5,38 +5,21 @@
  */
 package com.ping.service.crawl.amzlisting;
 
-import com.ping.service.crawl.aliex.*;
-import com.config.Configs;
-import static com.config.Configs.CONFIG_FOLDER_PATH;
 import static com.config.Configs.IMAGE_PATH;
 //import static com.config.Configs.STORE_INFO_CACHE_DIR;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.models.aliex.store.AliexStoreInfo;
-import com.models.aliex.crawl.CrawlDataPageBase;
-import com.models.aliex.crawl.CrawlDataStoreBase;
-import com.models.aliex.crawl.CrawlPageProductItem;
 import com.models.amazon.AmzListingItem;
-import com.models.amazon.CustomizationModel;
+import com.models.amazon.BaseCustomize;
+import com.models.amazon.CustomizationOption;
+import com.models.amazon.CustomizationText;
 import com.models.amazon.OptionModel;
 import com.models.amazon.SurfaceModel;
-import com.ping.control.CrawlProcessListener;
 import com.ping.service.crawl.CrawlerMachine;
-import com.ping.view.ClientHomePanel;
-import com.utils.CookieUtil;
-import com.utils.EncryptUtil;
-import com.utils.Utils;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -50,7 +33,6 @@ import java.awt.image.BufferedImage;
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.JFrame;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -205,9 +187,14 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
 
     public void doUpdateCustomizationIfno(SurfaceModel surfaceModel) {
         for (int i = 0; i < 3; i++) {
-            CustomizationModel customizationModel = surfaceModel.getCustomizationModel(i);
+            BaseCustomize customizationModel = surfaceModel.getCustomizationModel(i);
 //            doAddingOptions(i, customizationModel.listOptions.size());
-            setCustomizationInfo(i, customizationModel);
+
+            if (customizationModel instanceof CustomizationOption) {
+                setCustomizationOption(i, (CustomizationOption) customizationModel);
+            } else {
+                setCustomizationText(i, (CustomizationText) customizationModel);
+            }
         }
 
     }
@@ -217,7 +204,11 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
         executor.executeScript("arguments[0].click();", ele);
     }
 
-    public void setCustomizationInfo(int index, CustomizationModel customizationModel) {
+    public void setCustomizationText(int index, CustomizationText customizationModel) {
+        
+    }
+    
+    public void setCustomizationOption(int index, CustomizationOption customizationModel) {
         WebElement elementOptionLabel = findWithFullXPath(getCustomLabelXpath(index));
 
         if (elementOptionLabel == null) {

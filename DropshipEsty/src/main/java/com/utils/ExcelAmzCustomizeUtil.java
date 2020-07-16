@@ -5,10 +5,12 @@
  */
 package com.utils;
 
+import com.models.amazon.BaseCustomize;
 import com.models.amazon.CustomDTO;
-import com.models.amazon.CustomizationModel;
+import com.models.amazon.CustomizationOption;
 import com.models.amazon.OptionModel;
 import com.models.amazon.SurfaceModel;
+import com.models.amazon.TextModel;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Iterator;
@@ -55,7 +57,7 @@ public class ExcelAmzCustomizeUtil {
             CustomDTO customDTO = new CustomDTO();
             customDTO.fetchData(fieldRow, formatter);
             
-            CustomizationModel customizationModel = null;
+            BaseCustomize customizationModel = null;
 
             while (fieldRow != null && customDTO.isHasData()) {
                 
@@ -64,8 +66,8 @@ public class ExcelAmzCustomizeUtil {
                         surfaceModel.setLabel(customDTO.getLabel());
                         surfaceModel.setInstruction(customDTO.getInstruction());
                         break;
-                    case "Customization":
-                        customizationModel = new CustomizationModel();
+                    case "Customization-Option":
+                        customizationModel = new CustomizationOption();
                         customizationModel.setLabel(customDTO.getLabel());
                         customizationModel.setInstruction(customDTO.getInstruction());
                         surfaceModel.addCustomization(customizationModel);
@@ -76,7 +78,20 @@ public class ExcelAmzCustomizeUtil {
                         optionModel.setLabel(customDTO.getLabel());
                         optionModel.setPrice(customDTO.getPriceValue());
                         if(customizationModel != null) {
-                            customizationModel.addOption(optionModel);
+                            customizationModel.addData(optionModel);
+                        }
+                        
+                        break;
+                    case "FontText":
+                    case "ColorText":
+                    case "Color":
+                    case "TextBlock":
+                        TextModel textModel = new TextModel();
+                        textModel.setLabel(customDTO.getLabel());
+                        textModel.setInstruction(customDTO.getInstruction());
+                        textModel.setType(customDTO.getType());
+                        if(customizationModel != null) {
+                            customizationModel.addData(textModel);
                         }
                         
                         break;
