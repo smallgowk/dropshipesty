@@ -8,6 +8,7 @@ package com.utils;
 import com.models.amazon.BaseCustomize;
 import com.models.amazon.CustomDTO;
 import com.models.amazon.CustomizationOption;
+import com.models.amazon.CustomizationText;
 import com.models.amazon.OptionModel;
 import com.models.amazon.SurfaceModel;
 import com.models.amazon.TextModel;
@@ -72,6 +73,12 @@ public class ExcelAmzCustomizeUtil {
                         customizationModel.setInstruction(customDTO.getInstruction());
                         surfaceModel.addCustomization(customizationModel);
                         
+                        break;
+                    case "Customization-Text":
+                        customizationModel = new CustomizationText();
+                        customizationModel.setLabel(customDTO.getLabel());
+                        customizationModel.setInstruction(customDTO.getInstruction());
+                        surfaceModel.addCustomization(customizationModel);
                         break;
                     case "Option":
                         OptionModel optionModel = new OptionModel();

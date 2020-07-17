@@ -69,35 +69,36 @@ public class CustomCrawlThread extends Thread {
 
         try {
             surfaceModel = ExcelAmzCustomizeUtil.readDataInfo(controller.infoPath);
+            System.out.println("" + surfaceModel);
         } catch (FileNotFoundException ex) {
             crawlProcessListener.onPushState("", "Error: " + ex.getMessage());
             return;
         }
 
-        ArrayList<AmzListingItem> listItems = AmzListingCrawlSvs.getInstance().crawlData();
-        crawlProcessListener.onPushState("", "Found " + listItems.size() + " result");
-
-        if (!controller.isTestMode || !controller.isRunOnlyOne) {
-            for (AmzListingItem item : listItems) {
-                if (isStop) {
-                    crawlProcessListener.onFinishPage("");
-                    return;
-                }
-                process(item, surfaceModel);
-            }
-        } else {
-            for (AmzListingItem item : listItems) {
-                if (isStop) {
-                    crawlProcessListener.onFinishPage("");
-                    return;
-                }
-                if(item.sku.equals(controller.skuTest)) {
-                    process(item, surfaceModel);
-                    break;
-                }
-                
-            }
-        }
+//        ArrayList<AmzListingItem> listItems = AmzListingCrawlSvs.getInstance().crawlData();
+//        crawlProcessListener.onPushState("", "Found " + listItems.size() + " result");
+//
+//        if (!controller.isTestMode || !controller.isRunOnlyOne) {
+//            for (AmzListingItem item : listItems) {
+//                if (isStop) {
+//                    crawlProcessListener.onFinishPage("");
+//                    return;
+//                }
+//                process(item, surfaceModel);
+//            }
+//        } else {
+//            for (AmzListingItem item : listItems) {
+//                if (isStop) {
+//                    crawlProcessListener.onFinishPage("");
+//                    return;
+//                }
+//                if(item.sku.equals(controller.skuTest)) {
+//                    process(item, surfaceModel);
+//                    break;
+//                }
+//                
+//            }
+//        }
 
         crawlProcessListener.onFinishPage("");
     }

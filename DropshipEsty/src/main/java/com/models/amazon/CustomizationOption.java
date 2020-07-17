@@ -44,7 +44,7 @@ public class CustomizationOption extends BaseCustomize{
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(label).append(", ").append(instruction).append("\n");
+        sb.append("CustomOption: ").append(label).append(", ").append(instruction).append("\n");
         if (listOptions != null) {
             sb.append("Options: \n");
             listOptions.forEach((option) -> {

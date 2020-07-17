@@ -41,5 +41,22 @@ public class CustomizationText extends BaseCustomize {
         }
 
     }
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("CustomText: ").append(label).append(", ").append(instruction).append("\n");
+        sb.append("fontTextModel: ").append(fontTextModel).append("\n");
+        sb.append("colorTextModel: ").append(colorTextModel).append("\n");
+        sb.append("textBlockModel: ").append(textBlockModel).append("\n");
+        if (colorModels != null) {
+            sb.append("Colors: \n");
+            colorModels.forEach((option) -> {
+                sb.append(option).append("\n");
+            });
+        }
+
+        return sb.toString(); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }
