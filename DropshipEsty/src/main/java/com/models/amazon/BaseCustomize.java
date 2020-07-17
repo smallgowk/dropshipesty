@@ -11,6 +11,9 @@ package com.models.amazon;
  */
 public abstract class BaseCustomize {
     
+    public static String TYPE_OPTION = "Customization-Option";
+    public static String TYPE_TEXT = "Customization-Text";
+    
     public String label;
     public String instruction;
 
