@@ -13,7 +13,6 @@ public class ColorModel {
     public String label;
     public String instruction;
 
-    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

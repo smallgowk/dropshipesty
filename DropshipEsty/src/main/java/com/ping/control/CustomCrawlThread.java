@@ -112,36 +112,28 @@ public class CustomCrawlThread extends Thread {
             java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        File imageFile = new File(controller.imageFolderPath + Configs.pathChar + item.sku + ".jpg");
-        if (!imageFile.exists()) {
-            crawlProcessListener.onPushState("", "Not found image for " + item.sku);
-            return;
-        }
-
-        AmzListingCrawlSvs.getInstance().doFillBaseInfo(imageFile.getPath(), surfaceModel);
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException ex) {
-            java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-//        for(int i = 0; i < 3; i++) {
-//            AmzListingCrawlSvs.getInstance().doAddingCustomizePanel();
+//        File imageFile = new File(controller.imageFolderPath + Configs.pathChar + item.sku + ".jpg");
+//        if (!imageFile.exists()) {
+//            crawlProcessListener.onPushState("", "Not found image for " + item.sku);
+//            return;
 //        }
+
+//        AmzListingCrawlSvs.getInstance().doFillBaseInfo(imageFile.getPath(), surfaceModel);
 //        try {
-//            Thread.sleep(1000);
+//            Thread.sleep(500);
 //        } catch (InterruptedException ex) {
 //            java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
 //        }
+        
         AmzListingCrawlSvs.getInstance().doUpdateCustomizationIfno(surfaceModel);
 
-        if (!controller.isTestMode || controller.isSaveAfterFinish) {
-            AmzListingCrawlSvs.getInstance().doSave();
-        }
-        try {
-            Thread.sleep(6000);
-        } catch (InterruptedException ex) {
-            java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        if (!controller.isTestMode || controller.isSaveAfterFinish) {
+//            AmzListingCrawlSvs.getInstance().doSave();
+//        }
+//        try {
+//            Thread.sleep(6000);
+//        } catch (InterruptedException ex) {
+//            java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 }

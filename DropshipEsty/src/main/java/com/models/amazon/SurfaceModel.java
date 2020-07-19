@@ -60,6 +60,10 @@ public class SurfaceModel {
     public static String getAddCustomizeButtonXpath() {
         return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[2]/div/kat-button/button";
     }
+    
+    public static String getSaveButtonXpath() {
+        return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[2]/div/kat-button[2]/button";
+    }
 
     @Override
     public String toString() {

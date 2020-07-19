@@ -182,12 +182,12 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
     }
     
     public void doUpdateCustomizationIfno(SurfaceModel surfaceModel) {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < surfaceModel.listCustomization.size(); i++) {
             BaseCustomize customizationModel = surfaceModel.getCustomizationModel(i);
 //            doAddingOptions(i, customizationModel.listOptions.size());
 
             if (customizationModel instanceof CustomizationOption) {
-                setCustomizationOption(i, (CustomizationOption) customizationModel);
+//                setCustomizationOption(i, (CustomizationOption) customizationModel);
             } else {
                 setCustomizationText(i, (CustomizationText) customizationModel);
             }
@@ -196,12 +196,12 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
     }
 
     public void doSave() {
-        WebElement ele = findWithFullXPath("/html/body/div[1]/div[2]/div[1]/div/div[2]/div[2]/div/kat-button[2]/button");
+        WebElement ele = findWithFullXPath(SurfaceModel.getSaveButtonXpath());
         executor.executeScript("arguments[0].click();", ele);
     }
 
     public void setCustomizationText(int index, CustomizationText customizationModel) {
-        
+        doAddingCustomizePanel(BaseCustomize.TYPE_TEXT);
     }
     
     public void setCustomizationOption(int index, CustomizationOption customizationModel) {
@@ -264,53 +264,6 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
     public void doAddingOptionPanel(int customIndex, int optionIndex) {
         WebElement ele = findWithFullXPath(CustomizationOption.getAddOptionXpath(customIndex, optionIndex));
         executor.executeScript("arguments[0].click();", ele);
-    }
-
-    public boolean doAutoClick(JFrame jFrame) {
-        try {
-
-            Screen s = new Screen();
-
-            s.click(imageUpload);
-            s.wait(fileInputTextBox, 20);
-            s.type(fileInputTextBox, "D:\\ImageTest\\VPS_daup061601\\20119641.jpg");
-            s.click(openButton);
-            s.click(addCustomizeMore);
-            s.click(addCustomizeOption);
-            s.click(addCustomizeConfirm);
-            s.click(imageUpload);
-
-//            List<WebElement> activeElements = driver.findElements(By.className("sg-col-4-of-24 sg-col-4-of-12 sg-col-4-of-36 s-result-item s-asin sg-col-4-of-28 sg-col-4-of-16 AdHolder sg-col sg-col-4-of-20 sg-col-4-of-32"));
-//            List<WebElement> activeElements = driver.findElements(By.className("s-result-item s-asin"));
-//            List<WebElement> activeElements = driver.findElements(By.className("sg-col-4-of-24 sg-col-4-of-12 sg-col-4-of-36 s-result-item s-asin sg-col-4-of-28 sg-col-4-of-16 sg-col sg-col-4-of-20 sg-col-4-of-32"));
-//            List<WebElement> activeElements = driver.findElements(By.xpath("//*[@class='image-upload-square']"));
-//            List<WebElement> activeElements = driver.findElements(By.className("image-upload-square"));
-//            if (activeElements != null && activeElements.size() > 0) {
-//                activeElements.get(0).click();
-//
-//                Screen s = new Screen();
-//                Pattern fileInputTextBox = new Pattern("D:\\Github\\DropshipEsty\\DropshipEsty\\input.PNG");
-//                Pattern openButton = new Pattern("D:\\Github\\DropshipEsty\\DropshipEsty\\open.PNG");
-//                s.wait(fileInputTextBox, 20);
-//                s.type(fileInputTextBox, "D:\\ImageTest\\VPS_daup061601\\20119641.jpg");
-//                s.click(openButton);
-//
-////                for (WebElement element : activeElements) {
-////                    String asin = element.getAttribute("data-asin");
-////                    if (asinClick.equals(asin)) {
-////                        element.click();
-////                        return true;
-////                    }
-////                }
-//            }
-        } catch (org.openqa.selenium.NoSuchElementException ex) {
-            System.out.println("" + ex);
-        } catch (FindFailed ex) {
-            Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("" + ex);
-        }
-
-        return false;
     }
 
     public static BufferedImage toBufferedImage(Image img) {
