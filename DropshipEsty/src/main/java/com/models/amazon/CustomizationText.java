@@ -16,7 +16,7 @@ public class CustomizationText extends BaseCustomize {
     public TextModel fontTextModel;
     public TextModel colorTextModel;
     public ArrayList<TextModel> colorModels;
-    public TextModel textBlockModel;
+    public ArrayList<TextModel> textBlockModels;
 
     @Override
     public void addData(Object object) {
@@ -30,7 +30,10 @@ public class CustomizationText extends BaseCustomize {
                 colorTextModel = (TextModel) object;
                 break;
             case "TextBlock":
-                textBlockModel = (TextModel) object;
+                if (textBlockModels == null) {
+                    textBlockModels = new ArrayList<>();
+                }
+                textBlockModels.add((TextModel) object);
                 break;
             case "Color":
                 if (colorModels == null) {
@@ -50,10 +53,16 @@ public class CustomizationText extends BaseCustomize {
         sb.append("CustomText: ").append(label).append(", ").append(instruction).append("\n");
         sb.append("fontTextModel: ").append(fontTextModel).append("\n");
         sb.append("colorTextModel: ").append(colorTextModel).append("\n");
-        sb.append("textBlockModel: ").append(textBlockModel).append("\n");
+        
         if (colorModels != null) {
             sb.append("Colors: \n");
             colorModels.forEach((option) -> {
+                sb.append(option).append("\n");
+            });
+        }
+        if (textBlockModels != null) {
+            sb.append("TextBlocks: \n");
+            textBlockModels.forEach((option) -> {
                 sb.append(option).append("\n");
             });
         }

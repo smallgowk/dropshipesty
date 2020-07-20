@@ -9,10 +9,13 @@ import static com.config.Configs.IMAGE_PATH;
 //import static com.config.Configs.STORE_INFO_CACHE_DIR;
 import com.models.amazon.AmzListingItem;
 import com.models.amazon.BaseCustomize;
+import com.models.amazon.ColorModel;
 import com.models.amazon.CustomizationOption;
 import com.models.amazon.CustomizationText;
+import com.models.amazon.FontTextModel;
 import com.models.amazon.OptionModel;
 import com.models.amazon.SurfaceModel;
+import com.models.amazon.TextModel;
 import com.ping.service.crawl.CrawlerMachine;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -187,7 +190,7 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
 //            doAddingOptions(i, customizationModel.listOptions.size());
 
             if (customizationModel instanceof CustomizationOption) {
-//                setCustomizationOption(i, (CustomizationOption) customizationModel);
+                setCustomizationOption(i, (CustomizationOption) customizationModel);
             } else {
                 setCustomizationText(i, (CustomizationText) customizationModel);
             }
@@ -201,7 +204,80 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
     }
 
     public void setCustomizationText(int index, CustomizationText customizationModel) {
-        doAddingCustomizePanel(BaseCustomize.TYPE_TEXT);
+        WebElement elementFontTextLabel = findWithFullXPath(FontTextModel.getFontLabelXpath(index));
+        if (elementFontTextLabel == null) {
+            doAddingCustomizePanel(BaseCustomize.TYPE_TEXT);
+        }
+        
+        elementFontTextLabel = findWithFullXPath(FontTextModel.getFontLabelXpath(index));
+        elementFontTextLabel.clear();
+        elementFontTextLabel.sendKeys(customizationModel.fontTextModel.label);
+        
+        WebElement elementFontTextInstruction = findWithFullXPath(FontTextModel.getFontInstructionXpath(index));
+        elementFontTextInstruction.clear();
+        elementFontTextInstruction.sendKeys(customizationModel.fontTextModel.instruction);
+        
+        WebElement elementColorLabel = findWithFullXPath(FontTextModel.getColorLabelXpath(index));
+        elementColorLabel.clear();
+        elementColorLabel.sendKeys(customizationModel.colorTextModel.label);
+        
+        WebElement elementColorInstruction = findWithFullXPath(FontTextModel.getColorInstructionXpath(index));
+        elementColorInstruction.clear();
+        elementColorInstruction.sendKeys(customizationModel.colorTextModel.instruction);
+        
+        
+        
+        for(int j = 0, size = customizationModel.colorModels.size(); j < size; j++) {
+            TextModel colorModel = customizationModel.colorModels.get(j);
+            WebElement elementAddColorButton = findWithFullXPath(FontTextModel.getAddColorButtonXpath(index));
+            executor.executeScript("arguments[0].click();", elementAddColorButton);
+            
+            WebElement elementColorName = findWithFullXPath(FontTextModel.getAddColorNameXpath(index));
+            elementColorName.clear();
+            elementColorName.sendKeys(colorModel.label);
+            
+            WebElement elementColorValue = findWithFullXPath(FontTextModel.getAddColorValueXpath(index));
+            elementColorValue.clear();
+            elementColorValue.sendKeys(colorModel.instruction);
+            elementColorValue.sendKeys(Keys.ENTER);
+            
+            WebElement elementAddColorSaveButton = findWithFullXPath(FontTextModel.getAddColorSave(index));
+            executor.executeScript("arguments[0].click();", elementAddColorSaveButton);
+        }
+        
+        for(int j = 0, size = customizationModel.textBlockModels.size(); j < size; j++) {
+            TextModel colorModel = customizationModel.textBlockModels.get(j);
+            WebElement elementTextBlockLabel = findWithFullXPath(FontTextModel.getTextBlockLabelXpath(index, j));
+            
+            if(elementTextBlockLabel == null) {
+                doAddingTextBlockPanel(index);
+                elementTextBlockLabel = findWithFullXPath(FontTextModel.getTextBlockLabelXpath(index, j));
+            }
+            
+            elementTextBlockLabel.clear();
+            elementTextBlockLabel.sendKeys(colorModel.label);
+
+            WebElement elementTextBlockInstruction = findWithFullXPath(FontTextModel.getTextBlockInstructionXpath(index, j));
+            elementTextBlockInstruction.clear();
+            elementTextBlockInstruction.sendKeys(colorModel.instruction);
+
+            WebElement elementTextBlockX = findWithFullXPath(FontTextModel.getTextBlockXXpath(index, j));
+            elementTextBlockX.clear();
+            elementTextBlockX.sendKeys("0");
+
+            WebElement elementTextBlockY = findWithFullXPath(FontTextModel.getTextBlockYXpath(index, j));
+            elementTextBlockY.clear();
+            elementTextBlockY.sendKeys("0");
+
+            WebElement elementTextBlockSizeWidth = findWithFullXPath(FontTextModel.getTextBlockSizeWidthXpath(index, j));
+            elementTextBlockSizeWidth.clear();
+            elementTextBlockSizeWidth.sendKeys("400");
+
+            WebElement elementTextBlockSizeHeight = findWithFullXPath(FontTextModel.getTextBlockSizeHeightXpath(index, j));
+            elementTextBlockSizeHeight.clear();
+            elementTextBlockSizeHeight.sendKeys("400");
+        }
+        
     }
     
     public void setCustomizationOption(int index, CustomizationOption customizationModel) {
@@ -263,6 +339,11 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
 
     public void doAddingOptionPanel(int customIndex, int optionIndex) {
         WebElement ele = findWithFullXPath(CustomizationOption.getAddOptionXpath(customIndex, optionIndex));
+        executor.executeScript("arguments[0].click();", ele);
+    }
+    
+    public void doAddingTextBlockPanel(int customIndex) {
+        WebElement ele = findWithFullXPath(FontTextModel.getAddTextInputXpath(customIndex));
         executor.executeScript("arguments[0].click();", ele);
     }
 

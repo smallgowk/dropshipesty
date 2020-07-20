@@ -36,39 +36,42 @@ public class OptionModel {
     }
     
     public static String getOptionLabelXpath(int index, int i) {
-        switch (index) {
-            case 0:
-                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[1]/div/kat-input/input";
-            case 1:
-                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[5]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[1]/div/kat-input/input";
-            case 2:
-                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[8]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[1]/div/kat-input/input";
-        }
-        return null;
+        return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div["+(2 + index*3)+"]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[1]/div/kat-input/input";
+//        switch (index) {
+//            case 0:
+//                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[1]/div/kat-input/input";
+//            case 1:
+//                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[5]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[1]/div/kat-input/input";
+//            case 2:
+//                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[8]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[1]/div/kat-input/input";
+//        }
+//        return null;
     }
 
     public static String getOptionPriceXpath(int index, int i) {
-        switch (index) {
-            case 0:
-                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[2]/div/kat-input-group/kat-input-group/kat-input/input";
-            case 1:
-                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[5]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[2]/div/kat-input-group/kat-input-group/kat-input/input";
-            case 2:
-                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[8]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[2]/div/kat-input-group/kat-input-group/kat-input/input";
-        }
-        return null;
+        return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div["+(2 + index*3)+"]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[2]/div/kat-input-group/kat-input-group/kat-input/input";
+//        switch (index) {
+//            case 0:
+//                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[2]/div/kat-input-group/kat-input-group/kat-input/input";
+//            case 1:
+//                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[5]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[2]/div/kat-input-group/kat-input-group/kat-input/input";
+//            case 2:
+//                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[8]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[2]/div/kat-input-group/kat-input-group/kat-input/input";
+//        }
+//        return null;
     }
 
     public static String getOptionPriceKatXpath(int index, int i) {
-        switch (index) {
-            case 0:
-                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[2]/div/kat-input-group/kat-input-group/kat-input";
-            case 1:
-                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[5]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[2]/div/kat-input-group/kat-input-group/kat-input";
-            case 2:
-                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[8]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[2]/div/kat-input-group/kat-input-group/kat-input";
-        }
-        return null;
+        return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div["+(2 + index*3)+"]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[2]/div/kat-input-group/kat-input-group/kat-input";
+//        switch (index) {
+//            case 0:
+//                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[2]/div/kat-input-group/kat-input-group/kat-input";
+//            case 1:
+//                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[5]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[2]/div/kat-input-group/kat-input-group/kat-input";
+//            case 2:
+//                return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div[8]/div/div[2]/div/div/div[1]/div[4]/div/div[" + i + "]/div[1]/kat-box/div/div[1]/div/div[2]/div/kat-input-group/kat-input-group/kat-input";
+//        }
+//        return null;
     }
     
     @Override
