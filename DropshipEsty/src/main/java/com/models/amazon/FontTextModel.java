@@ -53,6 +53,10 @@ public class FontTextModel {
         return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div["+(2 + i*3)+"]/div/div[2]/div/div/div[2]/div/div[3]/div/div[2]/div[2]/div[1]/div["+(2 + j*3)+"]/div/div[2]/div/div/div[1]/div/div[2]/div[1]/div[2]/div[2]/kat-input[2]/input";
     }
     
+    public static String getTextBlockPlacementXpath(int i, int j) {
+        return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div["+(2 + i*3)+"]/div/div[2]/div/div/div[2]/div/div[3]/div/div[2]/div[2]/div[1]/div["+(2 + j*3)+"]/div/div[2]/div/div/div[1]/div/div[2]/div[1]/div[4]/kat-radiobutton-group/div[2]/kat-radiobutton[1]/div/div[1]";
+    }
+    
     public static String getAddTextInputXpath(int i) {
         return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div["+(2 + i*3)+"]/div/div[2]/div/div/div[2]/div/div[3]/div/div[2]/div[2]/div[2]/div/kat-button/button";
     }

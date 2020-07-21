@@ -306,6 +306,11 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
             WebElement elementTextBlockSizeHeight = findWithFullXPath(FontTextModel.getTextBlockSizeHeightXpath(index, j));
             elementTextBlockSizeHeight.clear();
             elementTextBlockSizeHeight.sendKeys(textBlockModel.height);
+            
+            if("1".equals(textBlockModel.placeMent)) {
+                WebElement elementTextBlockPlacement = findWithFullXPath(FontTextModel.getTextBlockPlacementXpath(index, j));
+                executor.executeScript("arguments[0].click();", elementTextBlockPlacement);
+            }
         }
 
     }
