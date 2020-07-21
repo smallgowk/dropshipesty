@@ -119,7 +119,7 @@ public class CustomCrawlThread extends Thread {
             java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        AmzListingCrawlSvs.getInstance().doUpdateCustomizationIfno(surfaceModel);
+        AmzListingCrawlSvs.getInstance().doUpdateCustomizationIfno(surfaceModel, controller.isAddText);
 
         if (!controller.isTestMode || controller.isSaveAfterFinish) {
             AmzListingCrawlSvs.getInstance().doSave();

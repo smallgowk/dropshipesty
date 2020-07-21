@@ -193,7 +193,7 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
 
     }
 
-    public void doUpdateCustomizationIfno(SurfaceModel surfaceModel) {
+    public void doUpdateCustomizationIfno(SurfaceModel surfaceModel, boolean isAddText) {
         for (int i = 0; i < surfaceModel.listCustomization.size(); i++) {
             BaseCustomize customizationModel = surfaceModel.getCustomizationModel(i);
 //            doAddingOptions(i, customizationModel.listOptions.size());
@@ -203,7 +203,7 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
             }
         }
 
-        if (surfaceModel.customizationText != null) {
+        if (isAddText && surfaceModel.customizationText != null) {
             setCustomizationText(3, surfaceModel.customizationText);
         }
 

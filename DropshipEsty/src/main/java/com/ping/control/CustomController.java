@@ -29,6 +29,7 @@ public class CustomController {
     boolean isTestMode;
     boolean isRunOnlyOne;
     boolean isSaveAfterFinish;
+    boolean isAddText;
     String skuTest;
 
     public void setInfoPath(String infoPath) {
@@ -58,6 +59,16 @@ public class CustomController {
     public void setSkuTest(String skuTest) {
         this.skuTest = skuTest;
     }
+
+    public boolean isIsAddText() {
+        return isAddText;
+    }
+
+    public void setIsAddText(boolean isAddText) {
+        this.isAddText = isAddText;
+    }
+    
+    
 
     public void setCrawlProcessListener(CrawlProcessListener crawlProcessListener) {
         this.crawlProcessListener = crawlProcessListener;

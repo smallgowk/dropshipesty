@@ -79,37 +79,42 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="checkBoxIgnoreOld" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="49" max="32767" attributes="0"/>
+                          <Component id="checkBoxAddText" min="-2" pref="142" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="txtImageFolder" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtInfoPath" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtProfilePath" alignment="0" pref="252" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="unrelated" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jButton1" max="32767" attributes="0"/>
-                              <Component id="jButton3" max="32767" attributes="0"/>
-                              <Component id="jButton4" alignment="0" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="txtImageFolder" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtInfoPath" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtProfilePath" alignment="0" pref="252" max="32767" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="unrelated" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="jButton1" max="32767" attributes="0"/>
+                                      <Component id="jButton3" max="32767" attributes="0"/>
+                                      <Component id="jButton4" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="checkBoxIgnoreOld" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="201" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -138,7 +143,10 @@
                       <Component id="jButton4" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="checkBoxIgnoreOld" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="checkBoxIgnoreOld" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="checkBoxAddText" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace pref="10" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -194,6 +202,14 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="B&#x1ecf; qua s&#x1ea3;n ph&#x1ea9;m &#x111;&#xe3; custom"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="checkBoxAddText">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="C&#xf3; add text"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkBoxAddTextActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
