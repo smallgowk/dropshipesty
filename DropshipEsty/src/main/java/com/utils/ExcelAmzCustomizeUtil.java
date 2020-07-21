@@ -53,6 +53,8 @@ public class ExcelAmzCustomizeUtil {
             if (sheetText == null) {
                 return surfaceModel;
             }
+            
+            fetchSurfaceTextData(surfaceModel, sheetText);
 
             workbook.close();
         } catch (Exception ex) {
@@ -136,8 +138,8 @@ public class ExcelAmzCustomizeUtil {
         CustomDTO customDTO = new CustomDTO();
         customDTO.fetchCustomizeTextData(fieldRow, formatter);
 
-        BaseCustomize customizationModel = new CustomizationText();
-        surfaceModel.addCustomization(customizationModel);
+        CustomizationText customizationModel = new CustomizationText();
+        surfaceModel.setCustomizationText(customizationModel);
 
         while (fieldRow != null && customDTO.isHasData()) {
 

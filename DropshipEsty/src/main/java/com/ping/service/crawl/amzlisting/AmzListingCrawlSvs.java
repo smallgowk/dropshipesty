@@ -5,6 +5,7 @@
  */
 package com.ping.service.crawl.amzlisting;
 
+import com.config.Configs;
 import static com.config.Configs.IMAGE_PATH;
 //import static com.config.Configs.STORE_INFO_CACHE_DIR;
 import com.models.amazon.AmzListingItem;
@@ -34,6 +35,7 @@ import org.sikuli.script.FindFailed;
 import org.sikuli.script.Pattern;
 import org.sikuli.script.Screen;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.JFrame;
@@ -76,7 +78,7 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
         return amzListingCrawlSvs;
     }
 
-    public void doFillBaseInfo(String imagePath, SurfaceModel surfaceModel) {
+    public void doFillBaseInfo(String imageFolder, String sku, SurfaceModel surfaceModel) {
 
 //        WebElement element1 = driver.findElement(By.xpath("//input[@placeholder='Label']"));
 //        WebDriverWait wait1 = new WebDriverWait(driver, 100);
@@ -116,11 +118,17 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
 
             try {
 
+                File imageFile = new File(imageFolder + Configs.pathChar + sku + ".jpg");
+                if (!imageFile.exists()) {
+                    System.out.println("Not found image for " + sku);
+                    return;
+                }
+
                 WebElement uploadImageElement = findWithFullXPath("/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[1]/div[2]/div/div[1]/div[2]/div/div/div");
                 uploadImageElement.click();
 //            s.click(imageUpload);
                 s.wait(fileInputTextBox, 20);
-                s.type(fileInputTextBox, imagePath);
+                s.type(fileInputTextBox, imageFile.getPath());
                 s.click(openButton);
 
                 s.wait(imageUploaded, 20);
@@ -153,7 +161,7 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
         } catch (InterruptedException ex) {
             java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         String select = type.equals(BaseCustomize.TYPE_OPTION) ? "Option Dropdown" : "Text";
 
         List<WebElement> optionElements = driver.findElements(By.className("choice-content__3DVcc"));
@@ -184,7 +192,7 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
         }
 
     }
-    
+
     public void doUpdateCustomizationIfno(SurfaceModel surfaceModel) {
         for (int i = 0; i < surfaceModel.listCustomization.size(); i++) {
             BaseCustomize customizationModel = surfaceModel.getCustomizationModel(i);
@@ -192,9 +200,11 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
 
             if (customizationModel instanceof CustomizationOption) {
                 setCustomizationOption(i, (CustomizationOption) customizationModel);
-            } else {
-                setCustomizationText(i, (CustomizationText) customizationModel);
             }
+        }
+
+        if (surfaceModel.customizationText != null) {
+            setCustomizationText(3, surfaceModel.customizationText);
         }
 
     }
@@ -209,52 +219,71 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
         if (elementFontTextLabel == null) {
             doAddingCustomizePanel(BaseCustomize.TYPE_TEXT);
         }
-        
+
         elementFontTextLabel = findWithFullXPath(FontTextModel.getFontLabelXpath(index));
         elementFontTextLabel.clear();
         elementFontTextLabel.sendKeys(customizationModel.fontTextModel.label);
-        
+
         WebElement elementFontTextInstruction = findWithFullXPath(FontTextModel.getFontInstructionXpath(index));
         elementFontTextInstruction.clear();
         elementFontTextInstruction.sendKeys(customizationModel.fontTextModel.instruction);
-        
+
         WebElement elementColorLabel = findWithFullXPath(FontTextModel.getColorLabelXpath(index));
         elementColorLabel.clear();
         elementColorLabel.sendKeys(customizationModel.colorTextModel.label);
-        
+
         WebElement elementColorInstruction = findWithFullXPath(FontTextModel.getColorInstructionXpath(index));
         elementColorInstruction.clear();
         elementColorInstruction.sendKeys(customizationModel.colorTextModel.instruction);
-        
-        
-        
-        for(int j = 0, size = customizationModel.colorModels.size(); j < size; j++) {
+
+        WebElement elementAddFontButton = findWithFullXPath(FontTextModel.getAddFontButtonXpath(index));
+        executor.executeScript("arguments[0].click();", elementAddFontButton);
+
+        WebElement elementFontGroup = findWithFullXPath(FontTextModel.getTableFontXpath(index));
+        updateFont(elementFontGroup, customizationModel);
+
+        while (!customizationModel.isFullChecked()) {
+
+            WebElement nextTab = findWithFullXPath(FontTextModel.getNextTabXpath(index));
+            executor.executeScript("arguments[0].click();", nextTab);
+
+            elementFontGroup = findWithFullXPath(FontTextModel.getTableFontXpath(index));
+            updateFont(elementFontGroup, customizationModel);
+
+        }
+
+        WebElement elementDoneFontButton = findWithFullXPath(FontTextModel.getDoneAddFontXpath(index));
+        executor.executeScript("arguments[0].click();", elementDoneFontButton);
+
+        System.out.println("Added full font!");
+
+        for (int j = 0, size = customizationModel.colorModels.size(); j < size; j++) {
             TextModel colorModel = customizationModel.colorModels.get(j);
             WebElement elementAddColorButton = findWithFullXPath(FontTextModel.getAddColorButtonXpath(index));
             executor.executeScript("arguments[0].click();", elementAddColorButton);
-            
+
             WebElement elementColorName = findWithFullXPath(FontTextModel.getAddColorNameXpath(index));
             elementColorName.clear();
             elementColorName.sendKeys(colorModel.label);
-            
+
             WebElement elementColorValue = findWithFullXPath(FontTextModel.getAddColorValueXpath(index));
             elementColorValue.clear();
             elementColorValue.sendKeys(colorModel.instruction);
             elementColorValue.sendKeys(Keys.ENTER);
-            
+
             WebElement elementAddColorSaveButton = findWithFullXPath(FontTextModel.getAddColorSave(index));
             executor.executeScript("arguments[0].click();", elementAddColorSaveButton);
         }
-        
-        for(int j = 0, size = customizationModel.textBlockModels.size(); j < size; j++) {
+//        
+        for (int j = 0, size = customizationModel.textBlockModels.size(); j < size; j++) {
             TextBlockModel textBlockModel = customizationModel.textBlockModels.get(j);
             WebElement elementTextBlockLabel = findWithFullXPath(FontTextModel.getTextBlockLabelXpath(index, j));
-            
-            if(elementTextBlockLabel == null) {
+
+            if (elementTextBlockLabel == null) {
                 doAddingTextBlockPanel(index);
                 elementTextBlockLabel = findWithFullXPath(FontTextModel.getTextBlockLabelXpath(index, j));
             }
-            
+
             elementTextBlockLabel.clear();
             elementTextBlockLabel.sendKeys(textBlockModel.label);
 
@@ -278,9 +307,35 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
             elementTextBlockSizeHeight.clear();
             elementTextBlockSizeHeight.sendKeys(textBlockModel.height);
         }
-        
+
     }
-    
+
+    public void updateFont(WebElement elementFontGroup, CustomizationText customizationModel) {
+        List<WebElement> items = elementFontGroup.findElements(By.tagName("kat-table-row"));
+        if (items != null) {
+            for (WebElement webElement : items) {
+                List<WebElement> itemCells = webElement.findElements(By.tagName("kat-table-cell"));
+                if (itemCells != null && itemCells.size() >= 2) {
+
+                    WebElement cellLabel = itemCells.get(1);
+                    String fontLabel = cellLabel.getText();
+
+                    if (customizationModel.isContainFont(fontLabel)) {
+                        System.out.println("Found " + fontLabel);
+
+                        WebElement cellCheckBox = itemCells.get(0);
+//                        WebElement katCheckbox = cellCheckBox.findElement(By.tagName("kat-checkbox"));
+                        WebElement checkbox = cellCheckBox.findElement(By.tagName("div"));
+                        executor.executeScript("arguments[0].click();", checkbox);
+//                        katCheckbox.click();
+                        customizationModel.updateAddedFont(fontLabel);
+                    }
+                }
+
+            }
+        }
+    }
+
     public void setCustomizationOption(int index, CustomizationOption customizationModel) {
         WebElement elementOptionLabel = findWithFullXPath(CustomizationOption.getCustomLabelXpath(index));
 
@@ -342,7 +397,7 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
         WebElement ele = findWithFullXPath(CustomizationOption.getAddOptionXpath(customIndex, optionIndex));
         executor.executeScript("arguments[0].click();", ele);
     }
-    
+
     public void doAddingTextBlockPanel(int customIndex) {
         WebElement ele = findWithFullXPath(FontTextModel.getAddTextInputXpath(customIndex));
         executor.executeScript("arguments[0].click();", ele);

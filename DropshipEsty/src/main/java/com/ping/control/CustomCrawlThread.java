@@ -75,30 +75,30 @@ public class CustomCrawlThread extends Thread {
             return;
         }
 
-//        ArrayList<AmzListingItem> listItems = AmzListingCrawlSvs.getInstance().crawlData();
-//        crawlProcessListener.onPushState("", "Found " + listItems.size() + " result");
+        ArrayList<AmzListingItem> listItems = AmzListingCrawlSvs.getInstance().crawlData();
+        crawlProcessListener.onPushState("", "Found " + listItems.size() + " result");
 //
-//        if (!controller.isTestMode || !controller.isRunOnlyOne) {
-//            for (AmzListingItem item : listItems) {
-//                if (isStop) {
-//                    crawlProcessListener.onFinishPage("");
-//                    return;
-//                }
-//                process(item, surfaceModel);
-//            }
-//        } else {
-//            for (AmzListingItem item : listItems) {
-//                if (isStop) {
-//                    crawlProcessListener.onFinishPage("");
-//                    return;
-//                }
-//                if(item.sku.equals(controller.skuTest)) {
-//                    process(item, surfaceModel);
-//                    break;
-//                }
-//                
-//            }
-//        }
+        if (!controller.isTestMode || !controller.isRunOnlyOne) {
+            for (AmzListingItem item : listItems) {
+                if (isStop) {
+                    crawlProcessListener.onFinishPage("");
+                    return;
+                }
+                process(item, surfaceModel);
+            }
+        } else {
+            for (AmzListingItem item : listItems) {
+                if (isStop) {
+                    crawlProcessListener.onFinishPage("");
+                    return;
+                }
+                if(item.sku.equals(controller.skuTest)) {
+                    process(item, surfaceModel);
+                    break;
+                }
+                
+            }
+        }
 
         crawlProcessListener.onFinishPage("");
     }
@@ -112,28 +112,22 @@ public class CustomCrawlThread extends Thread {
             java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-//        File imageFile = new File(controller.imageFolderPath + Configs.pathChar + item.sku + ".jpg");
-//        if (!imageFile.exists()) {
-//            crawlProcessListener.onPushState("", "Not found image for " + item.sku);
-//            return;
-//        }
-
-//        AmzListingCrawlSvs.getInstance().doFillBaseInfo(imageFile.getPath(), surfaceModel);
-//        try {
-//            Thread.sleep(500);
-//        } catch (InterruptedException ex) {
-//            java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        AmzListingCrawlSvs.getInstance().doFillBaseInfo(controller.imageFolderPath, item.sku, surfaceModel);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException ex) {
+            java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         AmzListingCrawlSvs.getInstance().doUpdateCustomizationIfno(surfaceModel);
 
-//        if (!controller.isTestMode || controller.isSaveAfterFinish) {
-//            AmzListingCrawlSvs.getInstance().doSave();
-//        }
-//        try {
-//            Thread.sleep(6000);
-//        } catch (InterruptedException ex) {
-//            java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        if (!controller.isTestMode || controller.isSaveAfterFinish) {
+            AmzListingCrawlSvs.getInstance().doSave();
+        }
+        try {
+            Thread.sleep(6000);
+        } catch (InterruptedException ex) {
+            java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

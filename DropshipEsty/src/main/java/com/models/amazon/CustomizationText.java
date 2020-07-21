@@ -6,6 +6,8 @@
 package com.models.amazon;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -18,6 +20,10 @@ public class CustomizationText extends BaseCustomize {
     public ArrayList<TextModel> colorModels;
     public ArrayList<TextModel> fontModels;
     public ArrayList<TextBlockModel> textBlockModels;
+    
+    private TextBlockModel textBlock = null;
+    private Set<String> fontSet = new HashSet<String>();
+    public ArrayList<String> fontAddedModels = new ArrayList<>();
 
     @Override
     public void addData(Object object) {
@@ -25,8 +31,6 @@ public class CustomizationText extends BaseCustomize {
         TextModel data = ((TextModel) object);
 
         String type = data.type;
-
-        TextBlockModel textBlock = null;
 
         switch (type) {
             case "FontText":
@@ -58,6 +62,7 @@ public class CustomizationText extends BaseCustomize {
                     fontModels = new ArrayList<>();
                 }
                 fontModels.add(data);
+                fontSet.add(data.instruction);
                 break;
             case "TextBlock_x":
                 if (textBlock != null) {
@@ -86,6 +91,18 @@ public class CustomizationText extends BaseCustomize {
                 break;
         }
 
+    }
+    
+    public boolean isContainFont(String fontName) {
+        return fontSet.contains(fontName);
+    }
+    
+    public void updateAddedFont(String fontName) {
+        fontAddedModels.add(fontName);
+    }
+    
+    public boolean isFullChecked() {
+        return fontAddedModels.size() == fontSet.size();
     }
 
     @Override

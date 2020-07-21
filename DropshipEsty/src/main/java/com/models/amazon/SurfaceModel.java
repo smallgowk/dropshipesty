@@ -16,6 +16,7 @@ public class SurfaceModel {
     public String label;
     public String instruction;
     public ArrayList<BaseCustomize> listCustomization;
+    public CustomizationText customizationText;
 
     public String getLabel() {
         return label;
@@ -48,6 +49,16 @@ public class SurfaceModel {
 
         listCustomization.add(model);
     }
+
+    public CustomizationText getCustomizationText() {
+        return customizationText;
+    }
+
+    public void setCustomizationText(CustomizationText customizationText) {
+        this.customizationText = customizationText;
+    }
+    
+    
     
     public BaseCustomize getCustomizationModel(int index) {
         if(index >= listCustomization.size()) {
@@ -75,6 +86,8 @@ public class SurfaceModel {
                 sb.append(customizationModel).append("\n");
             });
         }
+        
+        sb.append(customizationText).append("\n");
 
         return sb.toString(); //To change body of generated methods, choose Tools | Templates.
     }
