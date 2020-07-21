@@ -75,30 +75,30 @@ public class CustomCrawlThread extends Thread {
             return;
         }
 
-        ArrayList<AmzListingItem> listItems = AmzListingCrawlSvs.getInstance().crawlData();
-        crawlProcessListener.onPushState("", "Found " + listItems.size() + " result");
-
-        if (!controller.isTestMode || !controller.isRunOnlyOne) {
-            for (AmzListingItem item : listItems) {
-                if (isStop) {
-                    crawlProcessListener.onFinishPage("");
-                    return;
-                }
-                process(item, surfaceModel);
-            }
-        } else {
-            for (AmzListingItem item : listItems) {
-                if (isStop) {
-                    crawlProcessListener.onFinishPage("");
-                    return;
-                }
-                if(item.sku.equals(controller.skuTest)) {
-                    process(item, surfaceModel);
-                    break;
-                }
-                
-            }
-        }
+//        ArrayList<AmzListingItem> listItems = AmzListingCrawlSvs.getInstance().crawlData();
+//        crawlProcessListener.onPushState("", "Found " + listItems.size() + " result");
+//
+//        if (!controller.isTestMode || !controller.isRunOnlyOne) {
+//            for (AmzListingItem item : listItems) {
+//                if (isStop) {
+//                    crawlProcessListener.onFinishPage("");
+//                    return;
+//                }
+//                process(item, surfaceModel);
+//            }
+//        } else {
+//            for (AmzListingItem item : listItems) {
+//                if (isStop) {
+//                    crawlProcessListener.onFinishPage("");
+//                    return;
+//                }
+//                if(item.sku.equals(controller.skuTest)) {
+//                    process(item, surfaceModel);
+//                    break;
+//                }
+//                
+//            }
+//        }
 
         crawlProcessListener.onFinishPage("");
     }

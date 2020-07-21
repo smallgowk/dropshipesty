@@ -16,43 +16,91 @@ public class CustomizationText extends BaseCustomize {
     public TextModel fontTextModel;
     public TextModel colorTextModel;
     public ArrayList<TextModel> colorModels;
-    public ArrayList<TextModel> textBlockModels;
+    public ArrayList<TextModel> fontModels;
+    public ArrayList<TextBlockModel> textBlockModels;
 
     @Override
     public void addData(Object object) {
 
-        String type = ((TextModel) object).type;
+        TextModel data = ((TextModel) object);
+
+        String type = data.type;
+
+        TextBlockModel textBlock = null;
+
         switch (type) {
             case "FontText":
-                fontTextModel = (TextModel) object;
+                fontTextModel = data;
                 break;
             case "ColorText":
-                colorTextModel = (TextModel) object;
+                colorTextModel = data;
                 break;
-            case "TextBlock":
+            case "BlockText":
                 if (textBlockModels == null) {
                     textBlockModels = new ArrayList<>();
                 }
-                textBlockModels.add((TextModel) object);
+
+                textBlock = new TextBlockModel();
+
+                textBlock.setLabel(data.getLabel());
+                textBlock.setInstruction(data.getInstruction());
+
+                textBlockModels.add(textBlock);
                 break;
             case "Color":
                 if (colorModels == null) {
                     colorModels = new ArrayList<>();
                 }
-                colorModels.add((TextModel) object);
+                colorModels.add(data);
+                break;
+            case "Font":
+                if (fontModels == null) {
+                    fontModels = new ArrayList<>();
+                }
+                fontModels.add(data);
+                break;
+            case "TextBlock_x":
+                if (textBlock != null) {
+                    textBlock.setX(data.getInstruction());
+                }
+                break;
+            case "TextBlock_y":
+                if (textBlock != null) {
+                    textBlock.setY(data.getInstruction());
+                }
+                break;
+            case "TextBlock_width":
+                if (textBlock != null) {
+                    textBlock.setWidth(data.getInstruction());
+                }
+                break;
+            case "TextBlock_height":
+                if (textBlock != null) {
+                    textBlock.setHeight(data.getInstruction());
+                }
+                break;
+            case "TextBlock_placement":
+                if (textBlock != null) {
+                    textBlock.setPlaceMent(data.getInstruction());
+                }
                 break;
         }
 
     }
-    
-    
-    
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("CustomText: ").append(label).append(", ").append(instruction).append("\n");
         sb.append("fontTextModel: ").append(fontTextModel).append("\n");
         sb.append("colorTextModel: ").append(colorTextModel).append("\n");
+
+        if (fontModels != null) {
+            sb.append("Fonts: \n");
+            fontModels.forEach((option) -> {
+                sb.append(option).append("\n");
+            });
+        }
         
         if (colorModels != null) {
             sb.append("Colors: \n");
@@ -60,6 +108,9 @@ public class CustomizationText extends BaseCustomize {
                 sb.append(option).append("\n");
             });
         }
+        
+        
+        
         if (textBlockModels != null) {
             sb.append("TextBlocks: \n");
             textBlockModels.forEach((option) -> {

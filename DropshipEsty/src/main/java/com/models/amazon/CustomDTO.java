@@ -51,7 +51,7 @@ public class CustomDTO {
         this.type = type;
     }
 
-    public void fetchData(Row fieldRow, DataFormatter formatter) {
+    public void fetchCustomizeOptionData(Row fieldRow, DataFormatter formatter) {
         
         if(fieldRow == null) return;
         
@@ -67,6 +67,25 @@ public class CustomDTO {
                     instruction = formatter.formatCellValue(fieldRow.getCell(i));
                     break;
                 case 3:
+                    type = formatter.formatCellValue(fieldRow.getCell(i));
+                    break;
+            }
+        }
+    }
+    
+    public void fetchCustomizeTextData(Row fieldRow, DataFormatter formatter) {
+        
+        if(fieldRow == null) return;
+        
+        for (int i = 0; i < 3; i++) {
+            switch (i) {
+                case 0:
+                    label = formatter.formatCellValue(fieldRow.getCell(i));
+                    break;
+                case 1:
+                    instruction = formatter.formatCellValue(fieldRow.getCell(i));
+                    break;
+                case 2:
                     type = formatter.formatCellValue(fieldRow.getCell(i));
                     break;
             }

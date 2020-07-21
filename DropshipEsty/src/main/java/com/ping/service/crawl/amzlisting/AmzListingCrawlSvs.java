@@ -15,6 +15,7 @@ import com.models.amazon.CustomizationText;
 import com.models.amazon.FontTextModel;
 import com.models.amazon.OptionModel;
 import com.models.amazon.SurfaceModel;
+import com.models.amazon.TextBlockModel;
 import com.models.amazon.TextModel;
 import com.ping.service.crawl.CrawlerMachine;
 import java.awt.Graphics2D;
@@ -246,7 +247,7 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
         }
         
         for(int j = 0, size = customizationModel.textBlockModels.size(); j < size; j++) {
-            TextModel colorModel = customizationModel.textBlockModels.get(j);
+            TextBlockModel textBlockModel = customizationModel.textBlockModels.get(j);
             WebElement elementTextBlockLabel = findWithFullXPath(FontTextModel.getTextBlockLabelXpath(index, j));
             
             if(elementTextBlockLabel == null) {
@@ -255,27 +256,27 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
             }
             
             elementTextBlockLabel.clear();
-            elementTextBlockLabel.sendKeys(colorModel.label);
+            elementTextBlockLabel.sendKeys(textBlockModel.label);
 
             WebElement elementTextBlockInstruction = findWithFullXPath(FontTextModel.getTextBlockInstructionXpath(index, j));
             elementTextBlockInstruction.clear();
-            elementTextBlockInstruction.sendKeys(colorModel.instruction);
+            elementTextBlockInstruction.sendKeys(textBlockModel.instruction);
 
             WebElement elementTextBlockX = findWithFullXPath(FontTextModel.getTextBlockXXpath(index, j));
             elementTextBlockX.clear();
-            elementTextBlockX.sendKeys("0");
+            elementTextBlockX.sendKeys(textBlockModel.x);
 
             WebElement elementTextBlockY = findWithFullXPath(FontTextModel.getTextBlockYXpath(index, j));
             elementTextBlockY.clear();
-            elementTextBlockY.sendKeys("0");
+            elementTextBlockY.sendKeys(textBlockModel.y);
 
             WebElement elementTextBlockSizeWidth = findWithFullXPath(FontTextModel.getTextBlockSizeWidthXpath(index, j));
             elementTextBlockSizeWidth.clear();
-            elementTextBlockSizeWidth.sendKeys("400");
+            elementTextBlockSizeWidth.sendKeys(textBlockModel.width);
 
             WebElement elementTextBlockSizeHeight = findWithFullXPath(FontTextModel.getTextBlockSizeHeightXpath(index, j));
             elementTextBlockSizeHeight.clear();
-            elementTextBlockSizeHeight.sendKeys("400");
+            elementTextBlockSizeHeight.sendKeys(textBlockModel.height);
         }
         
     }
