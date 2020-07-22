@@ -93,6 +93,14 @@ public class FontTextModel {
         return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div["+(2 + i*3)+"]/div/div[2]/div/div/div[2]/div/div[1]/div/div[2]/div[2]/div[4]/kat-modal/kat-modal-content/kat-modal-footer/kat-button[2]/button";
     }
     
+    public static String getDeleteButtonXpath(int i) {
+        return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div["+(2 + i*3)+"]/div/div[1]/div[4]";
+    }
+    
+    public static String getConfirmDeleteButtonXpath(int i) {
+        return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div[1]/div["+(4 + i*3)+"]/kat-modal/kat-modal-content/kat-modal-footer/kat-button[2]/button";
+    }
+    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

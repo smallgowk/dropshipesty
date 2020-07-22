@@ -126,7 +126,6 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
 
                 WebElement uploadImageElement = findWithFullXPath("/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[1]/div[2]/div/div[1]/div[2]/div/div/div");
                 uploadImageElement.click();
-//            s.click(imageUpload);
                 s.wait(fileInputTextBox, 20);
                 s.type(fileInputTextBox, imageFile.getPath());
                 s.click(openButton);
@@ -137,19 +136,6 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
             }
         }
 
-//        WebElement uploadImageElement = findWithFullXPath("/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[1]/div[2]/div/div[1]/div[2]/div/div/div");
-//        uploadImageElement.click();
-//
-//        try {
-////            s.click(imageUpload);
-//            s.wait(fileInputTextBox, 20);
-//            s.type(fileInputTextBox, imagePath);
-//            s.click(openButton);
-//
-//            s.wait(imageUploaded, 20);
-//        } catch (FindFailed ex) {
-//            Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
-//        }
     }
 
     public void doAddingCustomizePanel(String type) {
@@ -196,14 +182,13 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
     public void doUpdateCustomizationIfno(SurfaceModel surfaceModel, boolean isAddText) {
         for (int i = 0; i < surfaceModel.listCustomization.size(); i++) {
             BaseCustomize customizationModel = surfaceModel.getCustomizationModel(i);
-//            doAddingOptions(i, customizationModel.listOptions.size());
-
             if (customizationModel instanceof CustomizationOption) {
                 setCustomizationOption(i, (CustomizationOption) customizationModel);
             }
         }
 
         if (isAddText && surfaceModel.customizationText != null) {
+            surfaceModel.customizationText.clearFontAdded();
             setCustomizationText(3, surfaceModel.customizationText);
         }
 
@@ -216,9 +201,18 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
 
     public void setCustomizationText(int index, CustomizationText customizationModel) {
         WebElement elementFontTextLabel = findWithFullXPath(FontTextModel.getFontLabelXpath(index));
-        if (elementFontTextLabel == null) {
-            doAddingCustomizePanel(BaseCustomize.TYPE_TEXT);
+        
+        while(elementFontTextLabel != null) {
+            WebElement deleteTextElement = findWithFullXPath(FontTextModel.getDeleteButtonXpath(index));
+            executor.executeScript("arguments[0].click();", deleteTextElement);
+            
+            WebElement confirmDeleteTextElement = findWithFullXPath(FontTextModel.getConfirmDeleteButtonXpath(index));
+            executor.executeScript("arguments[0].click();", confirmDeleteTextElement);
+            
+            elementFontTextLabel = findWithFullXPath(FontTextModel.getFontLabelXpath(index));
         }
+        
+        doAddingCustomizePanel(BaseCustomize.TYPE_TEXT);
 
         elementFontTextLabel = findWithFullXPath(FontTextModel.getFontLabelXpath(index));
         elementFontTextLabel.clear();

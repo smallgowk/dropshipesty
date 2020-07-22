@@ -101,6 +101,10 @@ public class CustomizationText extends BaseCustomize {
         fontAddedModels.add(fontName);
     }
     
+    public void clearFontAdded() {
+        fontAddedModels.clear();
+    }
+    
     public boolean isFullChecked() {
         return fontAddedModels.size() == fontSet.size();
     }
