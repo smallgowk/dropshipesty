@@ -12,11 +12,11 @@ package com.api;
 public class WebService {
     public static String PONG_IP = "http://localhost";
     
-    public static String SERVER_IP = "http://103.130.213.180";
+    public static String SERVER_IP = "http://iamhere.vn";
     
-    public static int AUTHEN_PORT = 69;
+    public static int AUTHEN_PORT = 89;
     public static String CONTENT_PORT = "";
     
-    public static String AUTHEN_URL = "http://103.130.213.180:" + AUTHEN_PORT;
+    public static String AUTHEN_URL = "http://iamhere.vn:" + AUTHEN_PORT;
     
 }
