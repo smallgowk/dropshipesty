@@ -5,17 +5,21 @@
  */
 package com.ping.control;
 
+import com.config.Configs;
 import com.models.aliex.store.inputdata.SnakeBaseStoreOrderInfo;
 import com.models.amazon.ProductAmz;
 import com.models.esty.EstyCrawlDataPageBase;
 import com.models.esty.EstyCrawlDataStoreBase;
 import com.models.esty.EstyCrawlProductItem;
+import com.ping.service.crawl.DownloadMachine;
 import com.ping.service.crawl.esty.EstyCrawlSvs;
 import com.ping.service.local.GenAmazonFromImageSvs;
 import com.pong.control.ProcessPageDataSvs;
 import com.pong.control.ProcessStoreInfoSvs;
 import com.pong.control.ProcessTransformEstyToAmz;
 import com.utils.StringUtils;
+import io.github.bonigarcia.wdm.Config;
+import java.io.File;
 import java.util.ArrayList;
 import org.apache.log4j.Logger;
 
@@ -98,6 +102,19 @@ public class ProcessCrawlThread extends Thread {
                     if (list != null) {
                         listProducts.addAll(list);
                     }
+                }
+                
+                File imageFolder = new File(baseStoreOrderInfo.getPrefix());
+                if (!imageFolder.exists()) {
+                    imageFolder.mkdir();
+                }
+                
+                for(int i = 0, size = listProducts.size(); i < size; i++) {
+                    ProductAmz productAmz = listProducts.get(i);
+                    productAmz.setItem_sku(baseStoreOrderInfo.getPrefix() + "_" + pageCount + "_" + (i + 1));
+                    productAmz.setPart_number(productAmz.getItem_sku().substring(0, productAmz.getItem_sku().length() - 2));
+                    DownloadMachine.download(productAmz.getMain_image_url(), imageFolder.getPath() + Configs.pathChar + productAmz.getItem_sku() + ".jpg");
+                    crawlProcessListener.onPushState("", "Downloaded " + productAmz.getMain_image_url());
                 }
 
                 crawlProcessListener.onPushState("", "--> Đã hoàn thành trang " + pageCount);

@@ -168,6 +168,8 @@ public class PUDHomePanel extends BasePanel {
         jLabel2 = new javax.swing.JLabel();
         txtImageFolder = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        txtSkuPrefix = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         txtDesciption = new javax.swing.JTextArea();
@@ -221,6 +223,8 @@ public class PUDHomePanel extends BasePanel {
             }
         });
 
+        jLabel3.setText("SKU prefix");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -239,16 +243,18 @@ public class PUDHomePanel extends BasePanel {
                         .addComponent(jButton1))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtBasePrice)
-                                    .addComponent(jComboBox, 0, 168, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addComponent(txtBrandName, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel3)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel1))
+                            .addComponent(jLabel1)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtSkuPrefix, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtBasePrice, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 168, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addComponent(txtBrandName, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -277,6 +283,10 @@ public class PUDHomePanel extends BasePanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtBasePrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtBrandName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtSkuPrefix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -469,6 +479,13 @@ public class PUDHomePanel extends BasePanel {
         }
 
         mainController.setBrandName(txtBrandName.getText().trim());
+        
+        if (txtSkuPrefix.getText().trim().isEmpty()) {
+            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng nhập sku prefix!");
+            return;
+        }
+
+        mainController.setSkuPrefix(txtSkuPrefix.getText().trim());
 
 //        if(mainController.getListColor() == null) {
 //            DialogUtil.showErrorMessage(topFrame, "", "Vui lòng chọn màu!");
@@ -733,6 +750,7 @@ public class PUDHomePanel extends BasePanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -754,6 +772,7 @@ public class PUDHomePanel extends BasePanel {
     private javax.swing.JTextArea txtDesciption;
     private javax.swing.JTextField txtImageFolder;
     private javax.swing.JTextArea txtLogs;
+    private javax.swing.JTextField txtSkuPrefix;
     private javax.swing.JTextArea txtStoreLink;
     private javax.swing.JTextArea txtSubImageLinks;
     // End of variables declaration//GEN-END:variables

@@ -34,6 +34,7 @@ public class MainController {
     String linkStore;
     String ip;
     String brandName;
+    String skuPrefix;
     String category;
     String description;
     ArrayList<String> links;
@@ -177,7 +178,8 @@ public class MainController {
                             basePrice,
                             bullets,
                             outerMaterialType,
-                            materialComposition
+                            materialComposition,
+                            skuPrefix
                     );
                     startCrawl(baseStoreOrderInfo);
                     break;
@@ -232,6 +234,16 @@ public class MainController {
         this.brandName = brandName;
     }
 
+    public String getSkuPrefix() {
+        return skuPrefix;
+    }
+
+    public void setSkuPrefix(String skuPrefix) {
+        this.skuPrefix = skuPrefix;
+    }
+    
+    
+
     public void setOuterMaterialType(String outerMaterialType) {
         this.outerMaterialType = outerMaterialType;
     }
@@ -259,6 +271,8 @@ public class MainController {
         currentIndex = 0;
         state = STATE.STOP;
     }
+    
+    
 
 //    public void pause() {
 //        if (processCrawlThread != null) {

@@ -6,16 +6,10 @@
 package com.models.aliex.store.inputdata;
 
 import com.config.Configs;
-import com.utils.EncryptUtil;
 import com.utils.StringUtils;
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Pattern;
 
 /**
  *
@@ -49,7 +43,8 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
             float basePrice,
             ArrayList<String> bullets,
             String outerMaterialType,
-            String materialComposition
+            String materialComposition, 
+            String skuPrefix
             ) {
         SnakeBaseStoreOrderInfo snakeBaseStoreOrderInfo = new SnakeBaseStoreOrderInfo();
         snakeBaseStoreOrderInfo.setLink(linkStore);
@@ -68,6 +63,7 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
         snakeBaseStoreOrderInfo.setListBullets(bullets);
         snakeBaseStoreOrderInfo.setOuterMaterialType(outerMaterialType);
         snakeBaseStoreOrderInfo.setMaterialComposition(materialComposition);
+        snakeBaseStoreOrderInfo.setPrefix(skuPrefix);
         
         return snakeBaseStoreOrderInfo;
     }
@@ -253,6 +249,11 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
     }
     
     public String prefix;
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
+    
     public String getPrefix() {
 
         if (prefix != null) {

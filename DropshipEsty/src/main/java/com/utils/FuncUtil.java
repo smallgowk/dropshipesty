@@ -134,6 +134,11 @@ public class FuncUtil {
         String output = sb.toString();
         return output;
     }
+    
+    public static String createSaltNumber(String prefix) {
+        String hash = "" + prefix.hashCode();
+        return hash.substring(0, 5);
+    }
 
     public static String formatPhoneNumber(String devicePhone) {
         if (devicePhone.startsWith("0")) {
