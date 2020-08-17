@@ -1124,4 +1124,66 @@ public class ExcelUtils {
         }
     }
 
+    public static ArrayList<ProductAmz> getProductInfos(String filePath, String dataSheet) throws FileNotFoundException, IOException, InvalidFormatException {
+        ArrayList<ProductAmz> listResults = new ArrayList<>();
+
+        FileInputStream fis = new FileInputStream(filePath);
+
+        HashMap<String, String> skuHash = new HashMap<>();
+
+        /* CreationHelper helps us create instances of various things like DataFormat,
+        Hyperlink, RichTextString etc, in a format (HSSF, XSSF) independent way */
+        try (Workbook workbook = WorkbookFactory.create(fis)) {
+
+            /* CreationHelper helps us create instances of various things like DataFormat,
+            Hyperlink, RichTextString etc, in a format (HSSF, XSSF) independent way */
+            CreationHelper createHelper = workbook.getCreationHelper();
+            //        Sheet btgSheet = workbook.createSheet("Employee");
+
+            Sheet sheet = null;
+            Iterator<Sheet> sheetIterator = workbook.sheetIterator();
+            while (sheetIterator.hasNext()) {
+                Sheet sh = sheetIterator.next();
+
+                if (sh.getSheetName().equals(dataSheet)) {
+                    sheet = sh;
+                    break;
+                }
+            }
+            if (sheet == null) {
+                return null;
+            }   // Create a Sheet
+
+            Row fieldnameRow = sheet.getRow(2);
+            int cellMax = fieldnameRow.getLastCellNum();
+
+            int i = 3;
+            Row fieldRow = sheet.getRow(i);
+
+            while (fieldRow != null) {
+                ProductAmz productAmz = new ProductAmz();
+
+                DataFormatter formatter = new DataFormatter();
+                for (int j = 0; j < cellMax; j++) {
+                    String value = formatter.formatCellValue(fieldRow.getCell(j));
+                    if (value == null || value.isEmpty()) {
+                        continue;
+                    }
+
+                    productAmz.setValueForAFiled(formatter.formatCellValue(fieldnameRow.getCell(j)), value);
+
+                }
+
+                listResults.add(productAmz);
+
+                i++;
+                fieldRow = sheet.getRow(i);
+            }
+
+            fis.close();
+            workbook.close();
+        }
+
+        return listResults;
+    }
 }

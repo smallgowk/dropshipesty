@@ -13,6 +13,7 @@ import com.utils.OSUtil;
 import com.ping.view.AboutPannel;
 import com.ping.view.BasePanel;
 import com.ping.view.ClientHomePanel;
+import com.ping.view.EditProductPanel;
 import com.ping.view.PUDHomePanel;
 import com.utils.Constants;
 import java.awt.Desktop;
@@ -121,6 +122,10 @@ public class StartClientApp {
         JMenuItem jItemPL = new JMenuItem("PL tool");
         jItemPL.setActionCommand("pltool");
         menu.add(jItemPL);
+        
+        JMenuItem jItemEdit = new JMenuItem("Edit tool");
+        jItemEdit.setActionCommand("edittool");
+        menu.add(jItemEdit);
 
         JMenuItem jItemExit = new JMenuItem("Exit");
         jItemExit.setActionCommand("exit");
@@ -133,6 +138,7 @@ public class StartClientApp {
 //        settingMenuItem.addActionListener(actionListener);
         jItemPL.addActionListener(actionListener);
         aboutMenuItem.addActionListener(actionListener);
+        jItemEdit.addActionListener(actionListener);
         jItemExit.addActionListener(actionListener);
 
         addBasePanel(jFrame, container, mainHomePanel);
@@ -188,6 +194,10 @@ public class StartClientApp {
         JMenuItem jItemPL = new JMenuItem("Customize tool");
         jItemPL.setActionCommand("customTool");
         menu.add(jItemPL);
+        
+        JMenuItem jItemEdit = new JMenuItem("Edit tool");
+        jItemEdit.setActionCommand("edittool");
+        menu.add(jItemEdit);
 
         JMenuItem jItemExit = new JMenuItem("Exit");
         jItemExit.setActionCommand("exit");
@@ -198,6 +208,79 @@ public class StartClientApp {
 
 //        menuItem.addActionListener(actionListener);
 //        settingMenuItem.addActionListener(actionListener);
+        jItemPL.addActionListener(actionListener);
+        aboutMenuItem.addActionListener(actionListener);
+        jItemEdit.addActionListener(actionListener);
+        jItemExit.addActionListener(actionListener);
+
+        addBasePanel(jFrame, container, mainHomePanel);
+
+        mb.add(menu);
+        mb.add(helpMenu);
+
+        jFrame.setJMenuBar(mb);
+        jFrame.add(container);
+
+        jFrame.pack();
+        jFrame.setResizable(false);
+        jFrame.setVisible(true);
+        
+        jFrame.addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent evt) {
+//                System.out.println("windowClosing");
+                if (OSUtil.isWindows()) {
+                    String sc = "taskkill /F /IM chromedriver.exe";
+
+                    try {
+                        Process p = Runtime.getRuntime().exec(sc);
+                    } catch (IOException ex) {
+                        Logger.getLogger(StartClientApp.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+    }
+    
+    public void initEditProductPanel() {
+        jFrame = new JFrame();
+        container = new JPanel();
+        OSUtil.setAppTitle(jFrame);
+        EditProductPanel mainHomePanel = new EditProductPanel();
+        AboutPannel aboutPannel = new AboutPannel();
+
+        listPanel.add(mainHomePanel);
+        listPanel.add(aboutPannel);
+
+        JMenuBar mb = new JMenuBar();
+
+        JMenu menu = new JMenu("Menu");
+        JMenu helpMenu = new JMenu("Help");
+
+//        JMenuItem menuItem = createMenuItem(mainHomePanel);
+//        menu.add(menuItem);
+//        JMenuItem settingMenuItem = createMenuItem(settingPannel);
+//        menu.add(settingMenuItem);
+
+        JMenuItem jItemCustomMize = new JMenuItem("Customize tool");
+        jItemCustomMize.setActionCommand("customTool");
+        menu.add(jItemCustomMize);
+        
+        JMenuItem jItemPL = new JMenuItem("PL tool");
+        jItemPL.setActionCommand("pltool");
+        menu.add(jItemPL);
+
+        JMenuItem jItemExit = new JMenuItem("Exit");
+        jItemExit.setActionCommand("exit");
+        menu.add(jItemExit);
+
+        JMenuItem aboutMenuItem = createMenuItem(aboutPannel);
+        helpMenu.add(aboutMenuItem);
+
+//        menuItem.addActionListener(actionListener);
+//        settingMenuItem.addActionListener(actionListener);
+        jItemCustomMize.addActionListener(actionListener);
         jItemPL.addActionListener(actionListener);
         aboutMenuItem.addActionListener(actionListener);
         jItemExit.addActionListener(actionListener);
@@ -262,6 +345,12 @@ public class StartClientApp {
             if (s.equals("customTool")) {
                 hideCurrentMode();
                 initCustomizationModule();
+                return;
+            }
+            
+            if (s.equals("edittool")) {
+                hideCurrentMode();
+                initEditProductPanel();
                 return;
             }
 
