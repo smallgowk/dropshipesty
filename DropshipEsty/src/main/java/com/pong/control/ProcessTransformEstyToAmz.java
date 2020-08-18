@@ -43,13 +43,8 @@ public class ProcessTransformEstyToAmz {
 
     public static HashMap<String, String> setBannedProduct = new HashMap<>();
 
-    public static ArrayList<ProductAmz> transform(EstyCrawlProductItem estyCrawlProductItem, SnakeBaseStoreOrderInfo snakeBaseStoreOrderInfo) {
-        ArrayList<ProductAmz> results = new ArrayList<>();
-
-        ProductAmz productAmz = createBasicProductAmz(estyCrawlProductItem, snakeBaseStoreOrderInfo);
-        results.add(productAmz);
-
-        return results;
+    public static ProductAmz transform(EstyCrawlProductItem estyCrawlProductItem, SnakeBaseStoreOrderInfo snakeBaseStoreOrderInfo) {
+        return createBasicProductAmz(estyCrawlProductItem, snakeBaseStoreOrderInfo);
     }
 
 //    public static ArrayList<ProductAmz> createChilds(EstyCrawlProductItem estyCrawlProductItem, SnakeBaseStoreOrderInfo snakeBaseStoreOrderInfo, ProductAmz productAmz) {
@@ -284,6 +279,13 @@ public class ProcessTransformEstyToAmz {
     }
 
     public static ProductAmz createBasicProductAmz(EstyCrawlProductItem estyCrawlProductItem, SnakeBaseStoreOrderInfo snakeBaseStoreOrderInfo) {
+        String title = estyCrawlProductItem.getTitle();
+        String bannedKeyword = AWSUtil.containBannedKeyword(title);
+        if (bannedKeyword != null) {
+            System.out.println("" + title + " contain banned keyword: " + bannedKeyword);
+            return null;
+        }
+        
         ProductAmz productAmz = new ProductAmz();
         productAmz.setExternal_product_id_type("UPC");
         productAmz.setFeed_product_type("shirt");
@@ -310,7 +312,7 @@ public class ProcessTransformEstyToAmz {
         productAmz.setSize_map("option");
         productAmz.setSize_name("option");
 
-        String title = estyCrawlProductItem.getTitle();
+        
 
 //        if(title == null) return null;
         productAmz.setItem_name(title);

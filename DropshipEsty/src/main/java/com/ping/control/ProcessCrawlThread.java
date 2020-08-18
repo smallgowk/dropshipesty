@@ -98,9 +98,9 @@ public class ProcessCrawlThread extends Thread {
                     if (isStop) {
                         return;
                     }
-                    ArrayList<ProductAmz> list = ProcessTransformEstyToAmz.transform(estyCrawlProductItem, baseStoreOrderInfo);
-                    if (list != null) {
-                        listProducts.addAll(list);
+                    ProductAmz productAmz = ProcessTransformEstyToAmz.transform(estyCrawlProductItem, baseStoreOrderInfo);
+                    if (productAmz != null) {
+                        listProducts.add(productAmz);
                     }
                 }
                 

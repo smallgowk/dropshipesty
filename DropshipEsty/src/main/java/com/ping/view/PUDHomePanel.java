@@ -205,7 +205,6 @@ public class PUDHomePanel extends BasePanel {
         jLabel9.setText("Nhập brand");
 
         txtBrandName.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txtBrandName.setText("Abbey Stores");
 
         jLabel2.setText("Image Folder (Dành cho cào data tự tạo)");
 
