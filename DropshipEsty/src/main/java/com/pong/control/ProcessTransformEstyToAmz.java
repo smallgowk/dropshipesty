@@ -301,7 +301,8 @@ public class ProcessTransformEstyToAmz {
         productAmz.setImageUrl(snakeBaseStoreOrderInfo.getImagesUrl(estyCrawlProductItem.getImageUrl()));
         productAmz.setItem_type(snakeBaseStoreOrderInfo.getItemType());
 //        productAmz.setVariation_theme(snakeBaseStoreOrderInfo.getVariationType());
-        
+        productAmz.setItem_sku(snakeBaseStoreOrderInfo.getPrefix() + "_" + estyCrawlProductItem.getId());
+        productAmz.setPart_number(productAmz.getItem_sku().substring(0, productAmz.getItem_sku().length() - 2));
         productAmz.setBulletPoints(snakeBaseStoreOrderInfo.getListBullets());
         
         productAmz.setOuter_material_type1(snakeBaseStoreOrderInfo.getOuterMaterialType());

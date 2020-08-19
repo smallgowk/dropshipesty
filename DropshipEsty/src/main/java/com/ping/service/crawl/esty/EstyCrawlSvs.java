@@ -19,7 +19,14 @@ import com.ping.service.crawl.CrawlerMachine;
 import com.utils.CookieUtil;
 import com.utils.EncryptUtil;
 import com.utils.StringUtils;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URIBuilder;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -56,7 +63,7 @@ public class EstyCrawlSvs extends CrawlerMachine {
         EstyCrawlDataPageBase estyCrawlDataPageBase = new EstyCrawlDataPageBase();
 
         Elements items = doc.select("li");
-        
+
         ArrayList<EstyCrawlProductItem> listEstyCrawlProductItems = new ArrayList<>();
 
         for (Element element : items) {
@@ -64,12 +71,12 @@ public class EstyCrawlSvs extends CrawlerMachine {
                 EstyCrawlProductItem estyCrawlProductItem = new EstyCrawlProductItem();
                 String id = element.attr("data-listing-id");
                 estyCrawlProductItem.setId(id);
-                
+
                 Elements aElements = element.select("a");
-                if(aElements != null) {
+                if (aElements != null) {
                     String title = aElements.first().attr("title");
                     estyCrawlProductItem.setTitle(title);
-                    
+
                     String detailLink = aElements.first().attr("href");
                     estyCrawlProductItem.setDetailUrl(detailLink);
                 }
@@ -87,11 +94,11 @@ public class EstyCrawlSvs extends CrawlerMachine {
                     image = StringUtils.convertEstyImageLink(image);
                     estyCrawlProductItem.setImageUrl(image);
                 }
-                
+
                 listEstyCrawlProductItems.add(estyCrawlProductItem);
             }
         }
-        
+
         estyCrawlDataPageBase.setListProductItems(listEstyCrawlProductItems);
 
         return estyCrawlDataPageBase;
@@ -102,24 +109,74 @@ public class EstyCrawlSvs extends CrawlerMachine {
 
         Document document = EstyCrawlSvs.getInstance().processPage(link);
 
-        Elements script = document.select("script[type='application/ld+json']");
-        Gson gson = new Gson();
-        EstyScriptCrawl estyScriptCrawl = gson.fromJson(script.html(), EstyScriptCrawl.class);
-        estyCrawlDataStoreBase.setEstyScriptCrawl(estyScriptCrawl);
+//        Elements script = document.select("script[type='application/ld+json']");
+//        Gson gson = new Gson();
+//        EstyScriptCrawl estyScriptCrawl = gson.fromJson(script.html(), EstyScriptCrawl.class);
+//        estyCrawlDataStoreBase.setEstyScriptCrawl(estyScriptCrawl);
+
+        Elements storeName = document.select("h1[class='mb-lg-1']");
+        estyCrawlDataStoreBase.setStoreName(storeName.text());
+
+        String pageRule = null;
 
         int page = 1;
 
         Elements pageInfos = document.select("li[class='wt-action-group__item-container'] > a");
+
         if (pageInfos != null) {
-            for (Element element : pageInfos) {
-                String pageStr = element.attr("data-page");
-                if (!StringUtils.isEmpty(pageStr)) {
-                    int pageValue = Integer.parseInt(pageStr);
-                    if (pageValue > page) {
-                        page = pageValue;
+            int size = pageInfos.size();
+            if (size < 5) {
+                for (Element element : pageInfos) {
+                    if (pageRule == null) {
+                        String pageLink = element.attr("href");
+                        if (pageLink != null && !pageLink.isEmpty()) {
+                            try {
+                                pageRule = removeQueryParameter(pageLink, "page");
+                            } catch (URISyntaxException ex) {
+                                pageRule = pageLink;
+                            }
+                            estyCrawlDataStoreBase.setPageRuleUrl(pageRule);
+                        }
+                    }
+
+                    String pageStr = element.attr("data-page");
+                    if (!StringUtils.isEmpty(pageStr)) {
+                        int pageValue = Integer.parseInt(pageStr);
+                        if (pageValue > page) {
+                            page = pageValue;
+                        }
+                    }
+                }
+            } else {
+                page = 5;
+                for (int i = size - 1; i >= 0; i--) {
+                    Element element = pageInfos.get(i);
+                    if (pageRule == null) {
+                        String pageLink = element.attr("href");
+                        if (pageLink != null && !pageLink.isEmpty()) {
+                            try {
+                                pageRule = removeQueryParameter(pageLink, "page");
+                            } catch (URISyntaxException ex) {
+                                pageRule = pageLink;
+                            }
+                            estyCrawlDataStoreBase.setPageRuleUrl(pageRule);
+                        }
+                    }
+
+                    String pageStr = element.attr("data-page");
+                    if (!StringUtils.isEmpty(pageStr)) {
+                        int pageValue = Integer.parseInt(pageStr);
+                        if (pageValue > page) {
+                            page = pageValue;
+                        }
+                    }
+                    
+                    if (page != 5 && pageRule != null) {
+                        break;
                     }
                 }
             }
+
         }
 
         estyCrawlDataStoreBase.setPageTotal(page);
@@ -128,7 +185,21 @@ public class EstyCrawlSvs extends CrawlerMachine {
 
         return estyCrawlDataStoreBase;
     }
-    
+
+    public String removeQueryParameter(String url, String parameterName) throws URISyntaxException {
+        URIBuilder uriBuilder = new URIBuilder(url);
+        List<NameValuePair> queryParameters = uriBuilder.getQueryParams()
+                .stream()
+                .filter(p -> !p.getName().equals(parameterName))
+                .collect(Collectors.toList());
+        if (queryParameters.isEmpty()) {
+            uriBuilder.removeQuery();
+        } else {
+            uriBuilder.setParameters(queryParameters);
+        }
+        return uriBuilder.build().toString();
+    }
+
     public String crawlMainUrl(String detailLink) {
         Document doc = EstyCrawlSvs.getInstance().processPage(detailLink);
         Elements items = doc.select("li");
@@ -137,16 +208,16 @@ public class EstyCrawlSvs extends CrawlerMachine {
         for (Element element : items) {
             if (!StringUtils.isEmpty(element.attr("data-image-id"))) {
                 Elements aElements = element.select("img");
-                if(aElements != null) {
+                if (aElements != null) {
                     mailUrl = aElements.first().attr("data-src-zoom-image");
-                    if(count == 4) {
+                    if (count == 4) {
                         break;
                     }
                     count++;
                 }
             }
         }
-        
+
         return mailUrl;
     }
 
@@ -308,7 +379,6 @@ public class EstyCrawlSvs extends CrawlerMachine {
 //
 //            }
 //        }
-
         boolean isLoadSuccess = false;
         String currentUrl = getCurrentUrl();
 
@@ -398,7 +468,6 @@ public class EstyCrawlSvs extends CrawlerMachine {
 //            CookieUtil.saveCookies(cookies, "errorCookies_" + System.currentTimeMillis() + ".txt");
 //            return crawlDataPageAliex;
 //        }
-
         Elements questions = doc.select("li[class='item']");
 
         if (questions == null || questions.isEmpty()) {
@@ -470,7 +539,6 @@ public class EstyCrawlSvs extends CrawlerMachine {
 //        } catch (IOException ex) {
 //            Logger.getLogger(EstyCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-
         return crawlDataPageAliex;
     }
 
