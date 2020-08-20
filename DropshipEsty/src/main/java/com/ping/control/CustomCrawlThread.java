@@ -111,6 +111,10 @@ public class CustomCrawlThread extends Thread {
         } catch (InterruptedException ex) {
             java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        if (controller.isIgnoreCustomed && AmzListingCrawlSvs.getInstance().isCustomized()) {
+            return;
+        }
 
         AmzListingCrawlSvs.getInstance().doFillBaseInfo(controller.imageFolderPath, item.sku, surfaceModel);
         try {

@@ -77,6 +77,10 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
         }
         return amzListingCrawlSvs;
     }
+    
+    public boolean isCustomized() {
+        return false;
+    }
 
     public void doFillBaseInfo(String imageFolder, String sku, SurfaceModel surfaceModel) {
 

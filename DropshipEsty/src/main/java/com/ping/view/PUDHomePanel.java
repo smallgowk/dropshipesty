@@ -163,6 +163,7 @@ public class PUDHomePanel extends BasePanel {
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         txtSkuPrefix = new javax.swing.JTextField();
+        checkBoxDownload = new javax.swing.JCheckBox();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         txtDesciption = new javax.swing.JTextArea();
@@ -217,6 +218,9 @@ public class PUDHomePanel extends BasePanel {
 
         jLabel3.setText("SKU prefix");
 
+        checkBoxDownload.setSelected(true);
+        checkBoxDownload.setText("Download Image");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -246,7 +250,9 @@ public class PUDHomePanel extends BasePanel {
                                     .addComponent(txtBasePrice, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 168, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
-                                .addComponent(txtBrandName, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtBrandName, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(checkBoxDownload))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -263,7 +269,7 @@ public class PUDHomePanel extends BasePanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtImageFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
-                .addGap(50, 50, 50)
+                .addGap(20, 20, 20)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -278,7 +284,9 @@ public class PUDHomePanel extends BasePanel {
                 .addGap(28, 28, 28)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtSkuPrefix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSkuPrefix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkBoxDownload))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -531,6 +539,8 @@ public class PUDHomePanel extends BasePanel {
             }
             mainController.setImageFolder(txtImageFolder.getText().trim());
         }
+        
+        mainController.setIsDownloadImage(checkBoxDownload.isSelected());
 
         mainController.doAction();
 
@@ -737,6 +747,7 @@ public class PUDHomePanel extends BasePanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnStartCrawl;
     private javax.swing.JButton btnStop;
+    private javax.swing.JCheckBox checkBoxDownload;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox;
     private javax.swing.JLabel jLabel1;

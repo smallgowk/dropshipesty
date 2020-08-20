@@ -35,6 +35,16 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
     public String imageFolder;
     public String imageFolderName;
     public String ip;
+    
+    public boolean isDownloadImage;
+
+    public boolean isIsDownloadImage() {
+        return isDownloadImage;
+    }
+
+    public void setIsDownloadImage(boolean isDownloadImage) {
+        this.isDownloadImage = isDownloadImage;
+    }
 
     public static SnakeBaseStoreOrderInfo createInstance(String linkStore, String ip, String imageFolder, String brandName,
             Set<String> listColor, Set<String> listSizes, 
@@ -44,7 +54,8 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
             ArrayList<String> bullets,
             String outerMaterialType,
             String materialComposition, 
-            String skuPrefix
+            String skuPrefix,
+            boolean isDownloadImage
             ) {
         SnakeBaseStoreOrderInfo snakeBaseStoreOrderInfo = new SnakeBaseStoreOrderInfo();
         snakeBaseStoreOrderInfo.setLink(linkStore);
@@ -64,6 +75,7 @@ public class SnakeBaseStoreOrderInfo extends BaseStoreOrderInfo {
         snakeBaseStoreOrderInfo.setOuterMaterialType(outerMaterialType);
         snakeBaseStoreOrderInfo.setMaterialComposition(materialComposition);
         snakeBaseStoreOrderInfo.setPrefix(skuPrefix);
+        snakeBaseStoreOrderInfo.setIsDownloadImage(isDownloadImage);
         
         return snakeBaseStoreOrderInfo;
     }

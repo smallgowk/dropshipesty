@@ -17,6 +17,7 @@ import com.ping.service.local.GenAmazonFromImageSvs;
 import com.pong.control.ProcessPageDataSvs;
 import com.pong.control.ProcessStoreInfoSvs;
 import com.pong.control.ProcessTransformEstyToAmz;
+import static com.pong.control.ProcessTransformEstyToAmz.createBasicProductAmz;
 import com.utils.AWSUtil;
 import com.utils.StringUtils;
 import io.github.bonigarcia.wdm.Config;
@@ -113,22 +114,24 @@ public class ProcessCrawlThread extends Thread {
                         continue;
                     }
                     
-                    ProductAmz productAmz = ProcessTransformEstyToAmz.transform(estyCrawlProductItem, baseStoreOrderInfo);
+                    ProductAmz productAmz = ProcessTransformEstyToAmz.createBasicProductAmz(estyCrawlProductItem, baseStoreOrderInfo, pageCount);
                     if (productAmz != null) {
                         listProducts.add(productAmz);
                     }
                 }
                 
-                File imageFolder = new File(baseStoreOrderInfo.getPrefix());
-                if (!imageFolder.exists()) {
-                    imageFolder.mkdir();
-                }
-                
-                for(int i = 0, size = listProducts.size(); i < size; i++) {
-                    ProductAmz productAmz = listProducts.get(i);
-                    DownloadMachine.download(productAmz.getMain_image_url(), imageFolder.getPath() + Configs.pathChar + productAmz.getItem_sku() + ".jpg");
-                    crawlProcessListener.onPushState("", "Downloaded " + productAmz.getMain_image_url());
-                    crawlProcessListener.onProgress(estyCrawlDataStoreBase.getStoreName() + " Page " + pageCount + " (" + (i + 1) + " / " + size + ")");
+                if (baseStoreOrderInfo.isIsDownloadImage()) {
+                    File imageFolder = new File(baseStoreOrderInfo.getPrefix());
+                    if (!imageFolder.exists()) {
+                        imageFolder.mkdir();
+                    }
+
+                    for (int i = 0, size = listProducts.size(); i < size; i++) {
+                        ProductAmz productAmz = listProducts.get(i);
+                        DownloadMachine.download(productAmz.getMain_image_url(), imageFolder.getPath() + Configs.pathChar + productAmz.getItem_sku() + ".jpg");
+                        crawlProcessListener.onPushState("", "Downloaded " + productAmz.getMain_image_url());
+                        crawlProcessListener.onProgress(estyCrawlDataStoreBase.getStoreName() + " Page " + pageCount + " (" + (i + 1) + " / " + size + ")");
+                    }
                 }
 
                 crawlProcessListener.onPushState("", "--> Đã hoàn thành trang " + pageCount);

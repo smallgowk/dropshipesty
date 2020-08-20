@@ -43,22 +43,16 @@ public class MainController {
     public String outerMaterialType = "Cotton";
     public String materialComposition = "100% cotton";
     public String imageFolder;
+    public boolean isDownloadImage;
 
-//    public Set<String> getListColor() {
-//        return listColor;
-//    }
-//
-//    public void setListColor(Set<String> listColor) {
-//        this.listColor = listColor;
-//    }
-//
-//    public Set<String> getListSizes() {
-//        return listSizes;
-//    }
-//
-//    public void setListSizes(Set<String> listSizes) {
-//        this.listSizes = listSizes;
-//    }
+    public boolean isIsDownloadImage() {
+        return isDownloadImage;
+    }
+
+    public void setIsDownloadImage(boolean isDownloadImage) {
+        this.isDownloadImage = isDownloadImage;
+    }
+    
     public String getImageFolder() {
         return imageFolder;
     }
@@ -179,7 +173,8 @@ public class MainController {
                             bullets,
                             outerMaterialType,
                             materialComposition,
-                            skuPrefix
+                            skuPrefix, 
+                            isDownloadImage
                     );
                     startCrawl(baseStoreOrderInfo);
                     break;

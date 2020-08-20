@@ -43,10 +43,6 @@ public class ProcessTransformEstyToAmz {
 
     public static HashMap<String, String> setBannedProduct = new HashMap<>();
 
-    public static ProductAmz transform(EstyCrawlProductItem estyCrawlProductItem, SnakeBaseStoreOrderInfo snakeBaseStoreOrderInfo) {
-        return createBasicProductAmz(estyCrawlProductItem, snakeBaseStoreOrderInfo);
-    }
-
 //    public static ArrayList<ProductAmz> createChilds(EstyCrawlProductItem estyCrawlProductItem, SnakeBaseStoreOrderInfo snakeBaseStoreOrderInfo, ProductAmz productAmz) {
 //        ArrayList<ProductAmz> results = new ArrayList<>();
 //        for(int i = 0, size = snakeBaseStoreOrderInfo.listVariation.size(); i < size; i++) {
@@ -278,7 +274,7 @@ public class ProcessTransformEstyToAmz {
         return html;
     }
 
-    public static ProductAmz createBasicProductAmz(EstyCrawlProductItem estyCrawlProductItem, SnakeBaseStoreOrderInfo snakeBaseStoreOrderInfo) {
+    public static ProductAmz createBasicProductAmz(EstyCrawlProductItem estyCrawlProductItem, SnakeBaseStoreOrderInfo snakeBaseStoreOrderInfo, int page) {
         String title = estyCrawlProductItem.getTitle();
         String bannedKeyword = AWSUtil.containBannedKeyword(title);
         if (bannedKeyword != null) {
@@ -301,7 +297,7 @@ public class ProcessTransformEstyToAmz {
         productAmz.setImageUrl(snakeBaseStoreOrderInfo.getImagesUrl(estyCrawlProductItem.getImageUrl()));
         productAmz.setItem_type(snakeBaseStoreOrderInfo.getItemType());
 //        productAmz.setVariation_theme(snakeBaseStoreOrderInfo.getVariationType());
-        productAmz.setItem_sku(snakeBaseStoreOrderInfo.getPrefix() + "_" + estyCrawlProductItem.getId());
+        productAmz.setItem_sku(snakeBaseStoreOrderInfo.getPrefix() + "_" + page +"_" + estyCrawlProductItem.getId());
         productAmz.setPart_number(productAmz.getItem_sku().substring(0, productAmz.getItem_sku().length() - 2));
         productAmz.setBulletPoints(snakeBaseStoreOrderInfo.getListBullets());
         

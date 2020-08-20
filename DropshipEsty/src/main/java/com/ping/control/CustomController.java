@@ -44,6 +44,10 @@ public class CustomController {
         this.isIgnoreCustomed = isIgnoreCustomed;
     }
 
+    public boolean isIsIgnoreCustomed() {
+        return isIgnoreCustomed;
+    }
+
     public void setIsTestMode(boolean isTestMode) {
         this.isTestMode = isTestMode;
     }

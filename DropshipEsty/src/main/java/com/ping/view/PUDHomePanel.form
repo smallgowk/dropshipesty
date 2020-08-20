@@ -88,7 +88,10 @@
                                       <Component id="jComboBox" alignment="0" pref="168" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="txtBrandName" min="-2" pref="155" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="txtBrandName" min="-2" pref="155" max="-2" attributes="0"/>
+                                      <Component id="checkBoxDownload" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -112,7 +115,7 @@
                       <Component id="txtImageFolder" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jComboBox" min="-2" max="-2" attributes="0"/>
@@ -129,7 +132,10 @@
                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="txtSkuPrefix" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="txtSkuPrefix" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="checkBoxDownload" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="lbStatus" min="-2" pref="17" max="-2" attributes="0"/>
               </Group>
@@ -220,6 +226,12 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtSkuPrefix">
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="checkBoxDownload">
+          <Properties>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" value="Download Image"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

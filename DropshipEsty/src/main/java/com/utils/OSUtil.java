@@ -7,9 +7,11 @@ package com.utils;
 
 import com.apple.eawt.Application;
 import com.config.Configs;
+import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.io.File;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -275,5 +277,14 @@ public class OSUtil {
         }
 
         return false;
+    }
+    
+    public static  void showImage(File f) {
+        Desktop dt = Desktop.getDesktop();
+        try {
+            dt.open(f);
+        } catch (IOException ex) {
+            Logger.getLogger(OSUtil.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
