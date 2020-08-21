@@ -82,7 +82,7 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
         return false;
     }
 
-    public void doFillBaseInfo(String imageFolder, String sku, SurfaceModel surfaceModel) {
+    public boolean doFillBaseInfo(String imageFolder, String sku, SurfaceModel surfaceModel) {
 
 //        WebElement element1 = driver.findElement(By.xpath("//input[@placeholder='Label']"));
 //        WebDriverWait wait1 = new WebDriverWait(driver, 100);
@@ -114,18 +114,20 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
         executor.executeScript("arguments[0].setAttribute('value', arguments[1])", element2, surfaceModel.getInstruction());
 
         Screen s = new Screen();
+        
+        boolean isFoundImage = false;
 
         try {
             s.wait(imageUploaded, 20);
+            isFoundImage = true;
         } catch (FindFailed ex) {
             Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
-
             try {
 
                 File imageFile = new File(imageFolder + Configs.pathChar + sku + ".jpg");
                 if (!imageFile.exists()) {
                     System.out.println("Not found image for " + sku);
-                    return;
+                    return false;
                 }
 
                 WebElement uploadImageElement = findWithFullXPath("/html/body/div[1]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[1]/div[2]/div/div[1]/div[2]/div/div/div");
@@ -138,7 +140,9 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
             } catch (FindFailed ex1) {
                 Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
+        } 
+        
+        return isFoundImage;
 
     }
 
