@@ -129,7 +129,7 @@ public class ProcessCrawlThread extends Thread {
                     for (int i = 0, size = listProducts.size(); i < size; i++) {
                         ProductAmz productAmz = listProducts.get(i);
                         DownloadMachine.download(productAmz.getMain_image_url(), imageFolder.getPath() + Configs.pathChar + productAmz.getItem_sku() + ".jpg");
-                        crawlProcessListener.onPushState("", "Downloaded " + productAmz.getMain_image_url());
+//                        crawlProcessListener.onPushState("", "Downloaded " + productAmz.getMain_image_url());
                         crawlProcessListener.onProgress(estyCrawlDataStoreBase.getStoreName() + " Page " + pageCount + " (" + (i + 1) + " / " + size + ")");
                     }
                 }

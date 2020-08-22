@@ -323,7 +323,7 @@ public class AWSUtil {
         }
         String inputLower = input.toLowerCase();
         for (String s : listChecks) {
-            if (checkContainsKeywordsNoRegex(inputLower, s, 0) > 0) {
+            if (checkContainsKeywordsNoRegex(inputLower, s, 0) >= 0) {
                 return s;
             }
         }
