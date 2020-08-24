@@ -60,6 +60,26 @@ public class CustomImageDesignPannel extends JPanel {
         return (int) (itemSize * ratio);
     }
 
+    public int getItemSize() {
+        return itemSize;
+    }
+
+    public BufferedImage getImgBackground() {
+        return imgBackground;
+    }
+
+    public BufferedImage getImgItem() {
+        return imgItem;
+    }
+
+    public Point getItemPoint() {
+        int x = (int)(itemPoint.x / ratio);
+        int y = (int)(itemPoint.y / ratio);
+        return new Point(x, y);
+    }
+    
+    
+
 
     @Override
     protected void paintComponent(Graphics g) {

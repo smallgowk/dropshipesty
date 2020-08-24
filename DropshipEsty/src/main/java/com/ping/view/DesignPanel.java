@@ -7,6 +7,7 @@ package com.ping.view;
 
 import com.models.aliex.store.BaseStoreInfo;
 import com.utils.DialogUtil;
+import com.utils.ImageUtils;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
@@ -251,6 +252,8 @@ public class DesignPanel extends BasePanel {
     BaseStoreInfo storePageInfo;
 
     private void btnStartCrawlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartCrawlActionPerformed
+        ImageUtils.combineImage(customImageDesignPannel.getImgBackground(), customImageDesignPannel.getImgItem(), 
+                customImageDesignPannel.getItemSize(), customImageDesignPannel.getItemPoint());
     }//GEN-LAST:event_btnStartCrawlActionPerformed
 
     private void txtYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtYActionPerformed
