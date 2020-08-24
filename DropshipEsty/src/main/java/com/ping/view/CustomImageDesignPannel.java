@@ -73,12 +73,10 @@ public class CustomImageDesignPannel extends JPanel {
     }
 
     public Point getItemPoint() {
-        int x = (int)(itemPoint.x / ratio);
-        int y = (int)(itemPoint.y / ratio);
+        int x = (int)((itemPoint.x - itemSizeDisplay / 2) / ratio);
+        int y = (int)((itemPoint.y - itemSizeDisplay / 2) / ratio);
         return new Point(x, y);
     }
-    
-    
 
 
     @Override
