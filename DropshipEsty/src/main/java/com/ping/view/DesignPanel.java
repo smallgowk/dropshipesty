@@ -57,8 +57,8 @@ public class DesignPanel extends BasePanel {
             customImageDesignPannel.setImgItem(img2);
             customImageDesignPannel.setItemSizeDisplay(100);
             txtWidth.setText("" + 100);
-            
             customImageDesignPannel.repaint();
+            
             
         } catch (IOException ex) {
             Logger.getLogger(DesignPanel.class.getName()).log(Level.SEVERE, null, ex);

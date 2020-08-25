@@ -7,17 +7,12 @@ package com.ping;
 
 import com.utils.OSUtil;
 import com.ping.view.BasePanel;
-import com.ping.view.CustomImageDesignPannel;
 import com.ping.view.DesignPanel;
-import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;

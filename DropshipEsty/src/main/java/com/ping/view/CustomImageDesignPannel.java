@@ -46,6 +46,9 @@ public class CustomImageDesignPannel extends JPanel {
     public void setItemSizeDisplay(int itemSizeDisplay) {
         this.itemSizeDisplay = itemSizeDisplay;
         this.itemSize = (int)(itemSizeDisplay / ratio);
+        if (itemPoint == null) {
+            itemPoint = new Point(itemSize / 2, itemSize / 2);
+        }
     }
 
     public void setPoint(Point point) {
