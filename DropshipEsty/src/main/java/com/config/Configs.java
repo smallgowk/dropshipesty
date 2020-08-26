@@ -7,6 +7,7 @@ package com.config;
 
 import com.models.amazon.BTGManager;
 import com.utils.AWSUtil;
+import com.utils.EstyUtils;
 import com.utils.OSUtil;
 import java.io.BufferedReader;
 import java.io.File;
@@ -231,6 +232,8 @@ public class Configs {
         AWSUtil.init();
 
         BTGManager.getInstance().initBTG();
+        
+        EstyUtils.init();
 
     }
 

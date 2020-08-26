@@ -107,6 +107,7 @@ public class ProcessCrawlThread extends Thread {
                     idsSet.add(estyCrawlProductItem.getId());
                     
                     String title = estyCrawlProductItem.getTitle();
+                    title = AWSUtil.removeTrademark(title);
                     String bannedKeyword = AWSUtil.containBannedKeyword(title);
                     if (bannedKeyword != null) {
                         System.out.println("" + title + " contain banned keyword: " + bannedKeyword);

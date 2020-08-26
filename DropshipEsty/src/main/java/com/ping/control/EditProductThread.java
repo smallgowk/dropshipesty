@@ -49,8 +49,6 @@ public class EditProductThread extends Thread {
 
     @Override
     public void run() {
-        //
-
         if (isStop) {
             crawlProcessListener.onFinishPage("");
             return;
