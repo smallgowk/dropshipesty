@@ -6,9 +6,13 @@
 package com.ping.control;
 
 import com.models.aliex.store.inputdata.SnakeBaseStoreOrderInfo;
+import com.utils.EstyUtils;
 import com.utils.StringUtils;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 /**
@@ -58,6 +62,11 @@ public class MainController {
     }
 
     public void setImageFolder(String imageFolder) {
+        try {
+            EstyUtils.changeImageFolder(imageFolder);
+        } catch (IOException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.imageFolder = imageFolder;
     }
 
@@ -75,9 +84,19 @@ public class MainController {
 
     public void setDescription(String description) {
         this.description = description;
+        try {
+            EstyUtils.changeDescription(description);
+        } catch (IOException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void setImageLinks(String linkData) {
+        try {
+            EstyUtils.changeImageUrls(linkData);
+        } catch (IOException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String[] linkParts = linkData.split(Pattern.quote("\n"));
 
         links = new ArrayList<>();
@@ -88,6 +107,12 @@ public class MainController {
     }
 
     public void setBullets(String bulletData) {
+        try {
+            EstyUtils.changeBulletPoints(bulletData);
+        } catch (IOException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         String[] bulletParts = bulletData.split(Pattern.quote("\n"));
 
         bullets = new ArrayList<>();
@@ -102,6 +127,11 @@ public class MainController {
     }
 
     public void setBasePrice(float basePrice) {
+        try {
+            EstyUtils.changePrice("" + basePrice);
+        } catch (IOException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.basePrice = basePrice;
     }
 
@@ -110,6 +140,11 @@ public class MainController {
     }
 
     public void setLinkStore(String linkStore) {
+        try {
+            EstyUtils.changeStoreLink(linkStore);
+        } catch (IOException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         if (!linkStore.contains("etsy.com")) {
             ip = linkStore;
@@ -164,7 +199,6 @@ public class MainController {
             switch (state) {
                 case STOP:
                     System.out.println("" + this.toString());
-
                     SnakeBaseStoreOrderInfo baseStoreOrderInfo = SnakeBaseStoreOrderInfo.createInstance(linkStore, ip, imageFolder, brandName,
                             null, null,
                             category, description,
@@ -226,6 +260,12 @@ public class MainController {
     }
 
     public void setBrandName(String brandName) {
+        try {
+            EstyUtils.changeBrand(brandName);
+        } catch (IOException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }    
+
         this.brandName = brandName;
     }
 
@@ -234,10 +274,13 @@ public class MainController {
     }
 
     public void setSkuPrefix(String skuPrefix) {
+        try {
+            EstyUtils.changePrefix(skuPrefix);
+        } catch (IOException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }  
         this.skuPrefix = skuPrefix;
     }
-    
-    
 
     public void setOuterMaterialType(String outerMaterialType) {
         this.outerMaterialType = outerMaterialType;

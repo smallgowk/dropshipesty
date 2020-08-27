@@ -14,6 +14,7 @@ import com.models.aliex.store.BaseStoreInfo;
 import com.models.aliex.store.inputdata.BaseStoreOrderInfo;
 import com.ping.tcpclient.ResponseObj;
 import com.utils.DialogUtil;
+import com.utils.EstyUtils;
 import com.utils.OSUtil;
 import java.awt.Dimension;
 import java.util.ArrayList;
@@ -89,49 +90,14 @@ public class PUDHomePanel extends BasePanel {
             System.setProperty("webdriver.chrome.driver", pathStr);
         }
         
-//        try {
-//            Thread.sleep(1000);
-//        } catch (InterruptedException ex) {
-//            Logger.getLogger(ClientHomePanel.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        AliexCrawlSvs.getInstance().doAutoClick(null);
-//        if (!AliexCrawlSvs.getInstance().isHasCookies()) {
-////            AliexCrawlSvs.getInstance().initDriver();
-////            MerchantSearchSvs.getInstance().login();
-//            boolean login = AliexCrawlSvs.getInstance().autoLoginAliex();
-//            if(!login) {
-//                int option = DialogUtil.showOptionsQuestionDialog(null, null, "Phiên bản trình duyệt chrome và phiên bản chromedriver không tương thích. Vui lòng cập nhật chromedriver theo phiên bản trình duyệt chrome trên máy tính!",
-//                        "Cập nhật", "Đóng");
-//                if (option == 0) {
-//
-//                    if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-//                        try {
-//                            Desktop.getDesktop().browse(new URI("https://chromedriver.chromium.org/downloads?fbclid=IwAR1I_wfvE-sipnM0-ZsU-nTBZhLYX3exGq9u1ive6mEDZ8922fWQQ_B1p1M"));
-//                        } catch (IOException ex) {
-//                            Logger.getLogger(StartClientApp.class.getName()).log(Level.SEVERE, null, ex);
-//                        } catch (URISyntaxException ex) {
-//                            Logger.getLogger(StartClientApp.class.getName()).log(Level.SEVERE, null, ex);
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        MerchantSearchSvs.getInstance().login();
-//        AliexCrawlSvs.getInstance().autoLoginAliex();
-//        btnStop.setEnabled(false);
-
-//        if (!AliexCrawlSvs.getInstance().isHasCookies()) {
-//            AliexCrawlSvs.getInstance().autoLoginAliex();
-//        }
-//        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-//            public void run() {
-//                processPannel = new ProcessPannel(statePannel.getWidth(), statePannel.getHeight());
-//                processPannel.setBackground(Color.red);
-//                statePannel.add(processPannel);
-//                statePannel.validate();
-//            }
-//        });
-//        fakeData();
+        txtStoreLink.setText(EstyUtils.storeLink);
+        txtImageFolder.setText(EstyUtils.imageFolder);
+        txtBasePrice.setText("" + EstyUtils.price);
+        txtBrandName.setText(EstyUtils.brand);
+        txtSkuPrefix.setText(EstyUtils.skuPrefix);
+        txtDesciption.setText(EstyUtils.description);
+        txtBullets.setText(EstyUtils.bulletPoints);
+        txtSubImageLinks.setText(EstyUtils.imageUrls);
     }
 
     public void disableButton() {
