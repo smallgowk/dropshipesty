@@ -22,8 +22,13 @@ public class CustomImageDesignPannel extends JPanel {
     private int itemSizeDisplay;
     BufferedImage imgBackground;
     BufferedImage imgItem;
+    private Point oldPoint = null;
     private Point itemPoint = null;
     private float ratio;
+    private int x, y;
+    private double sin, cos;
+    private int a = 10;
+    private int t = 1;
     
     public void setImgBackground(BufferedImage imgBackground) {
         this.imgBackground = imgBackground;
@@ -41,6 +46,7 @@ public class CustomImageDesignPannel extends JPanel {
         if (itemPoint == null) {
             itemPoint = new Point(itemSize / 2, itemSize / 2);
         }
+        this.oldPoint = this.itemPoint;
     }
     
     public void setItemSizeDisplay(int itemSizeDisplay) {
@@ -49,10 +55,39 @@ public class CustomImageDesignPannel extends JPanel {
         if (itemPoint == null) {
             itemPoint = new Point(itemSize / 2, itemSize / 2);
         }
+        this.oldPoint = this.itemPoint;
     }
-
+    
+    public void calculateSinCos() {
+        if (itemPoint == null || oldPoint == null) {
+            sin = 1;
+            cos = 1;
+            return;
+        }
+        
+        if ((itemPoint.x == oldPoint.x) && (itemPoint.y == oldPoint.y)) {
+            sin = 1;
+            cos = 1;
+            return;
+        }
+        
+        double xOffset = Math.abs(itemPoint.x * 1f - oldPoint.x * 1f);
+        double yOffset = Math.abs(itemPoint.y * 1f - oldPoint.y * 1f);
+        double s = Math.sqrt(xOffset * xOffset + yOffset * yOffset);
+        
+        sin = yOffset / s;
+        cos = xOffset / s;
+    }
+    
     public void setPoint(Point point) {
+        this.oldPoint = this.itemPoint;
         this.itemPoint = point;
+        t = 1;
+        calculateSinCos();
+    }
+    
+    public void updateCoorDinate() {
+        double s = (a * a) / (2 * t);
     }
     
     public void setImgItem(BufferedImage imgItem) {
@@ -79,6 +114,14 @@ public class CustomImageDesignPannel extends JPanel {
         int x = (int)((itemPoint.x - itemSizeDisplay / 2) / ratio);
         int y = (int)((itemPoint.y - itemSizeDisplay / 2) / ratio);
         return new Point(x, y);
+    }
+    
+    public void updateCoordinate() {
+        if (x == itemPoint.x && y == itemPoint.y) {
+            return;
+        }
+        
+        if (x )
     }
 
 

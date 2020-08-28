@@ -6,6 +6,7 @@
 package com.ping.view;
 
 import com.models.aliex.store.BaseStoreInfo;
+import com.ping.control.PaintThread;
 import com.utils.DialogUtil;
 import com.utils.ImageUtils;
 import java.awt.Dimension;
@@ -34,6 +35,7 @@ public class DesignPanel extends BasePanel {
     private static final int SIZE = 600;
     
     CustomImageDesignPannel customImageDesignPannel;
+    PaintThread paintThread;
 
     public DesignPanel() {
         initComponents();
@@ -57,13 +59,13 @@ public class DesignPanel extends BasePanel {
             customImageDesignPannel.setImgItem(img2);
             customImageDesignPannel.setItemSizeDisplay(100);
             txtWidth.setText("" + 100);
-            customImageDesignPannel.repaint();
             
             
         } catch (IOException ex) {
             Logger.getLogger(DesignPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        paintThread = new PaintThread(customImageDesignPannel);
+        paintThread.start();
         
     }
     
