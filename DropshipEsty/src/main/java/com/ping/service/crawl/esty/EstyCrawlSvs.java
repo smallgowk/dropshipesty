@@ -123,7 +123,7 @@ public class EstyCrawlSvs extends CrawlerMachine {
 
         Elements pageInfos = document.select("li[class='wt-action-group__item-container'] > a");
 
-        if (pageInfos != null) {
+        if (pageInfos != null && !pageInfos.isEmpty()) {
             int size = pageInfos.size();
             if (size < 5) {
                 for (Element element : pageInfos) {
@@ -177,6 +177,9 @@ public class EstyCrawlSvs extends CrawlerMachine {
                 }
             }
 
+        } else {
+            estyCrawlDataStoreBase.setPageRuleUrl(link);
+            page = 1;
         }
 
         estyCrawlDataStoreBase.setPageTotal(page);

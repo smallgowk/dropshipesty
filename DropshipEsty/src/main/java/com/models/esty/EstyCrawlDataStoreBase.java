@@ -64,6 +64,10 @@ public class EstyCrawlDataStoreBase extends EstyCrawlDataPageBase{
 //    }
     
     public String getPageLink(int pageCount) {
+        if (pageTotal == 1) {
+            return pageRuleUrl;
+        }
+                
         return pageRuleUrl + "&page=" + pageCount + "#items";
     }
     
