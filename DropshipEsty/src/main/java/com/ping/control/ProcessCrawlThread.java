@@ -24,6 +24,7 @@ import io.github.bonigarcia.wdm.Config;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 
 /**
@@ -92,6 +93,11 @@ public class ProcessCrawlThread extends Thread {
             }
             crawlProcessListener.onPushState("", "Đang cào trang " + pageCount);
             crawlProcessListener.onPushState("", "" + estyCrawlDataStoreBase.getPageLink(pageCount));
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                java.util.logging.Logger.getLogger(ProcessCrawlThread.class.getName()).log(Level.SEVERE, null, ex);
+            }
             EstyCrawlDataPageBase estyCrawlDataPageBase = EstyCrawlSvs.getInstance().crawlPage(estyCrawlDataStoreBase, pageCount);
 
             ArrayList<ProductAmz> listProducts = new ArrayList<>();
@@ -102,7 +108,10 @@ public class ProcessCrawlThread extends Thread {
                     if (isStop) {
                         return;
                     }
-                    if (idsSet.contains(estyCrawlProductItem.getId())) continue;
+                    if (idsSet.contains(estyCrawlProductItem.getId())) {
+                        System.out.println(" Already crawl : " + estyCrawlProductItem.getId());
+                        continue;
+                    }
                     
                     idsSet.add(estyCrawlProductItem.getId());
                     
@@ -135,7 +144,7 @@ public class ProcessCrawlThread extends Thread {
                     }
                 }
 
-                crawlProcessListener.onPushState("", "--> Đã hoàn thành trang " + pageCount);
+                crawlProcessListener.onPushState("", "--> Đã hoàn thành trang " + pageCount + " " + listProducts.size() + " products");
 
                 ProcessPageDataSvs.processPageData(listProducts, "Esty_" + estyCrawlDataStoreBase.getStoreName() + "_page" + pageCount + ".xlsx");
             }

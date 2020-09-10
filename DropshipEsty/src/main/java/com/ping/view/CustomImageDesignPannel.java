@@ -120,8 +120,6 @@ public class CustomImageDesignPannel extends JPanel {
         if (x == itemPoint.x && y == itemPoint.y) {
             return;
         }
-        
-        if (x )
     }
 
 

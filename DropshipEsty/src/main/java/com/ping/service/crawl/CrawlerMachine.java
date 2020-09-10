@@ -303,7 +303,11 @@ public class CrawlerMachine {
                     .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8")
                     .header("Accept-Language", "en-US,en;q=0.9,vi;q=0.8")
                     .header("Accept-Encoding", "gzip, deflate, br");
-//            Thread.sleep(500);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(CrawlerMachine.class.getName()).log(Level.SEVERE, null, ex);
+            }
             doc = connection.get();
             return doc;
         } catch (IOException e1) {

@@ -121,22 +121,21 @@ public class EstyCrawlSvs extends CrawlerMachine {
 
         int page = 1;
 
-        Elements pageInfos = document.select("li[class='wt-action-group__item-container'] > a");
+        Elements navi = document.select("div[data-item-pagination]");
+        Elements pageInfos = navi.select("li[class='wt-action-group__item-container'] > a");
 
         if (pageInfos != null && !pageInfos.isEmpty()) {
-            int size = pageInfos.size();
-            if (size < 5) {
-                for (Element element : pageInfos) {
+            
+            for (Element element : pageInfos) {
+                    String pageLink = element.attr("href");
+                    if (pageLink == null || pageLink.isEmpty()) continue;
                     if (pageRule == null) {
-                        String pageLink = element.attr("href");
-                        if (pageLink != null && !pageLink.isEmpty()) {
-                            try {
-                                pageRule = removeQueryParameter(pageLink, "page");
-                            } catch (URISyntaxException ex) {
-                                pageRule = pageLink;
-                            }
-                            estyCrawlDataStoreBase.setPageRuleUrl(pageRule);
+                        try {
+                            pageRule = removeQueryParameter(pageLink, "page");
+                        } catch (URISyntaxException ex) {
+                            pageRule = pageLink;
                         }
+                        estyCrawlDataStoreBase.setPageRuleUrl(pageRule);
                     }
 
                     String pageStr = element.attr("data-page");
@@ -147,35 +146,39 @@ public class EstyCrawlSvs extends CrawlerMachine {
                         }
                     }
                 }
-            } else {
-                page = 5;
-                for (int i = size - 1; i >= 0; i--) {
-                    Element element = pageInfos.get(i);
-                    if (pageRule == null) {
-                        String pageLink = element.attr("href");
-                        if (pageLink != null && !pageLink.isEmpty()) {
-                            try {
-                                pageRule = removeQueryParameter(pageLink, "page");
-                            } catch (URISyntaxException ex) {
-                                pageRule = pageLink;
-                            }
-                            estyCrawlDataStoreBase.setPageRuleUrl(pageRule);
-                        }
-                    }
-
-                    String pageStr = element.attr("data-page");
-                    if (!StringUtils.isEmpty(pageStr)) {
-                        int pageValue = Integer.parseInt(pageStr);
-                        if (pageValue > page) {
-                            page = pageValue;
-                        }
-                    }
-                    
-                    if (page != 5 && pageRule != null) {
-                        break;
-                    }
-                }
-            }
+            
+//            int size = pageInfos.size();
+//            if (size < 5) {
+//                
+//            } else {
+//                page = 5;
+//                for (int i = size - 1; i >= 0; i--) {
+//                    Element element = pageInfos.get(i);
+//                    if (pageRule == null) {
+//                        String pageLink = element.attr("href");
+//                        if (pageLink != null && !pageLink.isEmpty()) {
+//                            try {
+//                                pageRule = removeQueryParameter(pageLink, "page");
+//                            } catch (URISyntaxException ex) {
+//                                pageRule = pageLink;
+//                            }
+//                            estyCrawlDataStoreBase.setPageRuleUrl(pageRule);
+//                        }
+//                    }
+//
+//                    String pageStr = element.attr("data-page");
+//                    if (!StringUtils.isEmpty(pageStr)) {
+//                        int pageValue = Integer.parseInt(pageStr);
+//                        if (pageValue > page) {
+//                            page = pageValue;
+//                        }
+//                    }
+//                    
+//                    if (page != 5 && pageRule != null) {
+//                        break;
+//                    }
+//                }
+//            }
 
         } else {
             estyCrawlDataStoreBase.setPageRuleUrl(link);
