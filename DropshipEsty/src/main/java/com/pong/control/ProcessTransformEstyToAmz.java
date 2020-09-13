@@ -281,6 +281,7 @@ public class ProcessTransformEstyToAmz {
             System.out.println("" + title + " contain banned keyword: " + bannedKeyword);
             return null;
         }
+        title = AWSUtil.removeTrademark(title);
         
         ProductAmz productAmz = new ProductAmz();
         productAmz.setExternal_product_id_type("UPC");

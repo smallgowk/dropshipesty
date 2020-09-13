@@ -12,12 +12,16 @@ import com.ping.control.CrawlProcessListener;
 import com.ping.control.MainController;
 import com.models.aliex.store.BaseStoreInfo;
 import com.models.aliex.store.inputdata.BaseStoreOrderInfo;
+import com.ping.service.crawl.amzlisting.AmzListingCrawlSvs;
+import com.ping.service.crawl.esty.EstyCrawlSvs;
 import com.ping.tcpclient.ResponseObj;
 import com.utils.DialogUtil;
 import com.utils.EstyUtils;
 import com.utils.OSUtil;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -98,6 +102,12 @@ public class PUDHomePanel extends BasePanel {
         txtDesciption.setText(EstyUtils.description);
         txtBullets.setText(EstyUtils.bulletPoints);
         txtSubImageLinks.setText(EstyUtils.imageUrls);
+        
+        try {
+            EstyCrawlSvs.getInstance().initDriver(null);
+        } catch (Exception ex) {
+            Logger.getLogger(PUDHomePanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void disableButton() {

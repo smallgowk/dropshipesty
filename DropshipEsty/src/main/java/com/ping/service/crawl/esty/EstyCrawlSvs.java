@@ -55,14 +55,36 @@ public class EstyCrawlSvs extends CrawlerMachine {
     }
 
     public EstyCrawlDataPageBase crawlPage(EstyCrawlDataStoreBase estyCrawlDataStoreBase, int pageCount) {
-        Document document = EstyCrawlSvs.getInstance().processPage(estyCrawlDataStoreBase.getPageLink(pageCount));
+        
+        goToPage(estyCrawlDataStoreBase.getPageLink(pageCount));
+        
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(EstyCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        scrollPage();
+        
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(EstyCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        String documentHtml = EstyCrawlSvs.getInstance().getPageSource();
+        Document document = Jsoup.parse(documentHtml);
+        
+//        Document document = EstyCrawlSvs.getInstance().processPage(estyCrawlDataStoreBase.getPageLink(pageCount));
         return crawlPage(document);
     }
 
     public EstyCrawlDataPageBase crawlPage(Document doc) {
         EstyCrawlDataPageBase estyCrawlDataPageBase = new EstyCrawlDataPageBase();
 
-        Elements items = doc.select("li");
+        Elements items = doc.select("li > a");
+        
+        System.out.println("EstyCrawlDataPageBase " + items.size());
 
         ArrayList<EstyCrawlProductItem> listEstyCrawlProductItems = new ArrayList<>();
 
@@ -72,14 +94,14 @@ public class EstyCrawlSvs extends CrawlerMachine {
                 String id = element.attr("data-listing-id");
                 estyCrawlProductItem.setId(id);
 
-                Elements aElements = element.select("a");
-                if (aElements != null) {
-                    String title = aElements.first().attr("title");
+//                Elements aElements = element.select("a");
+//                if (aElements != null) {
+                    String title = element.attr("title");
                     estyCrawlProductItem.setTitle(title);
 
-                    String detailLink = aElements.first().attr("href");
+                    String detailLink = element.attr("href");
                     estyCrawlProductItem.setDetailUrl(detailLink);
-                }
+//                }
 //                
                 Elements elements = element.select("div[class='height-placeholder'] > img");
                 String image = null;
@@ -106,8 +128,18 @@ public class EstyCrawlSvs extends CrawlerMachine {
 
     public EstyCrawlDataStoreBase crawlStoreInfo(String link) {
         EstyCrawlDataStoreBase estyCrawlDataStoreBase = new EstyCrawlDataStoreBase();
+        
+        goToPage(link);
+        
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(EstyCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-        Document document = EstyCrawlSvs.getInstance().processPage(link);
+//        Document document = EstyCrawlSvs.getInstance().processPage(link);
+        String documentHtml = EstyCrawlSvs.getInstance().getPageSource();
+        Document document = Jsoup.parse(documentHtml);
 
 //        Elements script = document.select("script[type='application/ld+json']");
 //        Gson gson = new Gson();

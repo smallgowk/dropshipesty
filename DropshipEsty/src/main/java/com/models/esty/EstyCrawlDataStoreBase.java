@@ -68,7 +68,7 @@ public class EstyCrawlDataStoreBase extends EstyCrawlDataPageBase{
             return pageRuleUrl;
         }
                 
-        return pageRuleUrl + "&page=" + pageCount + "#items";
+        return pageRuleUrl + "&page=" + pageCount + "#item";
     }
     
 }

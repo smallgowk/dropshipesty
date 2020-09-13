@@ -93,11 +93,6 @@ public class ProcessCrawlThread extends Thread {
             }
             crawlProcessListener.onPushState("", "Đang cào trang " + pageCount);
             crawlProcessListener.onPushState("", "" + estyCrawlDataStoreBase.getPageLink(pageCount));
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException ex) {
-                java.util.logging.Logger.getLogger(ProcessCrawlThread.class.getName()).log(Level.SEVERE, null, ex);
-            }
             EstyCrawlDataPageBase estyCrawlDataPageBase = EstyCrawlSvs.getInstance().crawlPage(estyCrawlDataStoreBase, pageCount);
 
             ArrayList<ProductAmz> listProducts = new ArrayList<>();
@@ -115,14 +110,14 @@ public class ProcessCrawlThread extends Thread {
                     
                     idsSet.add(estyCrawlProductItem.getId());
                     
-                    String title = estyCrawlProductItem.getTitle();
-                    title = AWSUtil.removeTrademark(title);
-                    String bannedKeyword = AWSUtil.containBannedKeyword(title);
-                    if (bannedKeyword != null) {
-                        System.out.println("" + title + " contain banned keyword: " + bannedKeyword);
-                        crawlProcessListener.onPushState("", "Removed " + estyCrawlProductItem.getId() + " because contains banned keyword: " + bannedKeyword);
-                        continue;
-                    }
+//                    String title = estyCrawlProductItem.getTitle();
+//                    title = AWSUtil.removeTrademark(title);
+//                    String bannedKeyword = AWSUtil.containBannedKeyword(title);
+//                    if (bannedKeyword != null) {
+//                        System.out.println("" + title + " contain banned keyword: " + bannedKeyword);
+//                        crawlProcessListener.onPushState("", "Removed " + estyCrawlProductItem.getId() + " because contains banned keyword: " + bannedKeyword);
+//                        continue;
+//                    }
                     
                     ProductAmz productAmz = ProcessTransformEstyToAmz.createBasicProductAmz(estyCrawlProductItem, baseStoreOrderInfo, pageCount);
                     if (productAmz != null) {

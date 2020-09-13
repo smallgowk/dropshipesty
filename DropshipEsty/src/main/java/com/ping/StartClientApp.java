@@ -91,7 +91,7 @@ public class StartClientApp {
             DialogUtil.showInfoMessage(null, responseObj.getMessage());
         }
 
-        initCustomizationModule();
+        initPLModule();
     }
     
     public void hideCurrentMode() {
