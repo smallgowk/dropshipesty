@@ -451,15 +451,12 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
                         Elements options = sku.select("option");
                         if (options != null && !options.isEmpty()) {
                             for (Element option : options) {
-                                String text = option.text();
-
-                                if (text.contains("Customization")) {
-//                                    System.out.println("" + option.attr("data-action-string"));
+                                String id = option.attr("id");
+                                if (id != null && id.contains("addEditCustomization")) {
                                     amzListingItem.setCustomLink(option.attr("data-action-string"));
                                     if (!setSkus.contains(amzListingItem.getSku())) {
                                         setSkus.add(amzListingItem.getSku());
                                         list.add(amzListingItem);
-//                                        System.out.println("" + amzListingItem);
                                     }
 
                                 }
