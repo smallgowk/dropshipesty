@@ -97,26 +97,26 @@ public class ExcelAmzCustomizeUtil {
 
             switch (customDTO.getType()) {
                 case "Surface":
-                    surfaceModel.setLabel(customDTO.getLabel());
-                    surfaceModel.setInstruction(customDTO.getInstruction());
+                    surfaceModel.setLabel(customDTO.getLabel().trim());
+                    surfaceModel.setInstruction(customDTO.getInstruction().trim());
                     break;
                 case "Customization-Option":
                     customizationModel = new CustomizationOption();
-                    customizationModel.setLabel(customDTO.getLabel());
-                    customizationModel.setInstruction(customDTO.getInstruction());
+                    customizationModel.setLabel(customDTO.getLabel().trim());
+                    customizationModel.setInstruction(customDTO.getInstruction().trim());
                     surfaceModel.addCustomization(customizationModel);
 
                     break;
                 case "Customization-Text":
                     customizationModel = new CustomizationText();
-                    customizationModel.setLabel(customDTO.getLabel());
-                    customizationModel.setInstruction(customDTO.getInstruction());
+                    customizationModel.setLabel(customDTO.getLabel().trim());
+                    customizationModel.setInstruction(customDTO.getInstruction().trim());
                     surfaceModel.addCustomization(customizationModel);
                     break;
                 case "Option":
                     OptionModel optionModel = new OptionModel();
-                    optionModel.setLabel(customDTO.getLabel());
-                    optionModel.setPrice(customDTO.getPriceValue());
+                    optionModel.setLabel(customDTO.getLabel().trim());
+                    optionModel.setPrice(customDTO.getPrice().trim());
                     if (customizationModel != null) {
                         customizationModel.addData(optionModel);
                     }

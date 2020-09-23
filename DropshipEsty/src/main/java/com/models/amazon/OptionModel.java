@@ -11,7 +11,7 @@ package com.models.amazon;
  */
 public class OptionModel {
     public String label;
-    public float price;
+    public String price;
 
     public String getLabel() {
         return label;
@@ -21,18 +21,16 @@ public class OptionModel {
         this.label = label;
     }
 
-    public float getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(String price) {
         this.price = price;
     }
     
     public String getPriceStr() {
-        if(price == 0) return "";
-        
-        return (int) price + ".00";
+        return price;
     }
     
     public static String getOptionLabelXpath(int index, int i) {

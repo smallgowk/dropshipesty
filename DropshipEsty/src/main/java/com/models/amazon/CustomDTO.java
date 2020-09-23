@@ -20,7 +20,7 @@ public class CustomDTO {
     public String type;
 
     public String getLabel() {
-        return label;
+        return label != null ? label : "";
     }
 
     public void setLabel(String label) {
@@ -28,7 +28,7 @@ public class CustomDTO {
     }
 
     public String getPrice() {
-        return price;
+        return price != null ? price : "";
     }
 
     public void setPrice(String price) {
@@ -36,7 +36,7 @@ public class CustomDTO {
     }
 
     public String getInstruction() {
-        return instruction;
+        return instruction != null ? instruction : "";
     }
 
     public void setInstruction(String instruction) {
