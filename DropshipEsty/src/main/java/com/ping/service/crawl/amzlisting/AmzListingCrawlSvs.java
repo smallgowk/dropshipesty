@@ -177,7 +177,7 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
                 String text = webElement.getAttribute("type");
                 if (text != null && text.equals("button")) {
                     String label = webElement.getText();
-                    if (label.equals("Add customization")) {
+                    if (label.equals("Add customization") || label.equals("Add customisation")) {
                         webElement.click();
                         break;
                     }
