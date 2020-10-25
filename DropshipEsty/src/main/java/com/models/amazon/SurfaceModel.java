@@ -73,6 +73,10 @@ public class SurfaceModel {
     }
     
     public static String getSaveButtonXpath() {
+        return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[2]/div/div[2]/kat-button[2]/button";
+    }
+    
+    public static String getSaveButtonXpathOld() {
         return "/html/body/div[1]/div[2]/div[1]/div/div[2]/div[2]/div/kat-button[2]/button";
     }
 

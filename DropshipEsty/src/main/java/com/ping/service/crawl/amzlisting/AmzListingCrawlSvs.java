@@ -204,6 +204,9 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
 
     public void doSave() {
         WebElement ele = findWithFullXPath(SurfaceModel.getSaveButtonXpath());
+        if (ele == null) {
+            ele = findWithFullXPath(SurfaceModel.getSaveButtonXpathOld());
+        }
         executor.executeScript("arguments[0].click();", ele);
     }
 
@@ -395,6 +398,7 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
             waitele.ignoring(StaleElementReferenceException.class);
             return waitele.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
         } catch (Exception ex) {
+            System.out.println("" + ex.toString());
             return null;
         }
 
