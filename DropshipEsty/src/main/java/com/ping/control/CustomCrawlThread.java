@@ -111,9 +111,18 @@ public class CustomCrawlThread extends Thread {
         } catch (InterruptedException ex) {
             java.util.logging.Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        boolean isCustomized = AmzListingCrawlSvs.getInstance().doFillBaseInfo(controller.imageFolderPath, item.sku, surfaceModel);
-        if (controller.isIgnoreCustomed && isCustomized) return;
+        boolean isCustomized = false;
+        try {
+            isCustomized = AmzListingCrawlSvs.getInstance().doFillBaseInfo(controller.imageFolderPath, item.sku, surfaceModel);
+        } catch (Exception ex) {
+            System.out.println("" + ex.getMessage());
+            crawlProcessListener.onPushState("", item.getSku() + " error!");
+            return;
+        }
+        if (controller.isIgnoreCustomed && isCustomized) {
+            crawlProcessListener.onPushState("", item.getSku() + " already customized");
+            return;
+        }
         try {
             Thread.sleep(500);
         } catch (InterruptedException ex) {

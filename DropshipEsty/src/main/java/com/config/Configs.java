@@ -97,6 +97,7 @@ public class Configs {
     public static String profilePath;
     public static String infoCustomPath;
     public static String imageCustomPath;
+    public static int timeDelay;
 
     public static boolean isOnlyUS;
     public static int dataSaveType;
@@ -372,6 +373,9 @@ public class Configs {
             profilePath = cnfParamsTmp.getProperty("profilePath", "");
             infoCustomPath = cnfParamsTmp.getProperty("infoCustomPath", "");
             imageCustomPath = cnfParamsTmp.getProperty("imageFolderCustom", "");
+
+            String timeDelayStr = cnfParamsTmp.getProperty("timeDelay", "5");
+            timeDelay = Integer.parseInt(timeDelayStr);
 
             createProductFolders();
 

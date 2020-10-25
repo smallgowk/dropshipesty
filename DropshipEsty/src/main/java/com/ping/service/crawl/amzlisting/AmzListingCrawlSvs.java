@@ -118,7 +118,7 @@ public class AmzListingCrawlSvs extends CrawlerMachine {
         boolean isFoundImage = false;
 
         try {
-            s.wait(imageUploaded, 20);
+            s.wait(imageUploaded, Configs.timeDelay);
             isFoundImage = true;
         } catch (FindFailed ex) {
             Logger.getLogger(AmzListingCrawlSvs.class.getName()).log(Level.SEVERE, null, ex);
